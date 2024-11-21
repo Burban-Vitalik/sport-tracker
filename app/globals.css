@@ -2,20 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Глобальні стилі */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-family: "Arial", "Helvetica", sans-serif;
 }
 
+/* Теми: світла та темна */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background-color: #0a0a0a;
+    --foreground-color: #ededed;
   }
 }
 
+:root {
+  --background-color: #ffffff;
+  --foreground-color: #171717;
+}
+
+/* Глобальні налаштування для body */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-family);
+  color: var(--foreground-color);
+  background-color: var(--background-color);
+  transition: background-color 0.3s ease, color 0.3s ease; /* Додаємо плавний перехід */
+}
+
+/* Підтримка темної теми через Tailwind */
+body.dark {
+  --background-color: #0a0a0a;
+  --foreground-color: #ededed;
+}
+
+/* Додаємо стилі для інших елементів */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+  color: var(--foreground-color);
+}
+
+a {
+  color: inherit; /* Наслідує колір тексту */
+  text-decoration: none; /* Вимикаємо підкреслення для лінків */
+}
+
+a:hover {
+  text-decoration: underline;
 }
