@@ -1,5 +1,8 @@
+"use client";
+
 import { ColumnDef } from "@tanstack/react-table";
 import { IUser } from "../types/user";
+import { formatAddress } from "../helpers/formatAddress";
 
 export const columns: ColumnDef<IUser>[] = [
   {
@@ -21,6 +24,9 @@ export const columns: ColumnDef<IUser>[] = [
   {
     accessorKey: "address",
     header: "Address",
+    cell: ({ row }) => (
+      <div>{formatAddress(row.getValue("address"), "table")}</div>
+    ),
   },
   {
     accessorKey: "status",
