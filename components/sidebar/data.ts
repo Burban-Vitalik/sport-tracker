@@ -15,42 +15,19 @@ export const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       items: [
         {
-          title: "Overview",
-          url: "#",
+          title: "Page1",
+          url: "/dashboard/page1",
         },
         {
-          title: "Progress",
-          url: "#",
-          isActive: true,
+          title: "Page2",
+          url: "/dashboard/page2",
         },
         {
-          title: "Daily Goals",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Workouts",
-      url: "#",
-      items: [
-        {
-          title: "Workout Plans",
-          url: "#",
-        },
-        {
-          title: "Exercises",
-          url: "#",
-        },
-        {
-          title: "Create New Workout",
-          url: "#",
-        },
-        {
-          title: "Workout History",
-          url: "#",
+          title: "Page3",
+          url: "/dashboard/page3",
         },
       ],
     },

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -24,7 +25,7 @@ export const SideBarList = ({ navMain }: PropsType) => {
               {item.items.map((item: NavItem) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={item.isActive}>
-                    <a href={item.url}>{item.title}</a>
+                    <Link href={item.url}>{item.title}</Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
