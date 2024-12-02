@@ -2,7 +2,8 @@ import { Table as ReactTable } from "@tanstack/react-table";
 import { Button } from "../ui/button";
 
 type PropsType = {
-  dataTable: ReactTable<TData>;
+  // dataTable: ReactTable<TData>;
+  dataTable: ReactTable<unknown>;
 };
 
 export const DataTablePagination = ({ dataTable }: PropsType) => {
