@@ -1,20 +1,20 @@
 import { DataTable } from "@/components/dataTable";
-import { mockUsers } from "../mockData/mockUserData";
-import { IUser } from "../types/user";
 import { columns } from "./columns";
 import { EmptyMessageWithSmile } from "@/components/common";
+import { PrismaClient, User } from "@prisma/client";
+const prisma = new PrismaClient();
 
-async function getData(): Promise<IUser[]> {
-  return mockUsers;
+async function getData(): Promise<User[]> {
+  return await prisma.user.findMany();
 }
 
 export default async function UsersPage() {
-  const data: IUser[] = await getData();
+  const data: User[] = await getData();
 
   return (
     <div className="container mx-auto py-10 h-100vh">
       {data ? (
-        <DataTable columns={columns} data={data} filterByColumn={"userName"} />
+        <DataTable columns={columns} data={data} filterByColumn={"firstName"} />
       ) : (
         <EmptyMessageWithSmile message="No users found" />
       )}

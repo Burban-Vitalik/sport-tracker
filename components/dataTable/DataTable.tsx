@@ -29,11 +29,12 @@ import {
   // DataTablePagination,
   DataTableViewOptions,
 } from "@/components/dataTable";
+import { User } from "@prisma/client";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  filterByColumn: string;
+  filterByColumn: keyof User;
 }
 
 export function DataTable<TData, TValue>({
