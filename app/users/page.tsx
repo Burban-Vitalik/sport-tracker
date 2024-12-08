@@ -1,8 +1,8 @@
 import { DataTable } from "@/components/dataTable";
 import { columns } from "./columns";
 import { EmptyMessageWithSmile } from "@/components/common";
-import { PrismaClient, User } from "@prisma/client";
-const prisma = new PrismaClient();
+import { User } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
 async function getData(): Promise<User[]> {
   return await prisma.user.findMany();

@@ -1,7 +1,5 @@
+import { prisma } from "@/lib/prisma";
 import { mockUsers } from "../app/mockData/mockUserData";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
 
 async function seed() {
   try {
