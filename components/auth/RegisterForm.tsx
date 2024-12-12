@@ -2,13 +2,51 @@
 
 import { User } from "@prisma/client";
 import { Formik } from "formik";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import CustomIconInput from "../form-elements/CustomIconInput";
+import { LockKeyhole, Mail } from "lucide-react";
+import { CustomIconButton } from "../form-elements/buttons/CustomIconButton";
+import { ErrorMessage } from "../form-elements/messages/ErrorMessage";
+import Link from "next/link";
 
 type InitialRegisterValues = Pick<User, "email" | "password">;
 
+const handleApiErrors = (
+  status: number,
+  setErrors: (errors: Partial<InitialRegisterValues>) => void
+) => {
+  const errorMessages: Record<number, Partial<InitialRegisterValues>> = {
+    400: {
+      email: "Email and password are required.",
+      password: "Email and password are required.",
+    },
+    409: {
+      email: "User with this email already exists.",
+    },
+  };
+
+  const defaultError = {
+    email: "Something went wrong. Please try again later.",
+    password: "Something went wrong. Please try again later.",
+  };
+
+  setErrors(errorMessages[status] || defaultError);
+};
+
+const registerUser = async (values: InitialRegisterValues) => {
+  const res = await fetch("/api/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(values),
+  });
+
+  const data = await res.json();
+  return { res, data };
+};
+
 const RegisterForm = () => {
   const router = useRouter();
+
   const handleRegister = async (
     values: InitialRegisterValues,
     {
@@ -16,39 +54,14 @@ const RegisterForm = () => {
     }: { setErrors: (errors: Partial<InitialRegisterValues>) => void }
   ) => {
     try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-
-      const data = await res.json();
+      const { res, data } = await registerUser(values);
 
       if (res.status === 201) {
         alert(data.message);
         router.push("/auth/login");
-        return;
+      } else {
+        handleApiErrors(res.status, setErrors);
       }
-
-      if (res.status === 400) {
-        setErrors({
-          email: "Email and password are required.",
-          password: "Email and password are required.",
-        });
-        return;
-      }
-
-      if (res.status === 409) {
-        setErrors({
-          email: "User with this email already exists.",
-        });
-        return;
-      }
-
-      setErrors({
-        email: "Something went wrong. Please try again later.",
-        password: "Something went wrong. Please try again later.",
-      });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setErrors({
@@ -66,40 +79,49 @@ const RegisterForm = () => {
       {({ handleSubmit, values, handleChange, isSubmitting, errors }) => (
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-4 max-w-sm mx-auto"
+          className="flex flex-col gap-4 max-w-sm mx-auto w-full"
         >
-          <input
+          <CustomIconInput
             type="email"
             placeholder="Email"
             value={values.email}
             onChange={handleChange("email")}
             required
             className="border p-2 rounded w-full"
-          />
-          <input
+          >
+            <Mail size={16} strokeWidth={2} aria-hidden="true" />
+          </CustomIconInput>
+
+          <CustomIconInput
             type="password"
             placeholder="Password"
             value={values.password}
             onChange={handleChange("password")}
             required
             className="border p-2 rounded w-full"
-          />
+          >
+            <LockKeyhole size={16} strokeWidth={2} aria-hidden="true" />
+          </CustomIconInput>
 
-          <button
+          <CustomIconButton
             type="submit"
             disabled={isSubmitting || !values.email || !values.password}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 disabled:opacity-50"
           >
-            {isSubmitting ? "Wating..." : "Register"}
-          </button>
+            Register
+          </CustomIconButton>
 
-          {errors.password ||
-            (errors.email && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.password || errors.email}
-              </p>
-            ))}
-          <Link href="/auth/login">Login</Link>
+          <div className="flex items-center justify-center gap-2">
+            <p>Already have an account?</p>
+            <p className="text-blue-500 hover:underline cursor-pointer">
+              <Link href="/auth/login">Login</Link>
+            </p>
+          </div>
+
+          {(errors.email || errors.password) && (
+            <ErrorMessage
+              message={errors.email || (errors.password as string)}
+            />
+          )}
         </form>
       )}
     </Formik>

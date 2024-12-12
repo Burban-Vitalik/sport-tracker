@@ -24,8 +24,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div>
-      <div>Login Page</div>
+    <div className="flex h-screen w-full items-center justify-center">
       <LoginForm />
     </div>
   );

@@ -5,6 +5,10 @@ import { useRouter } from "next/navigation";
 import { Formik } from "formik";
 import { User } from "@prisma/client";
 import Link from "next/link";
+import CustomIconInput from "../form-elements/CustomIconInput";
+import { LockKeyhole, Mail } from "lucide-react";
+import { CustomIconButton } from "../form-elements/buttons/CustomIconButton";
+import { ErrorMessage } from "../form-elements/messages/ErrorMessage";
 
 type InitialLoginValues = Pick<User, "email" | "password">;
 
@@ -47,9 +51,9 @@ const LoginForm = () => {
       {({ values, handleChange, handleSubmit, isSubmitting, errors }) => (
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-4 max-w-sm mx-auto"
+          className="flex flex-col gap-4 max-w-sm mx-auto w-full"
         >
-          <input
+          <CustomIconInput
             type="email"
             name="email"
             placeholder="Email"
@@ -57,9 +61,11 @@ const LoginForm = () => {
             onChange={handleChange}
             className="border p-2 rounded w-full"
             required
-          />
+          >
+            <Mail size={16} strokeWidth={2} aria-hidden="true" />
+          </CustomIconInput>
 
-          <input
+          <CustomIconInput
             type="password"
             name="password"
             placeholder="Password"
@@ -67,23 +73,29 @@ const LoginForm = () => {
             onChange={handleChange}
             className="border p-2 rounded w-full"
             required
-          />
+          >
+            <LockKeyhole size={16} strokeWidth={2} aria-hidden="true" />
+          </CustomIconInput>
 
-          <button
+          <CustomIconButton
             type="submit"
             disabled={isSubmitting || !values.email || !values.password}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 disabled:opacity-50"
           >
-            {isSubmitting ? "Logging in..." : "Login"}
-          </button>
+            Login
+          </CustomIconButton>
 
-          {errors.password ||
-            (errors.email && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.password || errors.email}
-              </p>
-            ))}
-          <Link href="/auth/register">Register</Link>
+          <div className="flex items-center justify-center gap-2">
+            <p>Already have an account?</p>
+            <p className="text-blue-500 hover:underline cursor-pointer">
+              <Link href="/auth/register">Register</Link>
+            </p>
+          </div>
+
+          {(errors.email || errors.password) && (
+            <ErrorMessage
+              message={errors.email || (errors.password as string)}
+            />
+          )}
         </form>
       )}
     </Formik>
