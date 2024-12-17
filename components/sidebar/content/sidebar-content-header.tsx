@@ -1,4 +1,3 @@
-import LogoutButton from "@/components/auth/LogoutButton";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -26,11 +25,6 @@ export const SidebarContentHeader = ({}: PropsType) => {
           <BreadcrumbSeparator className="hidden md:block" />
           <BreadcrumbItem>
             <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-          </BreadcrumbItem>
-          <BreadcrumbItem className="ml-10">
-            <BreadcrumbPage>
-              <LogoutButton />
-            </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

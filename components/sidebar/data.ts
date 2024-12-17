@@ -31,5 +31,15 @@ export const data = {
         },
       ],
     },
+    {
+      title: "Users",
+      url: "/users",
+      items: [
+        {
+          title: "Users",
+          url: "/users",
+        },
+      ],
+    },
   ],
 };

@@ -1,23 +1,27 @@
 "use client";
 
 import Cookies from "js-cookie";
+import { LogOutIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { CustomIconButton } from "../form-elements/buttons/CustomIconButton";
+import React from "react";
 
 const LogoutButton = () => {
   const router = useRouter();
 
   const handleLogout = () => {
-    // Видаляємо токен з cookies
     Cookies.remove("token");
-
-    // Можна показати повідомлення або здійснити редірект
-    alert("Ви вийшли з облікового запису");
-
-    // Перенаправлення користувача на сторінку логіну або домашню сторінку
     router.push("/auth");
   };
 
-  return <button onClick={handleLogout}>Вийти</button>;
+  return (
+    <CustomIconButton
+      variant="destructive"
+      onClick={handleLogout}
+      style={{ width: "100%" }}
+    >
+      Log out <LogOutIcon />
+    </CustomIconButton>
+  );
 };
-
 export default LogoutButton;

@@ -11,8 +11,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../../ui/sidebar";
-
-// type PropsType = {};
+import Link from "next/link";
+import LogoutButton from "@/components/auth/LogoutButton";
 
 export function SidebarFooterComponent() {
   return (
@@ -31,13 +31,13 @@ export function SidebarFooterComponent() {
               className="w-[--radix-popper-anchor-width]"
             >
               <DropdownMenuItem>
-                <span>Account</span>
+                <Link href="/accounts/profile">Account</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <span>Billing</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <span>Sign out</span>
+                <LogoutButton />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
