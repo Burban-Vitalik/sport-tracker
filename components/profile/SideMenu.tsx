@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 const menuItems = [
   { label: "My Profile", href: "/accounts/profile" },
   { label: "Security", href: "/profile/security" },
-  { label: "Settings", href: "/profile/settings" },
+  { label: "Settings", href: "/accounts/settings" },
 ];
 
 export const SideMenu = () => {
