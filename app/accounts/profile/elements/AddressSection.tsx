@@ -1,11 +1,13 @@
 import { CustomIconButton } from "@/components/form-elements/buttons/CustomIconButton";
-import { Pencil } from "lucide-react";
+import { MapPinHouse, Pencil } from "lucide-react";
 
 export default function AddressSection() {
   return (
-    <section className="bg-white border rounded-md p-6 shadow-lg">
+    <section className="border rounded-md p-6 shadow-lg bg-gray-50/50">
       <div className="flex flex-row">
-        <p className="text-2xl font-semibold mb-6">Personal Information</p>
+        <p className="text-2xl font-semibold mb-6 flex items-center gap-4">
+          <MapPinHouse /> Address Information
+        </p>
         <div className="ml-auto">
           <CustomIconButton
             variant="outline"

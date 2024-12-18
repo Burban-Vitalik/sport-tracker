@@ -19,11 +19,11 @@ export default async function ProfilePage() {
     <div className="flex">
       <SideMenu />
       <div className="flex flex-col gap-4 w-full px-4">
-        <h1 className="text-2xl font-semibold">My Profle</h1>
-        <p>{user.email}</p>
         <ProfileHeader user={user} />
-        <PersonalInformation />
-        <AddressSection />
+        <div className="grid grid-cols-2 gap-4">
+          <PersonalInformation />
+          <AddressSection />
+        </div>
       </div>
     </div>
   );

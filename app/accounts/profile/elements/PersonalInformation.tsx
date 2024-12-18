@@ -1,11 +1,14 @@
 import { CustomIconButton } from "@/components/form-elements/buttons/CustomIconButton";
-import { Pencil } from "lucide-react";
+import { FileUser, Pencil } from "lucide-react";
 
 export const PersonalInformation = () => {
   return (
-    <section className="border rounded-md p-6 bg-white shadow-lg">
+    <section className="border rounded-md p-6  shadow-lg bg-gray-50/50">
       <div className="flex flex-row">
-        <p className="text-2xl font-semibold mb-6">Personal Information</p>
+        <p className="text-2xl font-semibold mb-6 flex items-center gap-4">
+          <FileUser />
+          Personal Information
+        </p>
         <div className="ml-auto">
           <CustomIconButton
             variant="outline"
