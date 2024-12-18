@@ -30,6 +30,7 @@ import {
   DataTableViewOptions,
 } from "@/components/dataTable";
 import { User } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -50,6 +51,7 @@ export function DataTable<TData, TValue>({
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
+  const router = useRouter();
   const table: ReactTable<TData> = useReactTable({
     data,
     columns,
@@ -105,6 +107,12 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() =>
+                    router.push(
+                      ("/users/" + row.original.id) as unknown as string
+                    )
+                  }
+                  className="cursor-pointer hover:bg-slate-100"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
