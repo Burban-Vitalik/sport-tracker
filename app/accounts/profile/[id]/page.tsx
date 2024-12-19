@@ -1,15 +1,19 @@
 import { SideMenu } from "@/components/profile/SideMenu";
-import { ProfileHeader } from "./elements/ProfileHeader";
-import { PersonalInformation } from "./elements/PersonalInformation";
-import AddressSection from "./elements/AddressSection";
 import { prisma } from "@/lib/prisma";
+import { ProfileHeader } from "../elements/ProfileHeader";
+import { PersonalInformation } from "../elements/PersonalInformation";
+import AddressSection from "../elements/AddressSection";
 
 async function getUser(id: number) {
   return await prisma.user.findUnique({ where: { id } });
 }
 
-export default async function ProfilePage() {
-  const user = await getUser(3);
+export default async function ProfilePage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const user = await getUser(+params.id);
 
   if (!user) {
     return <p>User not found</p>;

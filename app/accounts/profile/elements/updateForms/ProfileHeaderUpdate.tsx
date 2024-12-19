@@ -2,12 +2,15 @@ import { Formik } from "formik";
 import { Edit, User } from "lucide-react";
 import { CustomIconButton } from "@/components/form-elements/buttons/CustomIconButton";
 import CustomIconInput from "@/components/form-elements/CustomIconInput";
+import { showToast } from "@/app/helpers/showToast";
 
 type PropsType = {
   firstName: string;
   lastName: string;
   email: string;
-  age: string;
+  age: number;
+  userId: number;
+  closeModal: () => void;
 };
 
 export const ProfileHeaderUpdateForm = ({
@@ -15,16 +18,29 @@ export const ProfileHeaderUpdateForm = ({
   lastName,
   email,
   age,
+  userId,
+  closeModal,
 }: PropsType) => {
-  const handleUpdate = async (value: PropsType) => {
-    const response = await fetch("/api/users/3", {
+  const handleUpdate = async (
+    value: Omit<PropsType, "userId" | "closeModal">
+  ) => {
+    const res = await fetch("/api/users/3", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: 3, firstName: value.firstName }),
+      body: JSON.stringify({ id: userId, ...value }),
     });
-    console.log("response", response);
+
+    if (res.status === 200) {
+      showToast({ message: "Profile updated successfully", type: "success" });
+    }
+
+    if (res.status === 400) {
+      showToast({ message: "Profile update failed", type: "error" });
+    }
+
+    closeModal();
   };
 
   return (
@@ -32,7 +48,7 @@ export const ProfileHeaderUpdateForm = ({
       initialValues={{
         firstName: firstName || "",
         lastName: lastName || "",
-        age: age || "",
+        age: age || 0,
         email: email || "",
       }}
       onSubmit={handleUpdate}

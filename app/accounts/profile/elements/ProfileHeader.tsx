@@ -56,10 +56,12 @@ export const ProfileHeader = ({ user }: PropsType) => {
             onClick={() =>
               openModal(
                 <ProfileHeaderUpdateForm
-                  firstName="Vitalik"
-                  lastName="Burban"
-                  email="vitalik@bk.com"
-                  age="26"
+                  firstName={user.firstName}
+                  lastName={user.lastName}
+                  email={user.email}
+                  age={user.age}
+                  userId={user.id}
+                  closeModal={closeModal}
                 />
               )
             }

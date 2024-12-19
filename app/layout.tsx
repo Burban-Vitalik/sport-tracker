@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect } from "react";
+import Cookies from "js-cookie";
 import { useRouter, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import "./globals.css";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import {
   SidebarContent,
   SidebarContentHeader,
 } from "@/components/sidebar/content";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import Cookies from "js-cookie";
+import { ToastContainer } from "react-toastify";
+import "./globals.css";
 
 export default function RootLayout({
   children,
@@ -55,6 +56,20 @@ export default function RootLayout({
             </SidebarContent>
           </SidebarInset>
         </SidebarProvider>
+
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          className="max-w-full sm:max-w-xs md:max-w-md lg:max-w-lg px-4 py-2"
+        />
       </body>
     </html>
   );
