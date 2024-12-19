@@ -15,7 +15,7 @@ export const SideMenu = () => {
 
   return (
     <div className="flex flex-col w-64 h-full bg-white">
-      <nav className="flex flex-col gap-4">
+      <nav className="flex flex-col gap-2">
         {menuItems.map((item) => (
           <Link
             key={item.href}

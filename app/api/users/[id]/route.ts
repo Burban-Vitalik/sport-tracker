@@ -66,7 +66,7 @@ export async function DELETE(req: Request) {
       });
     }
 
-    await prisma.newUser.delete({ where: { id: parseInt(id) } });
+    await prisma.user.delete({ where: { id: parseInt(id) } });
 
     return new NextResponse(
       JSON.stringify({ message: "User deleted successfully" }),
