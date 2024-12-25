@@ -41,6 +41,7 @@ export const ProfileHeaderUpdateForm = ({
     }
 
     closeModal();
+    window.location.reload(); //тимчасово
   };
 
   return (

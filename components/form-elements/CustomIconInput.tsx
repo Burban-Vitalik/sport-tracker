@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Input } from "../ui/input";
 
 type PropsType = {
@@ -9,7 +10,7 @@ export default function CustomIconInput({ children, ...rest }: PropsType) {
     <div className="relative">
       <Input
         id="input-09"
-        className="peer pl-10"
+        className={cn("peer pl-10", rest.className)}
         {...rest}
         style={{ paddingLeft: "35px" }}
       />
