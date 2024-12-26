@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const menuItems = [
-  { label: "My Profile", href: "/accounts/profile" },
+  { label: "My Profile", href: "/accounts/profile/1" },
   { label: "Security", href: "/profile/security" },
   { label: "Settings", href: "/accounts/settings" },
 ];

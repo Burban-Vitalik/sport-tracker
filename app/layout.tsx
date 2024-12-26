@@ -12,6 +12,7 @@ import {
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
+import { UserProvider } from "@/hooks/userContext";
 
 export default function RootLayout({
   children,
@@ -44,19 +45,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("min-h-screen bg-background font-sans antialiased")}>
-        <SidebarProvider>
-          <AppSidebar />
-          <SidebarInset>
-            <SidebarContentHeader />
-            <SidebarContent>
-              <div className="flex flex-1 flex-col gap-4 p-4">
-                <div className="grid w-full">{children}</div>
-                <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-              </div>
-            </SidebarContent>
-          </SidebarInset>
-        </SidebarProvider>
-
+        <UserProvider>
+          {" "}
+          {/* Обгортаємо контекстом тут */}
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+              <SidebarContentHeader />
+              <SidebarContent>
+                <div className="flex flex-1 flex-col gap-4 p-4">
+                  <div className="grid w-full">{children}</div>
+                  <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+                </div>
+              </SidebarContent>
+            </SidebarInset>
+          </SidebarProvider>
+        </UserProvider>
+        {/* Закриваємо обгортку тут */}
         <ToastContainer
           position="top-right"
           autoClose={3000}

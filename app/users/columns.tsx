@@ -1,12 +1,14 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { User } from "@prisma/client";
-import { formatDate } from "../helpers/formatDate";
-import { getFullUserName } from "../helpers/getFullUserName";
-import { formatEmail } from "../helpers/formatEmail";
-import { capitalizeName } from "../helpers/capitalizeName";
 import { CalendarCheck, CalendarDays } from "lucide-react";
+import { User } from "@prisma/client";
+import {
+  capitalizeName,
+  formatDate,
+  formatEmail,
+  getFullUserName,
+} from "../helpers";
 
 type UserKeys = keyof User;
 
@@ -19,6 +21,7 @@ const userKeys: Record<UserKeys, UserKeys> = {
   password: "password",
   createdAt: "createdAt",
   updatedAt: "updatedAt",
+  profileImage: "profileImage",
 };
 
 export const columns: ColumnDef<User>[] = [
@@ -30,11 +33,11 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: userKeys.firstName,
     header: "Name",
     cell: ({ row }) => {
-      const fullName = getFullUserName(
-        row.original.firstName,
-        row.original.lastName
-      );
-      return capitalizeName(fullName);
+      const fullName = getFullUserName({
+        firstName: row.getValue(userKeys.firstName) as string,
+        lastName: row.getValue(userKeys.lastName) as string,
+      });
+      return capitalizeName(fullName as string);
     },
   },
   {

@@ -5,13 +5,12 @@ import UserLogo from "../../../../public/img/userLogo.png";
 import { CustomIconButton } from "@/components/form-elements/buttons/CustomIconButton";
 import { Pencil } from "lucide-react";
 import { User } from "@prisma/client";
-import { getFullUserName } from "@/app/helpers/getFullUserName";
 import { useState } from "react";
 import { ProfileHeaderUpdateForm } from "./updateForms/ProfileHeaderUpdate";
 import { CustomModal } from "@/components/modals/CustomModal";
 import { UploadFile } from "@/components/common/UploadFile";
 import { uploadFileToStarage } from "@/lib/supabase/storage/uploadFile";
-import { showToast } from "@/app/helpers/showToast";
+import { getFullUserName, showToast } from "@/app/helpers";
 import { formFullUrl } from "@/lib/supabase/helperes/makeFullUrl";
 
 type PropsType = {
@@ -86,7 +85,10 @@ export const ProfileHeader = ({ user }: PropsType) => {
 
         <div className="ml-5 flex flex-col">
           <p className="font-bold text-gray-700 text-lg">
-            {getFullUserName(user.firstName || "", user.lastName || "")}
+            {getFullUserName({
+              firstName: user.firstName,
+              lastName: user.lastName,
+            })}
           </p>
           <p className="mt-1 text-sm font-medium text-gray-500">{user.email}</p>
           <p className="text-sm text-gray-500">{user.age} years old</p>
