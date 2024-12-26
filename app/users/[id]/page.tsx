@@ -1,12 +1,13 @@
 import { prisma } from "@/lib/prisma";
 
-async function getUser(id: number) {
-  const response = await prisma.user.findUnique({ where: { id } });
+async function getUser(id: string) {
+  const response = await prisma.user.findUnique({ where: { id: Number(id) } });
   return response;
 }
 
 export default async function UserPage({ params }: { params: { id: string } }) {
-  const user = await getUser(+params.id);
+  const { id } = params;
+  const user = await getUser(id);
 
   if (!user) {
     return <div>user not found</div>;

@@ -9,6 +9,7 @@ import {
   formatEmail,
   getFullUserName,
 } from "../helpers";
+import { UserAvatar } from "@/components/common/UserAvatar";
 
 type UserKeys = keyof User;
 
@@ -34,10 +35,23 @@ export const columns: ColumnDef<User>[] = [
     header: "Name",
     cell: ({ row }) => {
       const fullName = getFullUserName({
-        firstName: row.getValue(userKeys.firstName) as string,
-        lastName: row.getValue(userKeys.lastName) as string,
-      });
-      return capitalizeName(fullName as string);
+        firstName: row.original.firstName,
+        lastName: row.original.lastName,
+      }) as string;
+
+      const capitalizedName = capitalizeName(fullName);
+
+      debugger;
+      return (
+        <div className="flex items-center gap-2">
+          <UserAvatar
+            width={30}
+            height={30}
+            imageUrl={row.original.profileImage as string}
+          />
+          {capitalizedName}
+        </div>
+      );
     },
   },
   {
