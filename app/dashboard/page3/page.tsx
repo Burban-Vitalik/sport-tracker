@@ -60,8 +60,6 @@ const Page3 = () => {
     } else {
       showToast({ message: "File is not deleted successfully", type: "error" });
     }
-
-    debugger;
   };
 
   if (!photos) {

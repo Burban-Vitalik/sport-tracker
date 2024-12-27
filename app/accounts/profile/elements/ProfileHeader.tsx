@@ -3,7 +3,7 @@
 import Image from "next/image";
 import UserLogo from "../../../../public/img/userLogo.png";
 import { CustomIconButton } from "@/components/form-elements/buttons/CustomIconButton";
-import { Pencil } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { User } from "@prisma/client";
 import { useState } from "react";
 import { ProfileHeaderUpdateForm } from "./updateForms/ProfileHeaderUpdate";
@@ -12,6 +12,7 @@ import { UploadFile } from "@/components/common/UploadFile";
 import { uploadFileToStarage } from "@/lib/supabase/storage/uploadFile";
 import { getFullUserName, showToast } from "@/app/helpers";
 import { formFullUrl } from "@/lib/supabase/helperes/makeFullUrl";
+import { useRouter } from "next/navigation";
 
 type PropsType = {
   user: User;
@@ -20,6 +21,8 @@ type PropsType = {
 export const ProfileHeader = ({ user }: PropsType) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
+
+  const router = useRouter();
 
   const openModal = (content: React.ReactNode) => {
     setModalContent(content);
@@ -34,41 +37,44 @@ export const ProfileHeader = ({ user }: PropsType) => {
   const handleUploadImage = async (file: File) => {
     if (!file) return;
 
-    const response = await uploadFileToStarage({
-      bucket: "images",
-      folder: user.id.toString(),
-      file: file,
-    });
+    try {
+      const response = await uploadFileToStarage({
+        bucket: "images",
+        folder: user.id.toString(),
+        file,
+      });
 
-    debugger;
+      if (!response) return;
 
-    if (response) {
       const fullUrl = formFullUrl({
         bucket: "images",
-        filePath: response?.path || "",
+        filePath: response.path || "",
       });
-      const res = await fetch("/api/users/1", {
+
+      const res = await fetch(`/api/users/${user.id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...user,
+          id: user.id,
           profileImage: fullUrl,
         }),
       });
-      if (res.status === 200) {
+
+      if (res.ok) {
         showToast({ message: "Profile updated successfully", type: "success" });
-        window.location.reload(); // тимчасово
+        router.refresh();
       } else {
         showToast({ message: "Profile update failed", type: "error" });
       }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      showToast({ message: "An error occurred during upload", type: "error" });
     }
   };
 
   return (
     <>
-      <section className="flex items-center w-full border p-4 rounded-md bg-white shadow-sm">
+      <section className="flex items-center w-full p-4 bg-white">
         <div className="flex-shrink-0">
           <UploadFile handleUploadImage={handleUploadImage}>
             <Image
@@ -76,7 +82,6 @@ export const ProfileHeader = ({ user }: PropsType) => {
               alt="User Logo"
               height={70}
               width={70}
-              // className="rounded-full"
               className="object-cover w-full h-full rounded-full"
               draggable={false}
             />
@@ -94,15 +99,15 @@ export const ProfileHeader = ({ user }: PropsType) => {
           <p className="text-sm text-gray-500">{user.age} years old</p>
         </div>
 
-        <div className="ml-auto">
+        <div className="ml-auto flex flex-col gap-2">
           <CustomIconButton
-            variant="outline"
-            className="flex items-center gap-1"
+            variant="destructive"
+            className="flex items-center gap-1 bg-green-600 text-white hover:bg-green-700 hover:text-white"
             onClick={() =>
               openModal(
                 <ProfileHeaderUpdateForm
-                  firstName={user.firstName || ""}
-                  lastName={user.lastName || ""}
+                  firstName={user.firstName}
+                  lastName={user.lastName}
                   email={user.email}
                   age={user.age as number}
                   userId={user.id}
@@ -113,9 +118,21 @@ export const ProfileHeader = ({ user }: PropsType) => {
           >
             <Pencil size={14} /> Edit
           </CustomIconButton>
+          <CustomIconButton
+            className="flex items-center gap-1"
+            onClick={() => router.push(`/accounts/settings`)}
+            variant="destructive"
+          >
+            <Trash2 /> Delete
+          </CustomIconButton>
         </div>
       </section>
-      <CustomModal isOpen={isModalOpen} onClose={closeModal}>
+
+      <CustomModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        title="Edit Profile"
+      >
         {modalContent}
       </CustomModal>
     </>

@@ -34,6 +34,12 @@ export async function POST(req: Request) {
       data: {
         email,
         password: hashedPassword,
+        bodyInfo: {
+          create: {
+            weight: 0,
+            height: 0,
+          },
+        },
       },
     });
 

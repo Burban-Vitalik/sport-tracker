@@ -1,17 +1,62 @@
 import { Formik } from "formik";
-import { Edit, User } from "lucide-react";
-import { CustomIconButton } from "@/components/form-elements/buttons/CustomIconButton";
-import CustomIconInput from "@/components/form-elements/CustomIconInput";
+import { Cake, Pen, Trash2, User } from "lucide-react";
 import { showToast } from "@/app/helpers/showToast";
+import { CustomIconButton, CustomIconInput } from "@/components/form-elements";
+import { cn } from "@/lib/utils";
 
 type PropsType = {
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   email: string;
   age: number;
   userId: number;
   closeModal: () => void;
 };
+
+const formFields = [
+  {
+    name: "firstName",
+    label: "First Name",
+    icon: <User size={18} />,
+    type: "text",
+  },
+  {
+    name: "lastName",
+    label: "Last Name",
+    icon: <User size={18} />,
+    type: "text",
+  },
+  {
+    name: "email",
+    label: "Email",
+    icon: <User size={18} />,
+    type: "email",
+  },
+  {
+    name: "age",
+
+    label: "Age",
+    icon: <Cake size={18} />,
+    type: "number",
+  },
+];
+
+const formButtons = [
+  {
+    name: "update",
+    label: "Update",
+    icon: <Pen />,
+    type: "submit",
+    className: "bg-black text-white",
+  },
+  {
+    name: "cancel",
+    label: "Cancel",
+    icon: <Trash2 />,
+    type: "button",
+    className: "border border-black text-black",
+  },
+];
 
 export const ProfileHeaderUpdateForm = ({
   firstName,
@@ -21,140 +66,83 @@ export const ProfileHeaderUpdateForm = ({
   userId,
   closeModal,
 }: PropsType) => {
+  const initialValues = {
+    firstName: firstName || "",
+    lastName: lastName || "",
+    email: email || "",
+    age: age || 0,
+  };
+
   const handleUpdate = async (
-    value: Omit<PropsType, "userId" | "closeModal">
+    value: Omit<PropsType, "userId" | "closeModal" | "profileImage">
   ) => {
-    const res = await fetch("/api/users/3", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: userId, ...value }),
-    });
+    try {
+      const res = await fetch(`/api/users/${userId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: userId, ...value }),
+      });
 
-    if (res.status === 200) {
-      showToast({ message: "Profile updated successfully", type: "success" });
+      const message =
+        res.status === 200
+          ? "Profile updated successfully"
+          : "Profile update failed";
+
+      showToast({
+        message,
+        type: res.status === 200 ? "success" : "error",
+      });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      showToast({ message: "An unexpected error occurred", type: "error" });
+    } finally {
+      closeModal();
+      window.location.reload(); // тимчасово
     }
-
-    if (res.status === 400) {
-      showToast({ message: "Profile update failed", type: "error" });
-    }
-
-    closeModal();
-    window.location.reload(); //тимчасово
   };
 
   return (
-    <Formik
-      initialValues={{
-        firstName: firstName || "",
-        lastName: lastName || "",
-        age: age || 0,
-        email: email || "",
-      }}
-      onSubmit={handleUpdate}
-    >
-      {({ values, handleChange, handleSubmit, touched, errors }) => (
+    <Formik initialValues={initialValues} onSubmit={handleUpdate}>
+      {({ values, handleChange, handleSubmit }) => (
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* First Name */}
-          <div className="space-y-2">
-            <label
-              htmlFor="firstName"
-              className="text-sm font-semibold text-gray-700"
-            >
-              First Name
-            </label>
-            <CustomIconInput
-              id="firstName"
-              type="text"
-              placeholder="First Name"
-              value={values.firstName}
-              onChange={handleChange("firstName")}
-              className="border p-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <User size={16} strokeWidth={2} aria-hidden="true" />
-            </CustomIconInput>
-            {touched.firstName && errors.firstName && (
-              <div className="text-sm text-red-600">{errors.firstName}</div>
-            )}
+          <div className="grid grid-cols-1 gap-4">
+            {formFields.map((field) => (
+              <div key={field.name} className="space-y-2">
+                <label
+                  htmlFor={field.name}
+                  className="text-sm font-semibold text-gray-400"
+                >
+                  {field.label}
+                </label>
+                <CustomIconInput
+                  id={field.name}
+                  type={field.type}
+                  placeholder={field.label}
+                  value={values[field.name as keyof typeof values]}
+                  onChange={handleChange(field.name)}
+                  className="p-2"
+                  readOnly={field.name === "email"}
+                  disabled={field.name === "email"}
+                >
+                  {field.icon}
+                </CustomIconInput>
+              </div>
+            ))}
           </div>
 
-          {/* Last Name */}
-          <div className="space-y-2">
-            <label
-              htmlFor="lastName"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Last Name
-            </label>
-            <CustomIconInput
-              id="lastName"
-              type="text"
-              placeholder="Last Name"
-              value={values.lastName}
-              onChange={handleChange("lastName")}
-              className="border p-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <User size={16} strokeWidth={2} aria-hidden="true" />
-            </CustomIconInput>
-            {touched.lastName && errors.lastName && (
-              <div className="text-sm text-red-600">{errors.lastName}</div>
-            )}
+          <div className="flex flex-row gap-4">
+            {formButtons.map((button) => (
+              <CustomIconButton
+                key={button.name}
+                type={button.type as "submit" | "button"}
+                onClick={button.name === "cancel" ? closeModal : undefined}
+                className={cn(button.className, "w-1/2")}
+              >
+                {button.icon}
+                {button.label}
+              </CustomIconButton>
+            ))}
           </div>
-
-          {/* Email */}
-          <div className="space-y-2">
-            <label
-              htmlFor="email"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Email
-            </label>
-            <CustomIconInput
-              id="email"
-              type="email"
-              placeholder="Email"
-              value={values.email}
-              onChange={handleChange("email")}
-              className="border p-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-              readOnly
-              disabled
-            >
-              <User size={16} strokeWidth={2} aria-hidden="true" />
-            </CustomIconInput>
-          </div>
-
-          {/* Age */}
-          <div className="space-y-2">
-            <label
-              htmlFor="age"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Age
-            </label>
-            <CustomIconInput
-              id="age"
-              type="number"
-              placeholder="Age"
-              value={values.age}
-              onChange={handleChange("age")}
-              className="border p-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <User size={16} strokeWidth={2} aria-hidden="true" />
-            </CustomIconInput>
-            {touched.age && errors.age && (
-              <div className="text-sm text-red-600">{errors.age}</div>
-            )}
-          </div>
-
-          {/* Submit Button */}
-          <CustomIconButton
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg flex items-center justify-center hover:bg-blue-700 transition"
-          >
-            <Edit size={16} className="mr-2" />
-            Update
-          </CustomIconButton>
         </form>
       )}
     </Formik>

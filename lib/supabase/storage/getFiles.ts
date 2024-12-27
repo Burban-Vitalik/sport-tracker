@@ -28,7 +28,7 @@ export const getFilesFromStorage = async ({
         })}`
     );
 
-    debugger;
+    //;
     return photos || null;
   } catch (err) {
     console.error("Error fetching files:", err);

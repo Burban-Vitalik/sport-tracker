@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import CustomIconInput from "../form-elements/CustomIconInput";
 import Image from "next/image";
 import { Check, X } from "lucide-react";
+import { CustomIconInput } from "../form-elements";
 
 type PropsType = {
   children: React.ReactNode;
@@ -14,8 +14,6 @@ export const UploadFile = ({ children, handleUploadImage }: PropsType) => {
     file: File;
     fileUrl: string;
   } | null>(null);
-
-  //   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.files) return;

@@ -41,7 +41,6 @@ export const columns: ColumnDef<User>[] = [
 
       const capitalizedName = capitalizeName(fullName);
 
-      debugger;
       return (
         <div className="flex items-center gap-2">
           <UserAvatar

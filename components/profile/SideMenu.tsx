@@ -4,14 +4,14 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const menuItems = [
-  { label: "My Profile", href: "/accounts/profile/1" },
-  { label: "Security", href: "/profile/security" },
-  { label: "Settings", href: "/accounts/settings" },
-];
-
-export const SideMenu = () => {
+export const SideMenu = ({ userId }: { userId: number }) => {
   const pathname = usePathname();
+
+  const menuItems = [
+    { label: "My Profile", href: `/accounts/profile/${userId}` },
+    { label: "Security", href: "/profile/security" },
+    { label: "Settings", href: "/accounts/settings" },
+  ];
 
   return (
     <div className="flex flex-col w-64 h-full bg-white">

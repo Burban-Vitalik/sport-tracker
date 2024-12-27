@@ -32,14 +32,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         const decodedToken: { userId: string; [key: string]: unknown } =
           jwtDecode(token); // Декодуємо токен
         const userId = decodedToken.userId; // Витягуємо userId з токену
-        debugger;
         // Робимо запит на сервер для отримання даних користувача
         setIsLoading(true);
         const response = await fetch(`/api/users/${userId}`);
 
         if (response.ok) {
           const userData = await response.json();
-          debugger;
           setUser(userData);
         } else {
           console.error("Failed to fetch user data");

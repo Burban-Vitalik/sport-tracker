@@ -3,7 +3,7 @@ import { FileUser, Pencil } from "lucide-react";
 
 export const PersonalInformation = () => {
   return (
-    <section className="border rounded-md p-6  shadow-lg bg-gray-50/50">
+    <section className="rounded-md p-6 shadow-md">
       <div className="flex flex-row">
         <p className="text-2xl font-semibold mb-6 flex items-center gap-4">
           <FileUser />

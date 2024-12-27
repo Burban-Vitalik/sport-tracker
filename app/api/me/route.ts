@@ -8,14 +8,12 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
 
   try {
     const user = await prisma.user.findUnique({
-      where: { id: String(userId) },
+      where: { id: Number(userId) },
     });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    debugger;
 
     res.status(200).json({ user });
   } catch (error) {

@@ -38,7 +38,7 @@ export const deleteFileFromStorage = async ({
 
     const successMessage = `File '${folder}/${fileUrl}' is successefuly removed from bucket '${bucket}'.`;
     console.log(successMessage);
-    debugger;
+    //;
     return { success: true, message: successMessage };
   } catch (error) {
     const errorMessage = `Error deleting file: ${

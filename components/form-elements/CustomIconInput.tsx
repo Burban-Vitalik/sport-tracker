@@ -5,7 +5,7 @@ type PropsType = {
   children?: React.ReactNode;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
-export default function CustomIconInput({ children, ...rest }: PropsType) {
+export function CustomIconInput({ children, ...rest }: PropsType) {
   return (
     <div className="relative">
       <Input

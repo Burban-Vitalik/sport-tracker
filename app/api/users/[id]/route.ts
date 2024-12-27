@@ -9,6 +9,7 @@ export async function GET(
   try {
     const user = await prisma.user.findUnique({
       where: { id: parseInt(params.id) },
+      include: { bodyInfo: true },
     });
 
     if (!user) {
@@ -38,7 +39,7 @@ export async function PUT(req: Request) {
   try {
     const response = await prisma.user.update({
       where: {
-        id: parseInt(String(id)),
+        id: parseInt(id.toString()),
       },
       data: {
         ...body,
