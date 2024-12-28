@@ -13,11 +13,12 @@ export default function AddressSection() {
             variant="outline"
             className="flex items-center gap-1"
           >
-            <Pencil /> Edit
+            <Pencil style={{ width: "16px", height: "16px", color: "gray" }} />{" "}
+            Edit
           </CustomIconButton>
         </div>
       </div>
-      <div className="space-y-5">
+      <div className="space-y-2">
         <div className="flex justify-start gap-2 text-sm font-medium text-gray-600">
           <span>Country:</span>
           <span className="text-gray-800">Ukraine</span>

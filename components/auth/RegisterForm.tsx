@@ -3,11 +3,10 @@
 import { User } from "@prisma/client";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
-import CustomIconInput from "../form-elements/CustomIconInput";
 import { LockKeyhole, Mail } from "lucide-react";
-import { CustomIconButton } from "../form-elements/buttons/CustomIconButton";
 import { ErrorMessage } from "../form-elements/messages/ErrorMessage";
 import Link from "next/link";
+import { CustomIconButton, CustomIconInput } from "../form-elements";
 
 type InitialRegisterValues = Pick<User, "email" | "password">;
 

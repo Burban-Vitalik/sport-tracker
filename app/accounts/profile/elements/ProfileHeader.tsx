@@ -89,7 +89,7 @@ export const ProfileHeader = ({ user }: PropsType) => {
         </div>
 
         <div className="ml-5 flex flex-col">
-          <p className="font-bold text-gray-700 text-lg">
+          <p className="text-2xl font-bold text-gray-700">
             {getFullUserName({
               firstName: user.firstName,
               lastName: user.lastName,
