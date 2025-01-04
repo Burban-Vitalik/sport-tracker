@@ -20,6 +20,7 @@ model User {
 
   sex String?
   bodyInfo    BodyInfo?  @relation 
+  workoutProgram WorkoutProgram? @relation()
 
   @@index([email])
 }
@@ -34,4 +35,39 @@ model BodyInfo {
   updatedAt DateTime @default(now()) @updatedAt
 
   @@index([userId]) 
+}
+
+model WorkoutProgram {
+  id Int @id @default(autoincrement())
+  userId Int  @unique
+
+  title String
+  description String
+  programFor Int @unique
+  isPublic Boolean
+
+  currentAge Int
+  gender Gender
+  weeklySessions Int
+  bodyType BodyType
+  additionalNotes String?
+  programStart DateTime
+  programEnd DateTime?
+  withCoach Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+enum Gender {
+  Male
+  Female
+}
+
+enum BodyType {
+  ectomorph
+  mesomorph
+  endomorph
 }
