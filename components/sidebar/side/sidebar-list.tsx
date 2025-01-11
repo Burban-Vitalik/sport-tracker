@@ -26,6 +26,7 @@ export const SideBarList = ({ navMain }: PropsType) => {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={item.isActive}>
                     <Link href={item.url}>{item.title}</Link>
+                    {/* <Link href={"/123"}>{item.title}</Link> */}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

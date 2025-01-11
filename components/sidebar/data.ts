@@ -29,6 +29,10 @@ export const data = {
           title: "Page3",
           url: "/dashboard/page3",
         },
+        {
+          title: "Programs",
+          url: "/dashboard/programs",
+        },
       ],
     },
     {

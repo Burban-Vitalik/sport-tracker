@@ -38,27 +38,27 @@ model BodyInfo {
 }
 
 model WorkoutProgram {
-  id Int @id @default(autoincrement())
-  userId Int  @unique
+  id                Int      @id @default(autoincrement())
+  
+  currentAge        Int
+  currentWeight     Float
+  currentHeight     Float
+  fatPercentage     Float
+  goalWeight        Float
+  goalHeight        Float
+  goalFatPercentage Float
 
-  title String
-  description String
-  programFor Int @unique
-  isPublic Boolean
-
-  currentAge Int
-  gender Gender
-  weeklySessions Int
-  bodyType BodyType
-  additionalNotes String?
-  programStart DateTime
-  programEnd DateTime?
-  withCoach Boolean
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id])
+  title             String
+  notes             String
+  weekSessions      Int
+  isPrivate         Boolean
+  
+  gender            Gender
+  workoutGoal       WorkoutGoal
+  userId            Int @unique
+  user              User  @relation(fields: [userId], references: [id])
+  programStart      DateTime @default(now())
+  programEnd        DateTime?
 }
 
 enum Gender {
@@ -66,8 +66,10 @@ enum Gender {
   Female
 }
 
-enum BodyType {
-  ectomorph
-  mesomorph
-  endomorph
+enum WorkoutGoal {
+  muscleGain
+  fat_loss
+  maintenance
+  strength_development
+  cardio
 }
