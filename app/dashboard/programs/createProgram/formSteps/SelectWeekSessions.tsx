@@ -1,13 +1,44 @@
 "use client";
-import { FC, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { CheckCircle, X } from "lucide-react";
-import { initialValues } from "../form/CreateProgramForm";
+import { FC, useMemo, useState } from "react";
+
+import { Button } from "@/components/ui/button";
+
 import { WorkoutGoal as WorkoutGoalEnum } from "../../../../enums/workoutGoal";
+import { initialValues } from "../form/CreateProgramForm";
 
 type PropsType = {
   values: typeof initialValues;
   setFieldValue: (field: string, value: number) => void;
+};
+
+const getSessionColor = (weekSessions: number) => {
+  if (weekSessions < 3) {
+    return "#fbbf24";
+  } else if (weekSessions >= 3 && weekSessions <= 4) {
+    return "#34d399";
+  } else {
+    return "#f87171";
+  }
+};
+
+const getMessage = (weekSessions: number, workoutGoal: string) => {
+  if (weekSessions < 3) {
+    return {
+      text: `Given your workout goal of ${workoutGoal}, we recommend at least more sessions per week.`,
+      type: "info",
+    };
+  } else if (weekSessions >= 3 && weekSessions <= 4) {
+    return {
+      text: `Given your workout goal of ${workoutGoal}, we recommend a balanced number of sessions per week.`,
+      type: "success",
+    };
+  } else {
+    return {
+      text: `Given your workout goal of ${workoutGoal}, we recommend fewer sessions per week.`,
+      type: "info",
+    };
+  }
 };
 
 export const SelectWeekSecessions: FC<PropsType> = ({
@@ -15,6 +46,19 @@ export const SelectWeekSecessions: FC<PropsType> = ({
   setFieldValue,
 }) => {
   const [showMessage, setShowMessage] = useState(true);
+
+  const workoutGoalName = useMemo(
+    () => WorkoutGoalEnum[values.workoutGoal as keyof typeof WorkoutGoalEnum],
+    [values.workoutGoal]
+  );
+  const sessionColor = useMemo(
+    () => getSessionColor(values.weekSessions),
+    [values.weekSessions]
+  );
+  const message = useMemo(
+    () => getMessage(values.weekSessions, workoutGoalName),
+    [values.weekSessions, workoutGoalName]
+  );
 
   const handleAddSession = () => {
     if (values.weekSessions < 7) {
@@ -28,42 +72,8 @@ export const SelectWeekSecessions: FC<PropsType> = ({
     }
   };
 
-  const getSessionColor = () => {
-    if (values.weekSessions < 3) {
-      return "#fbbf24";
-    } else if (values.weekSessions >= 3 && values.weekSessions <= 4) {
-      return "#34d399";
-    } else {
-      return "#f87171";
-    }
-  };
-
-  const getMessage = () => {
-    const workoutGoalName =
-      WorkoutGoalEnum[values.workoutGoal as keyof typeof WorkoutGoalEnum];
-    if (values.weekSessions < 3) {
-      return {
-        text: `Given your workout goal of ${workoutGoalName}, we recommend at least more sessions per week.`,
-        type: "info",
-      };
-    } else if (values.weekSessions >= 3 && values.weekSessions <= 4) {
-      return {
-        text: `Given your workout goal of ${workoutGoalName}, we recommend a balanced number of sessions per week.`,
-        type: "success",
-      };
-    } else {
-      return {
-        text: `Given your workout goal of ${workoutGoalName}, we recommend less sessions per week.`,
-        type: "info",
-      };
-    }
-  };
-
-  const message = getMessage();
-
   return (
     <div className="flex flex-col gap-10">
-      {/* Повідомлення */}
       {showMessage && (
         <div
           className={`flex items-center p-2 rounded-md space-x-2 ${
@@ -81,7 +91,6 @@ export const SelectWeekSecessions: FC<PropsType> = ({
         </div>
       )}
 
-      {/* Кнопки додавання та видалення */}
       <div className="flex justify-end gap-4">
         <Button
           onClick={handleRemoveSession}
@@ -99,16 +108,13 @@ export const SelectWeekSecessions: FC<PropsType> = ({
         </Button>
       </div>
 
-      {/* Список тренувань */}
       <div className="flex flex-wrap gap-2">
         {Array(values.weekSessions)
           .fill(null)
           .map((_, index) => (
             <div
               key={index}
-              style={{
-                background: getSessionColor(),
-              }}
+              style={{ background: sessionColor }}
               className="flex items-center justify-between px-4 py-2 text-white rounded-md"
             >
               <span>Workout {index + 1}</span>

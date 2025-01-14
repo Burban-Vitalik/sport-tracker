@@ -1,7 +1,9 @@
-import { CustomDataPicker } from "@/components/common/CustomDataPicker";
-import { initialValues } from "../form/CreateProgramForm";
 import { FC } from "react";
+
 import { calculateTime } from "@/app/helpers/calculateTime";
+import { CustomDataPicker } from "@/components/common/CustomDataPicker";
+
+import { initialValues } from "../form/CreateProgramForm";
 
 type PropsType = {
   values: typeof initialValues;
@@ -12,11 +14,9 @@ export const SelectProgramDuration: FC<PropsType> = ({
   values,
   setFieldValue,
 }) => {
-  // Функція для визначення, чи можна вибирати дату до поточної
-  const isDisabledBeforeNow = (date: Date | undefined) =>
-    date && date < new Date(Date.now() - 1 * 24 * 60 * 60 * 1000);
+  const isDisabledBeforeNow = (date: Date | null) =>
+    (date && date < new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)) || false;
 
-  // Функція для перевірки, чи можна вибирати дату до початку програми
   const isDisabledBeforeStart = (date: Date) => {
     const now = new Date();
     const programStart = values.programStart
@@ -25,14 +25,12 @@ export const SelectProgramDuration: FC<PropsType> = ({
     return date < now || date < programStart;
   };
 
-  // Отримуємо тривалість в тижнях
   const durationInWeeks = calculateTime(
     values.programStart,
     values.programEnd,
     "weeks"
   );
 
-  // Обчислюємо кількість тренувань (3 тренування на тиждень)
   const totalWorkouts = durationInWeeks * 3;
 
   return (

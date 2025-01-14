@@ -52,7 +52,8 @@
     "swiper": "^11.2.0",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.4",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

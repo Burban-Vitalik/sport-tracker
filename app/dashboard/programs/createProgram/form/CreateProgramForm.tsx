@@ -1,20 +1,27 @@
 "use client";
+import { Form, Formik } from "formik";
+import React, { useState } from "react";
+
+import { showToast } from "@/app/helpers";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import React, { useState } from "react";
-import { Form, Formik } from "formik";
-import { FormHeader } from "./FormHeader";
 import { useUser } from "@/hooks/userContext";
-import { SelectAge } from "../formSteps/SelectAge";
-import { SelectWeekSecessions } from "../formSteps/SelectWeekSessions";
-import { SelectBodyInfo } from "../formSteps/SelectBodyInfo";
-import { SelectProgramDuration } from "../formSteps/SelectProgramDuration";
-import { Summarize } from "../formSteps/Summurize";
-import { SelectGender, SelectWorkoutGoal } from "../formSteps";
-import { Gender } from "@/app/enums/gender";
+import { Gender, User, WorkoutProgram } from "@prisma/client";
 
-export const initialValues = {
-  title: "dshjdshjds",
+import {
+  SelectAge,
+  SelectBodyInfo,
+  SelectGender,
+  SelectProgramDuration,
+  SelectWeekSecessions,
+  SelectWorkoutGoal,
+  Summarize,
+} from "../formSteps";
+import { FormHeader } from "./FormHeader";
+import { useRouter } from "next/navigation";
+
+export const initialValues: Omit<WorkoutProgram, "id" | "userId"> = {
+  title: "Some title",
   currentAge: 22,
   gender: Gender.Male,
   workoutGoal: "strength_development",
@@ -25,62 +32,79 @@ export const initialValues = {
   goalHeight: 185,
   goalFatPercentage: 20,
   weekSessions: 1,
-  notes: "hjdshsdhdsjh",
+  notes: "some notes",
   isPrivate: false,
-  userId: 1,
-
-  // programStart: new Date(),
-  programEnd: null,
+  programStart: new Date(),
+  programEnd: new Date(),
 };
 
 const steps = [
   { label: "Select gender", component: SelectGender },
   { label: "Select age", component: SelectAge },
-  { label: "Select your goal", component: SelectWorkoutGoal },
-  { label: "Select week sessions", component: SelectWeekSecessions },
   { label: "Select your body properties", component: SelectBodyInfo },
+  { label: "Select week sessions", component: SelectWeekSecessions },
+  { label: "Select your goal", component: SelectWorkoutGoal },
   { label: "Select Data", component: SelectProgramDuration },
   { label: "Summary", component: Summarize },
 ];
 
 export function CreateProgramForm() {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const currentUser = useUser();
+  const router = useRouter();
 
   if (!currentUser.isLoading && !currentUser) {
     return <p>Loading...</p>;
   }
+
   const isLastStep = currentStep === steps.length - 1;
 
-  const handleNext = () => setCurrentStep((prev) => prev + 1);
+  const handleNext = (e: React.FormEvent) => {
+    if (currentStep < steps.length - 1) {
+      e.preventDefault();
+      setCurrentStep((prev) => prev + 1);
+    }
+  };
   const handlePrevious = () => setCurrentStep((prev) => prev - 1);
 
   const handleCreation = async (values: typeof initialValues) => {
-    debugger;
-    try {
-      const response = await fetch("/api/workouts/programs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to create program");
-      }
+    if (!currentUser) return;
 
-      const data = await response.json();
-      console.log("Workout Program Created:", data);
-    } catch (error) {
-      console.error("Error creating workout program:", error);
+    if (isLastStep) {
+      try {
+        const response = await fetch("/api/workouts/programs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...values, userId: currentUser.user?.id }),
+        });
+
+        if (!response.ok) {
+          showToast({ message: "Failed to create program", type: "error" });
+          throw new Error("Failed to create program");
+        }
+
+        const data = await response.json();
+        showToast({ message: "Workout Program Created", type: "success" });
+        router.push("/dashboard/programs");
+        console.log("Workout Program Created:", data);
+      } catch (error) {
+        console.error("Error creating workout program:", error);
+      }
     }
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleCreation}>
-      {({ handleSubmit, values, handleChange, handleBlur, setFieldValue }) => (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleCreation}
+      validateOnChange={true}
+      validateOnBlur={true}
+    >
+      {(formik) => (
         <Form
-          onSubmit={handleSubmit}
+          onSubmit={formik.handleSubmit}
           className="max-w-[100%] md:max-w-[90%] mx-auto p-8 space-y-6 rounded-lg"
         >
           <FormHeader
@@ -100,24 +124,51 @@ export function CreateProgramForm() {
             >
               Back
             </Button>
-            <Button
-              type={isLastStep ? "submit" : "button"}
-              onClick={!isLastStep ? handleNext : undefined}
-              className="bg-blue-500 text-white hover:bg-blue-600"
-            >
-              {isLastStep ? "Finish" : "Next"}
-            </Button>
+            {!isLastStep ? (
+              <Button
+                type="button"
+                onClick={handleNext}
+                className="bg-blue-500 text-white hover:bg-blue-600"
+              >
+                Next
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                className="bg-blue-500 text-white hover:bg-blue-600"
+              >
+                Finish
+              </Button>
+            )}
           </div>
 
           <Card className="mt-6 py-5 border-none shadow-none">
             <CardContent>
-              {React.createElement(steps[currentStep].component as any, {
-                values,
-                handleChange,
-                handleBlur,
-                setFieldValue,
-                userId: currentUser.user?.id.toString(),
-              })}
+              {React.createElement(
+                steps[currentStep].component as React.ComponentType<{
+                  values: typeof initialValues;
+                  handleChange: (
+                    e: React.ChangeEvent<HTMLInputElement>
+                  ) => void;
+                  handleBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+                  setFieldValue: (
+                    field: string,
+                    value: string | boolean | number
+                  ) => void;
+                  user?: User;
+                  errors?: unknown;
+                  touched?: unknown;
+                }>,
+                {
+                  values: formik.values,
+                  handleChange: formik.handleChange,
+                  handleBlur: formik.handleBlur,
+                  setFieldValue: formik.setFieldValue,
+                  user: currentUser.user || undefined,
+                  errors: formik.errors,
+                  touched: formik.touched,
+                }
+              )}
             </CardContent>
           </Card>
         </Form>

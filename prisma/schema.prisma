@@ -20,7 +20,7 @@ model User {
 
   sex String?
   bodyInfo    BodyInfo?  @relation 
-  workoutProgram WorkoutProgram? @relation()
+  workoutProgram WorkoutProgram[] @relation()
 
   @@index([email])
 }
@@ -55,7 +55,7 @@ model WorkoutProgram {
   
   gender            Gender
   workoutGoal       WorkoutGoal
-  userId            Int @unique
+  userId            Int
   user              User  @relation(fields: [userId], references: [id])
   programStart      DateTime @default(now())
   programEnd        DateTime?

@@ -18,7 +18,7 @@ type PropsType = {
   disabled: (date: Date) => boolean;
   name: string;
   label: string;
-  date: Date | undefined;
+  date: Date | null;
   setDate: (date: Date | undefined) => void;
 };
 
@@ -50,7 +50,7 @@ export const CustomDataPicker: FC<PropsType> = ({
         <PopoverContent className="w-auto p-0" align="center">
           <Calendar
             mode="single"
-            selected={date}
+            selected={date || undefined}
             onSelect={setDate}
             disabled={disabled}
             initialFocus

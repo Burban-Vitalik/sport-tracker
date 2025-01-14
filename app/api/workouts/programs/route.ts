@@ -21,7 +21,6 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // Перевірка структури даних перед передачею в Prisma
     const program = await prisma.workoutProgram.create({
       data: body,
     });

@@ -1,16 +1,10 @@
+import Image from "next/image";
 import { FC } from "react";
-import { initialValues } from "../form/CreateProgramForm";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Image from "next/image";
-import Body5 from "../../../../../public/img/fatProgress/fat5-9.webp";
-import Body10 from "../../../../../public/img/fatProgress/fat10-14.webp";
-import Body15 from "../../../../../public/img/fatProgress/fat-15-19.webp";
-import Body20 from "../../../../../public/img/fatProgress/fat20-24.webp";
-import Body25 from "../../../../../public/img/fatProgress/fat25-29.webp";
-import Body30 from "../../../../../public/img/fatProgress/fat30-34.webp";
-import Body35 from "../../../../../public/img/fatProgress/fat35-39.webp";
-import Body40 from "../../../../../public/img/fatProgress/fatMore40.webp";
+
+import { initialValues } from "../form/CreateProgramForm";
 
 type PropsType = {
   values: typeof initialValues;
@@ -19,14 +13,14 @@ type PropsType = {
 };
 
 const bodyImages = [
-  { min: 5, max: 9, image: Body5 },
-  { min: 10, max: 14, image: Body10 },
-  { min: 15, max: 19, image: Body15 },
-  { min: 20, max: 24, image: Body20 },
-  { min: 25, max: 29, image: Body25 },
-  { min: 30, max: 34, image: Body30 },
-  { min: 35, max: 39, image: Body35 },
-  { min: 40, max: Infinity, image: Body40 },
+  { min: 5, max: 9, image: "/img/fatProgress/fat5-9.webp" },
+  { min: 10, max: 14, image: "/img/fatProgress/fat10-14.webp" },
+  { min: 15, max: 19, image: "/img/fatProgress/fat-15-19.webp" },
+  { min: 20, max: 24, image: "/img/fatProgress/fat20-24.webp" },
+  { min: 25, max: 29, image: "/img/fatProgress/fat25-29.webp" },
+  { min: 30, max: 34, image: "/img/fatProgress/fat30-34.webp" },
+  { min: 35, max: 39, image: "/img/fatProgress/fat35-39.webp" },
+  { min: 40, max: Infinity, image: "/img/fatProgress/fatMore40.webp" },
 ];
 
 const showBodyFat = (percent: number) => {
@@ -108,7 +102,7 @@ export const SelectBodyInfo: FC<PropsType> = ({ values, setFieldValue }) => {
       </div>
       <div className="flex items-center justify-center">
         <Image
-          src={bodyFat || Body10}
+          src={bodyFat || "/img/fatProgress/fat10-14.webp"}
           alt="Body Fat"
           width={250}
           height={250}

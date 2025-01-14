@@ -1,4 +1,8 @@
-export const calculateTime = (date1: Date, date2: Date, init: string) => {
+export const calculateTime = (
+  date1: Date | null,
+  date2: Date | null,
+  init: string
+) => {
   if (!date1 || !date2) return 0;
 
   const diffInMs = Math.abs(date2.getTime() - date1.getTime());
