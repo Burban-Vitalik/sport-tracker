@@ -14,7 +14,9 @@ const ageGroups = [
 
 type PropsType = {
   values: typeof initialValues;
-  handleChange: (e: { target: { name: string; value: string } }) => void;
+  handleChange: (e: {
+    target: { name: string; value: (typeof initialValues)["currentAge"] };
+  }) => void;
 };
 
 export const SelectAge: FC<PropsType> = ({ values, handleChange }) => {
@@ -24,7 +26,7 @@ export const SelectAge: FC<PropsType> = ({ values, handleChange }) => {
   );
 
   const handleSliderChange = (value: number[]) => {
-    handleChange({ target: { name: "currentAge", value: value[0].toFixed() } });
+    handleChange({ target: { name: "currentAge", value: value[0] } });
   };
   return (
     <div className="flex flex-col items-center gap-6">

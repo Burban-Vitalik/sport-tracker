@@ -1,21 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-
-const workTest = {
-  currentAge: 25, // good
-  currentWeight: 85.5, // good
-  currentHeight: 180.0, // good
-  fatPercentage: 20.0, // good
-  goalWeight: 75.0, // good
-  goalHeight: 180.0, // good
-  goalFatPercentage: 12.0, // good
-  title: "Summer Shred", // good
-  weekSessions: 5, // good
-  notes: "Focus on cardio and HIIT workouts.", // good
-  isPrivate: false, // works
-  gender: "Male", // works
-  workoutGoal: "cardio", // works
-};
+import { NextApiRequest, NextApiResponse } from "next";
+import { isFunction } from "@tanstack/react-table";
 
 export async function POST(req: Request) {
   try {
@@ -35,5 +21,18 @@ export async function POST(req: Request) {
       { message: "Помилка при створенні програми", error: error.message },
       { status: 500 }
     );
+  }
+}
+
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const response = await prisma.workoutProgram.findMany({
+      include: { user: true },
+    });
+
+    return NextResponse.json(response, { status: 200 });
+  } catch (error) {
+    console.error("Помилка при отриманні програм:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
