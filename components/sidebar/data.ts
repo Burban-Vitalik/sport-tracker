@@ -10,6 +10,21 @@ export type NavSection = {
   items: NavItem[];
 };
 
+const currentPrograms = [
+  {
+    title: "Program 1",
+    url: "/dashboard/programs/41",
+  },
+  {
+    title: "Program 2",
+    url: "/dashboard/programs/41",
+  },
+  {
+    title: "Program 3",
+    url: "/dashboard/programs/41",
+  },
+];
+
 export const data = {
   versions: ["Client", "Coach", "Admin"],
   navMain: [
@@ -29,10 +44,20 @@ export const data = {
           title: "Page3",
           url: "/dashboard/page3",
         },
+      ],
+    },
+    {
+      title: "Workout",
+      url: "/workouts",
+      items: [
         {
-          title: "Programs",
+          title: "All Programs",
           url: "/dashboard/programs",
         },
+        ...currentPrograms.map((program) => ({
+          title: program.title,
+          url: program.url,
+        })),
       ],
     },
     {

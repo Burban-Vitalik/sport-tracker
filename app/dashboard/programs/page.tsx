@@ -1,13 +1,20 @@
 "use client";
 
+import { Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
+
+import { CustomIconButton } from "@/components/form-elements";
 import { WorkoutProgram } from "@prisma/client";
-import { WorkoutProgramCard } from "@/components/cards/WorkoutProgram";
+
+import { WorkoutProgramsList } from "./WorkoutProgramsList";
+import { useRouter } from "next/navigation";
 
 export default function WorkoutPrograms() {
   const [programs, setPrograms] = useState<WorkoutProgram[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchPrograms = async () => {
@@ -41,16 +48,17 @@ export default function WorkoutPrograms() {
 
   return (
     <div>
-      <h1>Workout Programs</h1>
-      {programs.length === 0 ? (
-        <p>No programs available</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {programs.map((program: WorkoutProgram) => (
-            <WorkoutProgramCard key={program.id} data={program} />
-          ))}
-        </div>
-      )}
+      <div className="flex justify-end">
+        <CustomIconButton
+          className=" bg-emerald-800 text-white hover:bg-emerald-900 hover:text-white"
+          onClick={() => router.push("/dashboard/programs/createProgram")}
+        >
+          <Plus />
+          Create Program
+        </CustomIconButton>
+      </div>
+
+      <WorkoutProgramsList data={programs} />
     </div>
   );
 }

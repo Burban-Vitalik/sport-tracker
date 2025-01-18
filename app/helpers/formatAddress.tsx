@@ -1,8 +1,8 @@
 import { FaMapMarkerAlt, FaGlobe } from "react-icons/fa"; // Icons from react-icons
-import { IUserAddress } from "../types/users/address";
+// import { IUserAddress } from "../types/users/address";
 
 export function formatAddress(
-  address: IUserAddress,
+  address: any,
   format: "full" | "partial" | "table" = "full"
 ): JSX.Element {
   const { country, city, region, street, postalCode, houseNumber } = address;
