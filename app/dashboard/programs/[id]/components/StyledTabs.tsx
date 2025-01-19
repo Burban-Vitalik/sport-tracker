@@ -16,6 +16,11 @@ const tabsData = [
     label: "Metrics",
     content: <p>metrics</p>,
   },
+  {
+    value: "settings",
+    label: "Settings",
+    content: <p>Settings</p>,
+  },
 ];
 
 export const StyledTabs = () => {
@@ -37,7 +42,7 @@ export const StyledTabs = () => {
           <TabsContent
             key={tab.value}
             value={tab.value}
-            className="mt-8 text-gray-700 border"
+            className="mt-8 bg-white p-5 rounded-md shadow-lg"
           >
             {tab.content}
           </TabsContent>

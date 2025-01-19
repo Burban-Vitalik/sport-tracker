@@ -5,6 +5,8 @@ import { WorkoutProgram } from "@prisma/client";
 import { Goal } from "./components/Goals";
 import { TrainingSession } from "./components/TrainingSession";
 import { StyledTabs } from "./components/StyledTabs";
+import programBG from "../../../../public/img/program.webp";
+import Image from "next/image";
 
 export default function ProgramPage() {
   const { id: programId } = useParams<{ id: string }>();
@@ -40,10 +42,9 @@ export default function ProgramPage() {
     <div className="flex flex-col items-center">
       <div className="flex flex-row gap-8 w-full">
         <div className="flex flex-col gap-4 w-1/5">
-          <div className="flex justify-center items-center shadow-sm p-4 bg-white rounded-lg">
-            <div className="bg-green-500 w-full h-[100px]"></div>
+          <div className="flex flex-col gap-3 shadow-sm bg-white rounded-lg p-2">
+            <Image src={programBG} alt="programBg" className="rounded-lg" />
           </div>
-          <Goal />
           <Goal />
         </div>
 
@@ -51,12 +52,6 @@ export default function ProgramPage() {
           <TrainingSession />
           <div className="flex flex-row gap-5">
             <StyledTabs />
-            <div className="h-auto p-4 bg-gray-100 min-w-[200px]">
-              <p>Members</p>
-              {Array.from({ length: 10 }).map((_, index) => (
-                <p key={index}>Person {index + 1}</p>
-              ))}
-            </div>
           </div>
         </div>
       </div>

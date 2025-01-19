@@ -19,7 +19,9 @@ export const SideBarList = ({ navMain }: PropsType) => {
     <SidebarContent>
       {navMain.map((item: NavSection) => (
         <SidebarGroup key={item.title}>
-          <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+          <SidebarGroupLabel className="font-semibold text-md text-cyan-700">
+            {item.title}
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {item.items.map((item: NavItem) => (

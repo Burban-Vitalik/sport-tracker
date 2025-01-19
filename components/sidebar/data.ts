@@ -33,7 +33,7 @@ export const data = {
       url: "/dashboard",
       items: [
         {
-          title: "Page1",
+          title: "Overview",
           url: "/dashboard/page1",
         },
         {
