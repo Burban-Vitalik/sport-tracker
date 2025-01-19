@@ -34,10 +34,36 @@ export const Settings = () => {
     }
   };
 
+  const handleUpdate = async () => {
+    try {
+      const response = await fetch(`/api/workouts/programs/${programId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: "New Program Name" }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update program");
+      }
+
+      showToast({
+        message: "Program updated successfully",
+        type: "success",
+      });
+    } catch (error) {
+      console.error("Error updating program:", error);
+      showToast({
+        message: "Error updating program",
+        type: "error",
+      });
+    }
+  };
+
   return (
     <div>
       <div>
         <Button onClick={handleDelete}>Delete</Button>
+        <Button onClick={handleUpdate}>Update</Button>
       </div>
     </div>
   );

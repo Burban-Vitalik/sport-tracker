@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { WorkoutProgram } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -46,6 +47,32 @@ export async function DELETE(req: NextRequest) {
     console.error("Error deleting program:", error);
     return NextResponse.json(
       { message: "Failed to delete program" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  const id = pathname.split("/").pop();
+
+  const body: Partial<WorkoutProgram> = await req.json();
+
+  if (!id) {
+    return NextResponse.json({ error: "ID is required" }, { status: 400 });
+  }
+
+  try {
+    const response = await prisma.workoutProgram.update({
+      where: { id: parseInt(id) },
+      data: body,
+    });
+
+    return NextResponse.json(response, { status: 200 });
+  } catch (error) {
+    console.error("Error updating program:", error);
+    return NextResponse.json(
+      { message: "Failed to update program" },
       { status: 500 }
     );
   }
