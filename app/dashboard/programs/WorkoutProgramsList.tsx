@@ -9,7 +9,7 @@ type PropsType = {
 export const WorkoutProgramsList: FC<PropsType> = ({ data }) => {
   if (!data.length) {
     return (
-      <div className="flex justify-center items-center h-full">
+      <div className="flex justify-center items-center">
         <p className="text-gray-500 text-lg">No programs available</p>
       </div>
     );

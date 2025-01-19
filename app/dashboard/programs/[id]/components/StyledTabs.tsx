@@ -1,4 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Settings } from "./tabs/Settings";
 
 const tabsData = [
   {
@@ -19,7 +20,7 @@ const tabsData = [
   {
     value: "settings",
     label: "Settings",
-    content: <p>Settings</p>,
+    content: <Settings />,
   },
 ];
 
