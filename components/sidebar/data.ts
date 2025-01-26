@@ -34,7 +34,7 @@ export const data = {
       items: [
         {
           title: "Overview",
-          url: "/dashboard/page1",
+          url: "/dashboard/overview",
         },
         {
           title: "Page2",
