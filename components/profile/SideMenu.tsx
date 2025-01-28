@@ -14,7 +14,7 @@ export const SideMenu = ({ userId }: { userId: number }) => {
   ];
 
   return (
-    <div className="flex w-64 h-full bg-white mb-5">
+    <div className="flex flex-col gap-4 min-w-[200px] bg-white shadow-md p-4 border rounded-lg md:w-fit">
       <nav className="flex flex-col gap-2">
         {menuItems.map((item) => (
           <Link

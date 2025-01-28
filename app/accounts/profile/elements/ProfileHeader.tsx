@@ -74,7 +74,7 @@ export const ProfileHeader = ({ user }: PropsType) => {
 
   return (
     <>
-      <section className="flex items-center w-full p-4 bg-white">
+      <section className="flex items-center w-full p-4 bg-white border rounded-lg shadow-md">
         <div className="flex-shrink-0">
           <UploadFile handleUploadImage={handleUploadImage}>
             <Image

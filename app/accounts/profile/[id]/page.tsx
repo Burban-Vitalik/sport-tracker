@@ -1,13 +1,12 @@
-"use client"; // Тому що ми використовуємо хук
-
+"use client";
 import { SideMenu } from "@/components/profile/SideMenu";
-import { ProfileHeader } from "../elements/ProfileHeader";
 import { useUser } from "@/hooks/userContext";
+import { ProfileHeader } from "../elements/ProfileHeader";
 import { User } from "@prisma/client";
-import { SectionInformation } from "../elements/SectionInformation";
+import { BoxItem } from "../elements/BoxItem";
 
 export default function ProfilePage() {
-  const { user, isLoading } = useUser(); // Отримуємо користувача з контексту
+  const { user, isLoading } = useUser();
 
   if (isLoading && !user) {
     return <p>Loading...</p>;
@@ -18,27 +17,16 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="flex">
-      <SideMenu userId={user?.id as number} />
-      <div className="flex flex-col gap-4 w-full px-4">
-        <ProfileHeader user={user as User} />
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-          <SectionInformation
-            title="Contact Information"
-            data={{
-              firstName: user?.firstName as string,
-              lastName: user?.lastName as string,
-              email: user?.email as string,
-            }}
-          />
-          <SectionInformation
-            title="Body Information"
-            data={{
-              weight: 82,
-              height: 182,
-              age: 22,
-            }}
-          />
+    <div>
+      <div className="flex flex-col gap-4 md:flex-row">
+        <SideMenu userId={user?.id as number} />
+        <div className="flex flex-col gap-4 w-full">
+          <ProfileHeader user={user as User} />
+          <div className="flex flex-row flex-wrap gap-4 w-full">
+            <BoxItem />
+            <BoxItem />
+            <BoxItem />
+          </div>
         </div>
       </div>
     </div>
