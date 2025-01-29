@@ -10,6 +10,7 @@ export function CustomIconInput({ children, ...rest }: PropsType) {
     <div className="relative">
       <Input
         id="input-09"
+        name={rest.name}
         className={cn("peer pl-10", rest.className)}
         {...rest}
         style={{ paddingLeft: "35px" }}

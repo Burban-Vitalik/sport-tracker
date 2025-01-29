@@ -102,7 +102,7 @@ export const ProfileHeader = ({ user }: PropsType) => {
         <div className="ml-auto flex flex-col gap-2">
           <CustomIconButton
             variant="destructive"
-            className="flex items-center gap-1 bg-green-600 text-white hover:bg-green-700 hover:text-white"
+            className="flex items-center gap-1 bg-green-300 hover:bg-green-400"
             onClick={() =>
               openModal(
                 <ProfileHeaderUpdateForm
@@ -119,7 +119,7 @@ export const ProfileHeader = ({ user }: PropsType) => {
             <Pencil size={14} /> Edit
           </CustomIconButton>
           <CustomIconButton
-            className="flex items-center gap-1"
+            className="flex items-center gap-1 bg-red-300 hover:bg-red-400"
             onClick={() => router.push(`/accounts/settings`)}
             variant="destructive"
           >

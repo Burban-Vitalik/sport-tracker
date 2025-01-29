@@ -34,7 +34,6 @@ const formFields = [
   },
   {
     name: "age",
-
     label: "Age",
     icon: <Cake size={18} />,
     type: "number",
@@ -97,7 +96,7 @@ export const ProfileHeaderUpdateForm = ({
       showToast({ message: "An unexpected error occurred", type: "error" });
     } finally {
       closeModal();
-      window.location.reload(); // тимчасово
+      // window.location.reload(); // тимчасово
     }
   };
 
@@ -121,7 +120,6 @@ export const ProfileHeaderUpdateForm = ({
                   value={values[field.name as keyof typeof values]}
                   onChange={handleChange(field.name)}
                   className="p-2"
-                  readOnly={field.name === "email"}
                   disabled={field.name === "email"}
                 >
                   {field.icon}

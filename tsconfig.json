@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "prisma/seed.js",
-    "components/form-elements/CustomE"
+    "components/form-elements/CustomE",
+    "app/helpers/sportCalculations"
   ],
   "exclude": ["node_modules"]
 }
