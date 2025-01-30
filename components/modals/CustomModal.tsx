@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
-import { CustomIconButton } from "../form-elements/buttons/CustomIconButton";
 import { UserPen, X } from "lucide-react";
+import React from "react";
+
+import { CustomIconButton } from "../form-elements/buttons/CustomIconButton";
 
 type ModalProps = {
   isOpen: boolean;
@@ -26,7 +27,7 @@ export function CustomModal({ isOpen, onClose, children, title }: ModalProps) {
           {title && (
             <h2
               id="modal-title"
-              className="text-xl font-semibold text-gray-800 flex gap-2 items-center"
+              className="text-xl font-semibold text-gray-400 flex gap-2 items-center"
             >
               <UserPen />
               {title}

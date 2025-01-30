@@ -74,35 +74,37 @@ export const ProfileHeader = ({ user }: PropsType) => {
 
   return (
     <>
-      <section className="flex items-center w-full p-4 bg-white border rounded-lg shadow-md">
+      <section className="flex items-center w-full p-6 bg-white border rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
         <div className="flex-shrink-0">
           <UploadFile handleUploadImage={handleUploadImage}>
             <Image
               src={user.profileImage || UserLogo}
               alt="User Logo"
-              height={70}
-              width={70}
-              className="object-cover w-full h-full rounded-full"
+              height={90}
+              width={90}
+              className="object-cover w-full h-full rounded-full border-2 border-gray-200"
               draggable={false}
             />
           </UploadFile>
         </div>
 
-        <div className="ml-5 flex flex-col">
-          <p className="text-2xl font-bold text-gray-700">
+        <div className="ml-6 flex flex-col">
+          <p className="text-3xl font-semibold text-gray-800 hover:text-gray-600 transition-colors">
             {getFullUserName({
               firstName: user.firstName,
               lastName: user.lastName,
             })}
           </p>
-          <p className="mt-1 text-sm font-medium text-gray-500">{user.email}</p>
-          <p className="text-sm text-gray-500">{user.age} years old</p>
+          <p className="mt-2 text-sm font-medium text-gray-500">{user.email}</p>
+          <p className="mt-2 w-fit inline-block px-2 py-1 rounded-full text-xs font-medium bg-green-500 text-white lowercase tracking-wide shadow-md transform transition-all hover:bg-green-600">
+            {user.role}
+          </p>
         </div>
 
         <div className="ml-auto flex flex-col gap-2">
           <CustomIconButton
             variant="destructive"
-            className="flex items-center gap-1 bg-green-300 hover:bg-green-400"
+            className="flex items-center gap-2 text-gray-500 hover:text-gray-700 transition-colors text-sm py-2 px-3 bg-white border hover:bg-gray-100"
             onClick={() =>
               openModal(
                 <ProfileHeaderUpdateForm
@@ -116,14 +118,14 @@ export const ProfileHeader = ({ user }: PropsType) => {
               )
             }
           >
-            <Pencil size={14} /> Edit
+            <Pencil size={14} />
           </CustomIconButton>
           <CustomIconButton
-            className="flex items-center gap-1 bg-red-300 hover:bg-red-400"
+            className="flex items-center gap-2 text-gray-500 hover:text-gray-700 transition-colors text-sm py-2 px-3 bg-white border hover:bg-gray-100"
             onClick={() => router.push(`/accounts/settings`)}
             variant="destructive"
           >
-            <Trash2 /> Delete
+            <Trash2 size={14} />
           </CustomIconButton>
         </div>
       </section>

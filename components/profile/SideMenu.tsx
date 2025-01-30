@@ -55,15 +55,15 @@ export const SideMenu = ({ userId }: { userId: number }) => {
   ];
 
   return (
-    <div className="flex flex-col gap-4 min-w-[200px] shadow-md p-4 rounded-lg md:w-fit h-fit">
+    <div className="flex flex-col gap-4 min-w-[200px] p-4 rounded-lg md:w-fit h-fit bg-white border shadow-lg">
       <nav className="flex flex-col gap-2">
         {menuItems.map((item) => (
           <Menubar
             key={item.label}
             className={
               pathname === item.href
-                ? "bg-gray-100 border-gray-100 shadow-md text-gray-900"
-                : "text-gray-700 hover:text-gray-900 border-none"
+                ? "bg-gray-100 border-gray-100 shadow-md text-gray-900 border"
+                : "text-gray-700 hover:text-gray-900 border-none border"
             }
           >
             <MenubarMenu>

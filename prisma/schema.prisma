@@ -17,6 +17,7 @@ model User {
   age         Int?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
+  role UserRole? @default(client)
 
   sex String?
   bodyInfo    BodyInfo?  @relation 
@@ -72,4 +73,10 @@ enum WorkoutGoal {
   maintenance
   strength_development
   cardio
+}
+
+enum UserRole {
+  client
+  admin
+  coach
 }
