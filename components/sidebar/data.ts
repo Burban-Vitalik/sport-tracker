@@ -16,6 +16,10 @@ const currentPrograms = [
     url: "/dashboard/programs/41",
   },
   {
+    title: "Exercises",
+    url: "/dashboard/exercises",
+  },
+  {
     title: "Program 2",
     url: "/dashboard/programs/41",
   },

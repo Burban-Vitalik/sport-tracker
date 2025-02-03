@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
-import { isFunction } from "@tanstack/react-table";
 
 export async function POST(req: Request) {
   try {
@@ -15,7 +14,7 @@ export async function POST(req: Request) {
       { message: "Програму створено успішно", program },
       { status: 201 }
     );
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Помилка при створенні програми:", error);
     return NextResponse.json(
       { message: "Помилка при створенні програми", error: error.message },

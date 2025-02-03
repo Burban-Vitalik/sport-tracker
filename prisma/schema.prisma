@@ -6,7 +6,7 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
-
+// -- User Model -- //
 model User {
   id          Int      @id @default(autoincrement())
   email       String   @unique
@@ -26,6 +26,7 @@ model User {
   @@index([email])
 }
 
+// -- Body Info Model -- //
 model BodyInfo {
   id        Int      @id @default(autoincrement())
   userId    Int @unique
@@ -38,6 +39,7 @@ model BodyInfo {
   @@index([userId]) 
 }
 
+// -- Workout Program Model -- //
 model WorkoutProgram {
   id                Int      @id @default(autoincrement())
   
@@ -60,8 +62,36 @@ model WorkoutProgram {
   user              User  @relation(fields: [userId], references: [id])
   programStart      DateTime @default(now())
   programEnd        DateTime?
+  exercises         WorkoutExercise[] @relation("WorkoutProgramExercises")
+
 }
 
+// -- Exercise Model -- //
+model Exercise {
+  id String @id @default(uuid())
+  name String
+  difficulty Difficulty
+  muscleGroup MuscleGroup
+  createdAt DateTime @default(now())
+
+  workoutPrograms WorkoutExercise[] @relation("WorkoutExerciseToExercise")
+
+}
+
+
+model WorkoutExercise {
+  id               Int       @id @default(autoincrement())
+  workoutProgramId Int
+  exerciseId       String
+  sets             Int
+  reps             Int
+  restTime         Int
+  workoutProgram   WorkoutProgram @relation("WorkoutProgramExercises", fields: [workoutProgramId], references: [id])
+  exercise         Exercise        @relation("WorkoutExerciseToExercise", fields: [exerciseId], references: [id])
+
+}
+
+// -- Enums
 enum Gender {
   Male
   Female
@@ -79,4 +109,19 @@ enum UserRole {
   client
   admin
   coach
+}
+
+enum MuscleGroup {
+  CHEST      
+  BACK       
+  LEGS       
+  ARMS       
+  SHOULDERS  
+  CORE       
+  CARDIO     
+}
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
 }
