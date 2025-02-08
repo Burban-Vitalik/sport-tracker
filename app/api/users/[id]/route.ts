@@ -9,7 +9,7 @@ export async function GET(
   try {
     const user = await prisma.user.findUnique({
       where: { id: parseInt(params.id) },
-      include: { bodyInfo: true },
+      include: { bodyInfo: true, favorites: true },
     });
 
     if (!user) {

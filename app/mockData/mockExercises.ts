@@ -2,21 +2,21 @@ import { Exercise } from "@prisma/client";
 
 export const mockExercises: Exercise[] = [
   {
-    id: "1",
+    id: "cm6p0eji20000uwv8iu0dudkx",
     name: "Bench Press",
     difficulty: "MEDIUM",
     muscleGroup: "SHOULDERS",
     createdAt: new Date(),
   },
   {
-    id: "2",
+    id: "cm6p1rjqb0002uwv8d8venvfv",
     name: "Deadlift",
     difficulty: "HARD",
     muscleGroup: "LEGS",
     createdAt: new Date(),
   },
   {
-    id: "3",
+    id: "cm6p1rv9z0003uwv8bfppviq2",
     name: "Squats",
     difficulty: "EASY",
     muscleGroup: "LEGS",

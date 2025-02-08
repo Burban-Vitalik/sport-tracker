@@ -7,12 +7,15 @@ import { TrainingSession } from "./components/TrainingSession";
 import { StyledTabs } from "./components/StyledTabs";
 import programBG from "../../../../public/img/program.webp";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { useUser } from "@/hooks/userContext";
 
 export default function ProgramPage() {
   const { id: programId } = useParams<{ id: string }>();
   const [program, setProgram] = useState<WorkoutProgram | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const { user } = useUser();
 
   useEffect(() => {
     if (!programId) return;
@@ -34,6 +37,23 @@ export default function ProgramPage() {
     fetchProgram();
   }, [programId]);
 
+  if (!user) return <p>Loading...</p>;
+
+  const addToFavorites = async () => {
+    const res = await fetch("/api/favorites", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        entityId: programId,
+        id: user.id,
+        type: "WORKOUT_PROGRAM",
+      }),
+    });
+    debugger;
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
   if (!program) return <p>No program found</p>;
@@ -53,6 +73,8 @@ export default function ProgramPage() {
           <div className="flex flex-row gap-5">
             <StyledTabs />
           </div>
+
+          <Button onClick={addToFavorites}>Add to Favorites</Button>
         </div>
       </div>
     </div>

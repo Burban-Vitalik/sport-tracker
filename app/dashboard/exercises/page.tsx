@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import { ExercisesList } from "./components/ExercisesList";
 import { Button } from "@/components/ui/button";
-import { ExerciseCard } from "@/components/cards/ExerciseCard";
+import { Exercise } from "@prisma/client";
 
 export default function ExercisesPage() {
-  const [exercises, setExercises] = useState<unknown[]>([]);
+  const [exercises, setExercises] = useState<Exercise[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 

@@ -22,6 +22,7 @@ model User {
   sex String?
   bodyInfo    BodyInfo?  @relation 
   workoutProgram WorkoutProgram[] @relation()
+  favorites Favorite[]
 
   @@index([email])
 }
@@ -41,7 +42,8 @@ model BodyInfo {
 
 // -- Workout Program Model -- //
 model WorkoutProgram {
-  id                Int      @id @default(autoincrement())
+  // id                Int      @id @default(autoincrement())
+  id String @id @default(cuid())
   
   currentAge        Int
   currentWeight     Float
@@ -81,17 +83,29 @@ model Exercise {
 
 model WorkoutExercise {
   id               Int       @id @default(autoincrement())
-  workoutProgramId Int
+  workoutProgramId String
   exerciseId       String
   sets             Int
   reps             Int
   restTime         Int
   workoutProgram   WorkoutProgram @relation("WorkoutProgramExercises", fields: [workoutProgramId], references: [id])
   exercise         Exercise        @relation("WorkoutExerciseToExercise", fields: [exerciseId], references: [id])
+}
 
+model Favorite {
+  id String @id @default(cuid())
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  entityId String
+  type FavoriteType
 }
 
 // -- Enums
+enum FavoriteType {
+  EXERCISE
+  WORKOUT_PROGRAM
+}
+
 enum Gender {
   Male
   Female

@@ -10,6 +10,7 @@ import {
   getFullUserName,
 } from "../helpers";
 import { UserAvatar } from "@/components/common/UserAvatar";
+import { Button } from "@/components/ui/button";
 
 type UserKeys = keyof User;
 
@@ -79,6 +80,17 @@ export const columns: ColumnDef<User>[] = [
       <div className="flex items-center gap-2">
         <CalendarCheck size={16} color="grey" />
         {formatDate(row.getValue(userKeys.updatedAt))}
+      </div>
+    ),
+  },
+  {
+    accessorKey: userKeys.id,
+    header: "Add to favorites",
+    cell: ({ row }) => (
+      <div>
+        <Button onClick={() => alert(row.getValue(userKeys.id))}>
+          Add to Favorites
+        </Button>
       </div>
     ),
   },

@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     const program = await prisma.workoutProgram.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: params.id },
       include: { user: true },
     });
 
@@ -36,7 +36,7 @@ export async function DELETE(req: NextRequest) {
 
   try {
     await prisma.workoutProgram.delete({
-      where: { id: parseInt(id) },
+      where: { id: id },
     });
 
     return NextResponse.json(
@@ -64,7 +64,7 @@ export async function PATCH(req: NextRequest) {
 
   try {
     const response = await prisma.workoutProgram.update({
-      where: { id: parseInt(id) },
+      where: { id: id },
       data: body,
     });
 

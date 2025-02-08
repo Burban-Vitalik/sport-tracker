@@ -8,12 +8,14 @@ import { WorkoutProgram } from "@prisma/client";
 
 import { WorkoutProgramsList } from "./WorkoutProgramsList";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/hooks/userContext";
 
 export default function WorkoutPrograms() {
   const [programs, setPrograms] = useState<WorkoutProgram[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const { user } = useUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -45,6 +47,12 @@ export default function WorkoutPrograms() {
   if (error) {
     return <p>{error}</p>;
   }
+
+  if (!user) {
+    return <p>Loading...</p>;
+  }
+
+  console.table(user.favorites);
 
   return (
     <div>
