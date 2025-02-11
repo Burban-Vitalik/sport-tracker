@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 
 type PropsType = {
   children: React.ReactNode;
+  ref?: React.Ref<HTMLButtonElement>;
   variant?:
     | "default"
     | "destructive"
