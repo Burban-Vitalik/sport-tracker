@@ -7,6 +7,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Label } from "../ui/label";
+import { cn } from "@/lib/utils";
 
 type PropsType = {
   label?: string;
@@ -16,6 +17,7 @@ type PropsType = {
   options: string[];
   onChange?: (value: string) => void;
   placeholder?: string;
+  className?: string;
 };
 
 export const CustomSelect: FC<PropsType> = ({
@@ -26,9 +28,10 @@ export const CustomSelect: FC<PropsType> = ({
   width = 180,
   placeholder = "Select",
   onChange,
+  className,
 }) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className={cn(className, "flex flex-col gap-4")}>
       {label && (
         <Label
           htmlFor={name}

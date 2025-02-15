@@ -27,7 +27,10 @@ export const SideBarList = ({ navMain }: PropsType) => {
               {item.items.map((item: NavItem) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={item.isActive}>
-                    <Link href={item.url}>{item.title}</Link>
+                    <Link href={item.url}>
+                      {item.icon && <item.icon color="gray" size={20} />}
+                      {item.title}
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

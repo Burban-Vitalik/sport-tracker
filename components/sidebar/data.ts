@@ -1,7 +1,16 @@
+import {
+  HomeIcon,
+  LucideIcon,
+  Notebook,
+  ScrollText,
+  Users,
+} from "lucide-react";
+
 export type NavItem = {
   title: string;
   url: string;
   isActive?: boolean;
+  icon?: LucideIcon;
 };
 
 export type NavSection = {
@@ -12,18 +21,22 @@ export type NavSection = {
 
 const currentPrograms = [
   {
+    icon: Notebook,
     title: "Program 1",
     url: "/dashboard/programs/41",
   },
   {
+    icon: ScrollText,
     title: "Exercises",
     url: "/dashboard/exercises",
   },
   {
+    icon: Notebook,
     title: "Program 2",
     url: "/dashboard/programs/41",
   },
   {
+    icon: Notebook,
     title: "Program 3",
     url: "/dashboard/programs/41",
   },
@@ -37,14 +50,17 @@ export const data = {
       url: "/dashboard",
       items: [
         {
+          icon: HomeIcon,
           title: "Overview",
           url: "/dashboard/overview",
         },
         {
+          icon: HomeIcon,
           title: "Page2",
           url: "/dashboard/page2",
         },
         {
+          icon: HomeIcon,
           title: "Page3",
           url: "/dashboard/page3",
         },
@@ -55,12 +71,14 @@ export const data = {
       url: "/workouts",
       items: [
         {
+          icon: Notebook,
           title: "All Programs",
           url: "/dashboard/programs",
         },
         ...currentPrograms.map((program) => ({
           title: program.title,
           url: program.url,
+          icon: program.icon,
         })),
       ],
     },
@@ -69,6 +87,7 @@ export const data = {
       url: "/users",
       items: [
         {
+          icon: Users,
           title: "Users",
           url: "/users",
         },

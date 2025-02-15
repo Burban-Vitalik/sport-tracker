@@ -14,11 +14,12 @@ type PropsType = {
 
 export const ExerciseCard: FC<PropsType> = ({ exercise }) => {
   const { user } = useUser();
-  const [favorites, setFavorites] = useState(user.favorites);
+  const [favorites, setFavorites] = useState(user?.favorites);
   if (!user) {
     return null;
   }
 
+  //
   const addToFavorites = async () => {
     const res = await fetch("/api/favorites", {
       method: "POST",
@@ -35,6 +36,8 @@ export const ExerciseCard: FC<PropsType> = ({ exercise }) => {
     }
   };
 
+  //
+
   const removeFromFavorites = async () => {
     const foundElement = favorites.find((fav) => fav.entityId === exercise.id);
     if (!foundElement) return;
@@ -50,7 +53,7 @@ export const ExerciseCard: FC<PropsType> = ({ exercise }) => {
     }
   };
 
-  const foundElement = favorites.some((fav) => fav.entityId === exercise.id);
+  const foundElement = favorites?.some((fav) => fav.entityId === exercise.id);
 
   return (
     <div className="w-full flex items-center gap-5 p-2 rounded-xl shadow-lg bg-white transition-all hover:shadow-xl">

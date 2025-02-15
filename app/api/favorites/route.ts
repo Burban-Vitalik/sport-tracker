@@ -50,18 +50,16 @@ export async function POST(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  // Отримуємо id з тіла запиту
-  const { id } = await req.json(); // Тепер id буде в тілі запиту
+  const { id } = await req.json();
 
   if (!id) {
     return new NextResponse("ID is required", { status: 400 });
   }
 
   try {
-    // Видаляємо елемент з таблиці favorites за id
     const deletedFavorite = await prisma.favorite.delete({
       where: {
-        id: id, // Використовуємо id без перетворення
+        id,
       },
     });
 

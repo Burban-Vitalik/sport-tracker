@@ -1,57 +1,52 @@
 "use client";
-import { useEffect, useState } from "react";
-import { ExercisesList } from "./components/ExercisesList";
-import { Button } from "@/components/ui/button";
+import { useCallback, useEffect, useState } from "react";
+
+import { CustomContainer } from "@/components/common/CustomContainer";
 import { Exercise } from "@prisma/client";
 
+import { ExercisesList } from "./components/ExercisesList";
+import { fetchExercises } from "@/lib/api/fetchExercises";
+import { ExercisesListSkeleton } from "./components/ExercisesListSkeleton";
+
+type DataType = {
+  exercises: Exercise[];
+  loading: boolean;
+  error: string | null;
+};
+
 export default function ExercisesPage() {
-  const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<DataType>({
+    exercises: [],
+    loading: true,
+    error: null,
+  });
 
-  useEffect(() => {
-    const fetchExercises = async () => {
-      try {
-        const response = await fetch("/api/exercises");
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch exercises");
-        }
-
-        const data = await response.json();
-        setExercises(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchExercises();
+  const loadExercises = useCallback(async () => {
+    setData((prev) => ({ ...prev, loading: true }));
+    try {
+      const dataResponse = await fetchExercises();
+      setData((prev) => ({ ...prev, exercises: dataResponse }));
+    } catch (error) {
+      setData((prev) => ({
+        ...prev,
+        error: error instanceof Error ? error.message : String(error),
+      }));
+    } finally {
+      setData((prev) => ({ ...prev, loading: false }));
+    }
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  useEffect(() => {
+    loadExercises();
+  }, [loadExercises]);
 
   return (
-    <div>
-      <div className="flex justify-end">
-        <Button
-          variant="outline"
-          className="bg-cyan-600 text-white hover:bg-cyan-700 hover:text-white"
-        >
-          Add Exercise
-        </Button>
-      </div>
-
-      <div className="flex flex-col gap-4 w-[80%] mx-auto">
-        <ExercisesList exercises={exercises} />
-      </div>
-    </div>
+    <CustomContainer>
+      {data.loading ? (
+        <ExercisesListSkeleton />
+      ) : (
+        <ExercisesList exercises={data.exercises} />
+      )}
+    </CustomContainer>
   );
 }

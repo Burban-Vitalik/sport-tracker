@@ -1,5 +1,6 @@
 "use client";
 
+import { fetchExercises } from "@/lib/api/fetchExercises";
 import { Exercise } from "@prisma/client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -7,26 +8,15 @@ import { useEffect, useState } from "react";
 export default function ExercisePage() {
   const [exercise, setExercise] = useState<Exercise | null>(null);
   const params = useParams();
-  const id = params.id;
+  const id = params.id as string;
 
   useEffect(() => {
     if (!id) return;
 
-    const fetchProgram = async () => {
-      try {
-        const response = await fetch(`/api/exercises/${id}`);
-        if (!response.ok) throw new Error("Failed to fetch program data");
-
-        const data = await response.json();
-        setExercise(data);
-      } catch {
-        // setError("Error loading program data");
-      } finally {
-        // setLoading(false);
-      }
-    };
-
-    fetchProgram();
+    (async () => {
+      const res = await fetchExercises(id);
+      setExercise(res);
+    })();
   }, [id]);
 
   if (!exercise) return <div>Loading...</div>;

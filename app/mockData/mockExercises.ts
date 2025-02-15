@@ -2,7 +2,7 @@ import { Exercise } from "@prisma/client";
 
 export const mockExercises: Exercise[] = [
   {
-    id: "cm6p0eji20000uwv8iu0dudkx",
+    id: "1",
     name: "Bench Press",
     difficulty: "MEDIUM",
     muscleGroup: "SHOULDERS",
