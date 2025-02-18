@@ -1,3 +1,4 @@
+import { UserRole } from "@prisma/client";
 import {
   HomeIcon,
   LucideIcon,
@@ -40,10 +41,16 @@ const currentPrograms = [
     title: "Program 3",
     url: "/dashboard/programs/41",
   },
+  {
+    icon: Notebook,
+    title: "Balance",
+    url: "/dashboard/balance",
+  },
 ];
 
 export const data = {
-  versions: ["Client", "Coach", "Admin"],
+  // versions: ["Client", "Coach", "Admin"],
+  versions: [UserRole.client, UserRole.coach, UserRole.admin],
   navMain: [
     {
       title: "Dashboard",

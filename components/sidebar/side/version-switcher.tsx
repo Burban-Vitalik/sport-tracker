@@ -14,13 +14,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { UserRole } from "@prisma/client";
 
 export function VersionSwitcher({
   versions,
   defaultVersion,
 }: {
-  versions: string[];
-  defaultVersion: string;
+  versions: UserRole[];
+  defaultVersion: UserRole;
 }) {
   const [selectedVersion, setSelectedVersion] = React.useState(defaultVersion);
 

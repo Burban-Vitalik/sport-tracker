@@ -1,0 +1,68 @@
+import { Plus, Scale } from "lucide-react";
+import CoffeeCup from "../../../public/img/coffeeIcon.png";
+import TeaBalance from "../../../public/img/teaIcon.png";
+import WaterBalance from "../../../public/img/waterBottle.png";
+import { CustomContainer } from "@/components/common/CustomContainer";
+import { BalanceList } from "./components/BalanceList";
+
+export default function BalancePage() {
+  const balanceList = [
+    {
+      drinkType: "Coffee",
+      fillLevel: 40,
+      color: "#6b4226",
+      backgroundColor: "#f1e4db",
+      icon: CoffeeCup,
+    },
+    {
+      drinkType: "Tea",
+      fillLevel: 60,
+      color: "#a16207",
+      backgroundColor: "#e8ddcf",
+      icon: TeaBalance,
+    },
+    {
+      drinkType: "Water",
+      fillLevel: 80,
+      color: "#3b82f6",
+      backgroundColor: "#cfdcf0",
+      icon: WaterBalance,
+    },
+  ];
+
+  return (
+    <CustomContainer width="w-[90%]">
+      <div className="py-4 px-4">
+        <h1 className="text-4xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+          Balance Page <Scale size={30} color="gray" />
+        </h1>
+        <p className="text-gray-600 mb-6 text-lg">
+          Manage your water, coffee, and tea balance
+        </p>
+
+        <nav>
+          <ul className="flex gap-4 mb-4">
+            <li className="text-white hover:text-gray-800 transition-all duration-300 cursor-pointer bg-gray-400 p-2 rounded-md">
+              Daily
+            </li>
+            <li className="text-gray-600 hover:text-gray-800 transition-all duration-300 cursor-pointer bg-gray-200 p-2 rounded-md">
+              Weekly
+            </li>
+            <li className="text-gray-600 hover:text-gray-800 transition-all duration-300 cursor-pointer bg-gray-200 p-2 rounded-md">
+              Monthly
+            </li>
+          </ul>
+        </nav>
+
+        <div className="flex gap-6 flex-wrap">
+          <BalanceList listItems={balanceList} />
+
+          <div className="w-[150px] h-[300px] bg-gray-200 rounded-xl p-4 flex justify-center items-center text-gray-500 font-semibold text-lg flex-col cursor-pointer hover:bg-gray-300 transition-all duration-300 shadow-md">
+            <Plus size={32} />
+            <span className="mt-2">Add Balance</span>
+          </div>
+        </div>
+      </div>
+    </CustomContainer>
+  );
+}

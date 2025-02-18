@@ -2,11 +2,12 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { CustomContainer } from "@/components/common/CustomContainer";
-import { Exercise } from "@prisma/client";
+import { Exercise, Favorite } from "@prisma/client";
 
 import { ExercisesList } from "./components/ExercisesList";
 import { fetchExercises } from "@/lib/api/fetchExercises";
 import { ExercisesListSkeleton } from "./components/ExercisesListSkeleton";
+import { useUser } from "@/hooks/userContext";
 
 type DataType = {
   exercises: Exercise[];
@@ -20,6 +21,8 @@ export default function ExercisesPage() {
     loading: true,
     error: null,
   });
+
+  const { user } = useUser();
 
   const loadExercises = useCallback(async () => {
     setData((prev) => ({ ...prev, loading: true }));
@@ -42,10 +45,10 @@ export default function ExercisesPage() {
 
   return (
     <CustomContainer>
-      {data.loading ? (
+      {data.loading || !user ? (
         <ExercisesListSkeleton />
       ) : (
-        <ExercisesList exercises={data.exercises} />
+        <ExercisesList exercises={data.exercises} favorites={user.favorites} />
       )}
     </CustomContainer>
   );

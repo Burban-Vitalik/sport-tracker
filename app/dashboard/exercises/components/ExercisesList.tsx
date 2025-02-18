@@ -3,7 +3,6 @@
 import gsap from "gsap";
 import { FC, useEffect, useRef } from "react";
 
-import { useUser } from "@/hooks/userContext";
 import {
   addToFavorites,
   FavoriteTypeEnum,
@@ -15,12 +14,11 @@ import { ExerciseCard } from "./ExerciseCard";
 
 type PropsType = {
   exercises: Exercise[];
+  favorites: Favorite[];
 };
 
-export const ExercisesList: FC<PropsType> = ({ exercises }) => {
+export const ExercisesList: FC<PropsType> = ({ exercises, favorites }) => {
   const listRef = useRef<HTMLDivElement>(null);
-
-  const { user } = useUser();
 
   const addFavorite = (exercise: Exercise) =>
     addToFavorites({
@@ -32,8 +30,10 @@ export const ExercisesList: FC<PropsType> = ({ exercises }) => {
   const deleteFromFavorites = async (
     itemId: string
   ): Promise<null | undefined> => {
-    const foundElement = user?.favorites.find((fav) => fav.entityId === itemId);
-    await removeFromFavorites({ favoriteItemId: foundElement?.id });
+    const foundElement = favorites.find((fav) => fav.entityId === itemId);
+    if (foundElement) {
+      await removeFromFavorites({ favoriteItemId: foundElement?.id });
+    }
     return null;
   };
 
@@ -84,10 +84,6 @@ export const ExercisesList: FC<PropsType> = ({ exercises }) => {
     }
   }, []);
 
-  if (!user) {
-    return <div>loadin...</div>;
-  }
-
   return (
     <div
       ref={listRef}
@@ -100,7 +96,7 @@ export const ExercisesList: FC<PropsType> = ({ exercises }) => {
           className="flex-1"
           addFavorite={addFavorite}
           deleteFromFavorites={deleteFromFavorites}
-          isFavoriteItem={user.favorites.some(
+          isFavoriteItem={favorites.some(
             (fav: Favorite) => fav.entityId === exercise.id
           )}
         />
