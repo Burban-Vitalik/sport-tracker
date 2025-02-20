@@ -4,15 +4,23 @@ import { UserPen, X } from "lucide-react";
 import React from "react";
 
 import { CustomIconButton } from "../form-elements/buttons/CustomIconButton";
+import { cn } from "@/lib/utils";
 
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
   title?: string;
+  className?: string;
 };
 
-export function CustomModal({ isOpen, onClose, children, title }: ModalProps) {
+export function CustomModal({
+  isOpen,
+  onClose,
+  children,
+  title,
+  className,
+}: ModalProps) {
   if (!isOpen) return null;
 
   return (
@@ -22,12 +30,18 @@ export function CustomModal({ isOpen, onClose, children, title }: ModalProps) {
       aria-modal="true"
       role="dialog"
     >
-      <div className="bg-white rounded-lg w-full sm:w-[600px] max-w-lg relative shadow-2xl transform animate-scaleIn transition-transform">
-        <div className="flex justify-between items-center border-b border-gray-100 p-5">
+      <div
+        className={cn(
+          // "bg-white rounded-lg w-full sm:w-[600px] max-w-lg relative shadow-2xl transform animate-scaleIn transition-transform",
+          "bg-white rounded-lg w-full relative shadow-2xl transform animate-scaleIn transition-transform",
+          className
+        )}
+      >
+        <div className="flex justify-between items-center border-b border-gray-100 p-2">
           {title && (
             <h2
               id="modal-title"
-              className="text-xl font-semibold text-gray-400 flex gap-2 items-center"
+              className="text-xl font-semibold text-gray-800 flex gap-2 items-center"
             >
               <UserPen />
               {title}
@@ -35,7 +49,7 @@ export function CustomModal({ isOpen, onClose, children, title }: ModalProps) {
           )}
           <CustomIconButton
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-800 transition-colors"
+            className="text-white bg-cyan-700 hover:text-gray-800 transition-colors border-none"
             aria-label="Close"
           >
             <X size={24} />

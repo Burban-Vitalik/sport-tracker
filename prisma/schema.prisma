@@ -23,7 +23,7 @@ model User {
   bodyInfo    BodyInfo?  @relation 
   workoutProgram WorkoutProgram[] @relation()
   favorites Favorite[]
-
+  
   @@index([email])
 }
 
@@ -35,14 +35,15 @@ model BodyInfo {
   height    Int
   weight    Float
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt 
+
+  drinkRecords DrinkRecord[]
 
   @@index([userId]) 
 }
 
 // -- Workout Program Model -- //
 model WorkoutProgram {
-  // id                Int      @id @default(autoincrement())
   id String @id @default(cuid())
   
   currentAge        Int
@@ -80,7 +81,6 @@ model Exercise {
 
 }
 
-
 model WorkoutExercise {
   id               Int       @id @default(autoincrement())
   workoutProgramId String
@@ -99,6 +99,21 @@ model Favorite {
   entityId String
   type FavoriteType
 }
+
+model DrinkRecord {
+  id         String   @id @default(cuid())
+  bodyInfoId Int
+  bodyInfo   BodyInfo @relation(fields: [bodyInfoId], references: [id])
+  date       DateTime @default(now()) 
+  amountMl     Float    
+  drinkType DrinkType
+  comment String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  @@unique([bodyInfoId, date]) 
+}
+
 
 // -- Enums
 enum FavoriteType {
@@ -138,4 +153,10 @@ enum Difficulty {
   EASY
   MEDIUM
   HARD
+}
+
+enum DrinkType {
+  WATER
+  COFFEE
+  TEA
 }

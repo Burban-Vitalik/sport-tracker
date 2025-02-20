@@ -1,11 +1,19 @@
+"use client";
 import { Plus, Scale } from "lucide-react";
+
+import { CustomContainer } from "@/components/common/CustomContainer";
+
 import CoffeeCup from "../../../public/img/coffeeIcon.png";
 import TeaBalance from "../../../public/img/teaIcon.png";
 import WaterBalance from "../../../public/img/waterBottle.png";
-import { CustomContainer } from "@/components/common/CustomContainer";
 import { BalanceList } from "./components/BalanceList";
+import { CustomModal } from "@/components/modals/CustomModal";
+import { useState } from "react";
+import { AddDrinkForm } from "./components/AddDrinkForm";
 
 export default function BalancePage() {
+  const [open, setOpen] = useState(false);
+
   const balanceList = [
     {
       drinkType: "Coffee",
@@ -31,7 +39,7 @@ export default function BalancePage() {
   ];
 
   return (
-    <CustomContainer width="w-[90%]">
+    <CustomContainer width="w-[100%]">
       <div className="py-4 px-4">
         <h1 className="text-4xl font-bold text-gray-800 mb-2 flex items-center gap-2">
           Balance Page <Scale size={30} color="gray" />
@@ -54,15 +62,26 @@ export default function BalancePage() {
           </ul>
         </nav>
 
-        <div className="flex gap-6 flex-wrap">
+        <div className="flex gap-6 mt-6 w-full flex-wrap justify-start">
           <BalanceList listItems={balanceList} />
 
-          <div className="w-[150px] h-[300px] bg-gray-200 rounded-xl p-4 flex justify-center items-center text-gray-500 font-semibold text-lg flex-col cursor-pointer hover:bg-gray-300 transition-all duration-300 shadow-md">
+          <div className="w-[200px] h-[400px] bg-gray-200 rounded-xl p-4 flex justify-center items-center text-gray-500 font-semibold text-lg flex-col cursor-pointer hover:bg-gray-300 transition-all duration-300 shadow-md">
             <Plus size={32} />
-            <span className="mt-2">Add Balance</span>
+            <span className="mt-2" onClick={() => setOpen(true)}>
+              Add Balance
+            </span>
           </div>
         </div>
       </div>
+
+      <CustomModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        title="Add Balance"
+        className="w-full sm:w-[600px] max-w-lg mx-6"
+      >
+        <AddDrinkForm />
+      </CustomModal>
     </CustomContainer>
   );
 }
