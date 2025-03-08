@@ -2,9 +2,13 @@ import { Search } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "../ui/input";
 
-export function CustomSearchInput({}: React.ComponentProps<"form">) {
+type Props = {
+  className?: string;
+} & React.ComponentProps<"form">;
+
+export function CustomSearchInput({}: Props) {
   return (
-    <div className="relative w-full max-w-md">
+    <div className="relative w-full">
       <Label htmlFor="search" className="sr-only">
         Search
       </Label>
@@ -13,7 +17,7 @@ export function CustomSearchInput({}: React.ComponentProps<"form">) {
         <Input
           id="search"
           placeholder="Search..."
-          className="pl-10 w-fit border border-gray-300 bg-white rounded-lg shadow-sm"
+          className="pl-10 w-full border border-gray-300 bg-white rounded-lg shadow-sm"
         />
       </div>
     </div>

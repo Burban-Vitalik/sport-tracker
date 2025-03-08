@@ -145,3 +145,23 @@ input[type="number"] {
   -moz-appearance: textfield;
   appearance: none;
 }
+
+/* Стилі для кастомного скроллбару */
+::-webkit-scrollbar {
+  width: 8px; /* ширина скроллбару */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* колір слайдера */
+  border-radius: 4px; /* заокруглення слайдера */
+  transition: background-color 0.3s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* колір слайдера при наведенні */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* фон для області скроллбару */
+  border-radius: 4px;
+}

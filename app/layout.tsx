@@ -23,6 +23,10 @@ export default function RootLayout({
   const pathname = usePathname();
 
   useEffect(() => {
+    fetch("/api/socket");
+  }, []);
+
+  useEffect(() => {
     const token = Cookies.get("token");
 
     if (!token && !pathname.startsWith("/auth")) {

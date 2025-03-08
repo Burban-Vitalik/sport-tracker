@@ -2,6 +2,7 @@ import { UserRole } from "@prisma/client";
 import {
   HomeIcon,
   LucideIcon,
+  MessageCircle,
   Notebook,
   ScrollText,
   Users,
@@ -70,6 +71,11 @@ export const data = {
           icon: HomeIcon,
           title: "Page3",
           url: "/dashboard/page3",
+        },
+        {
+          icon: MessageCircle,
+          title: "Message",
+          url: "/dashboard/message",
         },
       ],
     },

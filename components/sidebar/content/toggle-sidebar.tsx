@@ -11,13 +11,13 @@ export const ToggleSidebarButton = () => {
     <PanelLeftCloseIcon
       onClick={() => setOpen(false)}
       orientation="vertical"
-      className="mr-2 h-4 cursor-pointer text-white"
+      className="mr-2 h-4 cursor-pointer text-black"
     />
   ) : (
     <PanelRightCloseIcon
       onClick={() => setOpen(true)}
       orientation="vertical"
-      className="mr-2 h-4 cursor-pointer text-white"
+      className="mr-2 h-4 cursor-pointer text-black"
     />
   );
 };

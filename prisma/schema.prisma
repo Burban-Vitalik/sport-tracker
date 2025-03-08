@@ -19,6 +19,7 @@ model User {
   updatedAt   DateTime @default(now()) @updatedAt
   role UserRole? @default(client)
 
+  messages Message[]
   sex String?
   bodyInfo    BodyInfo?  @relation 
   workoutProgram WorkoutProgram[] @relation()
@@ -112,6 +113,13 @@ model DrinkRecord {
   updatedAt  DateTime @default(now()) @updatedAt
 
   @@unique([bodyInfoId, date]) 
+}
+model Message {
+  id        Int      @id @default(autoincrement()) 
+  text      String
+  sender    User     @relation(fields: [senderId], references: [id])
+  senderId  Int
+  createdAt DateTime @default(now())
 }
 
 
