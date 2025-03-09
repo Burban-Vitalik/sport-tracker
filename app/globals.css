@@ -152,7 +152,7 @@ input[type="number"] {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #888; /* колір слайдера */
+  background-color: #e8e5e5; /* колір слайдера */
   border-radius: 4px; /* заокруглення слайдера */
   transition: background-color 0.3s ease-in-out;
 }

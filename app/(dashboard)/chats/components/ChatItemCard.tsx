@@ -7,6 +7,7 @@ type Props = {
   message?: string;
   time?: string;
   count?: number;
+  onClick?: () => void;
 };
 
 export const ChatItemCard: FC<Props> = ({
@@ -14,9 +15,13 @@ export const ChatItemCard: FC<Props> = ({
   message = "Hello! How are you?",
   time = "8 min",
   count = 10,
+  onClick,
 }) => {
   return (
-    <div className="flex items-center justify-between p-3 hover:bg-gray-200 transition cursor-pointer">
+    <div
+      className="flex items-center justify-between p-3 hover:bg-gray-200 transition cursor-pointer"
+      onClick={onClick}
+    >
       <div className="flex items-center gap-4">
         <div className="relative size-12 rounded-full overflow-hidden">
           <Image

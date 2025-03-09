@@ -74,8 +74,8 @@ export const data = {
         },
         {
           icon: MessageCircle,
-          title: "Message",
-          url: "/dashboard/message",
+          title: "Chats",
+          url: "/chats",
         },
       ],
     },
