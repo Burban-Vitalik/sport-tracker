@@ -8,7 +8,7 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
 
   try {
     const user = await prisma.user.findUnique({
-      where: { id: Number(userId) },
+      where: { id: userId?.toString() },
     });
 
     if (!user) {

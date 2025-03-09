@@ -8,7 +8,7 @@ generator client {
 }
 // -- User Model -- //
 model User {
-  id          Int      @id @default(autoincrement())
+  id String @id @default(cuid())
   email       String   @unique
   password    String
   firstName   String?
@@ -17,22 +17,22 @@ model User {
   age         Int?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
-  role UserRole? @default(client)
-
+  role UserRole @default(client)
   messages Message[]
-  sex String?
-  bodyInfo    BodyInfo?  @relation 
+  sex Gender?
+  bodyInfo    BodyInfo? 
   workoutProgram WorkoutProgram[] @relation()
   favorites Favorite[]
+  ChatParticipant ChatParticipant[]
   
   @@index([email])
 }
 
 // -- Body Info Model -- //
 model BodyInfo {
-  id        Int      @id @default(autoincrement())
-  userId    Int @unique
-  user      User     @relation(fields: [userId], references: [id]) 
+  id        String @unique @default(cuid())
+  userId    String @unique
+  user      User   @relation(fields: [userId], references: [id])
   height    Int
   weight    Float
   createdAt DateTime @default(now())
@@ -62,40 +62,41 @@ model WorkoutProgram {
   
   gender            Gender
   workoutGoal       WorkoutGoal
-  userId            Int
+  userId            String
   user              User  @relation(fields: [userId], references: [id])
   programStart      DateTime @default(now())
   programEnd        DateTime?
-  exercises         WorkoutExercise[] @relation("WorkoutProgramExercises")
+  exercises WorkoutExercise[]
 
+  @@index([userId])
 }
 
 // -- Exercise Model -- //
 model Exercise {
-  id String @id @default(uuid())
+  id String @id @default(cuid())
   name String
   difficulty Difficulty
   muscleGroup MuscleGroup
   createdAt DateTime @default(now())
-
-  workoutPrograms WorkoutExercise[] @relation("WorkoutExerciseToExercise")
-
+  workoutPrograms WorkoutExercise[] 
 }
 
 model WorkoutExercise {
-  id               Int       @id @default(autoincrement())
-  workoutProgramId String
-  exerciseId       String
+  id               String       @id @default(cuid())
   sets             Int
   reps             Int
   restTime         Int
-  workoutProgram   WorkoutProgram @relation("WorkoutProgramExercises", fields: [workoutProgramId], references: [id])
-  exercise         Exercise        @relation("WorkoutExerciseToExercise", fields: [exerciseId], references: [id])
+  workoutProgramId String
+  exerciseId       String
+  workoutProgram   WorkoutProgram @relation(fields: [workoutProgramId], references: [id], onDelete: Cascade)
+  exercise         Exercise        @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  @@index([workoutProgramId, exerciseId])
 }
 
 model Favorite {
   id String @id @default(cuid())
-  userId Int
+  userId String
   user User @relation(fields: [userId], references: [id])
   entityId String
   type FavoriteType
@@ -103,7 +104,7 @@ model Favorite {
 
 model DrinkRecord {
   id         String   @id @default(cuid())
-  bodyInfoId Int
+  bodyInfoId String
   bodyInfo   BodyInfo @relation(fields: [bodyInfoId], references: [id])
   date       DateTime @default(now()) 
   amountMl     Float    
@@ -115,11 +116,38 @@ model DrinkRecord {
   @@unique([bodyInfoId, date]) 
 }
 model Message {
-  id        Int      @id @default(autoincrement()) 
+  id        String      @id @default(cuid())
   text      String
-  sender    User     @relation(fields: [senderId], references: [id])
-  senderId  Int
+  senderId  String
+  chatId String
   createdAt DateTime @default(now())
+  chat Chat @relation(fields: [chatId], references: [id])
+  sender    User     @relation(fields: [senderId], references: [id])
+
+}
+
+model Chat {
+  id String @id @default(cuid())
+  isPrivate Boolean @default(true)
+  participants  ChatParticipant[]
+  messages Message[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@index([isPrivate])
+}
+
+model ChatParticipant  {
+  id String @id @default(cuid())
+  chatId String
+  userId String
+  chat Chat @relation(fields: [chatId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+  joinedAt DateTime @default(now())
+  isAdmin Boolean @default(false)
+
+  @@unique([chatId, userId])
 }
 
 
@@ -135,11 +163,11 @@ enum Gender {
 }
 
 enum WorkoutGoal {
-  muscleGain
-  fat_loss
-  maintenance
-  strength_development
-  cardio
+  MUSCLE_GAIN
+  FAT_LOSS
+  MAINTENANCE
+  STRENGTH_DEVELOPMENT
+  CARDIO
 }
 
 enum UserRole {

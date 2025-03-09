@@ -13,7 +13,7 @@ export async function verifyTokenAndGetUser(token: string) {
 
     // Отримання користувача з бази даних за допомогою Prisma
     const user = await prisma.user.findUnique({
-      where: { id: Number(decoded.userId) },
+      where: { id: decoded.userId },
     });
 
     if (!user) {
