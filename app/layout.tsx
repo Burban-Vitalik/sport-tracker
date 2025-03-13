@@ -1,18 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
+import "./globals.css";
+
 import Cookies from "js-cookie";
-import { useRouter, usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import {
   SidebarContent,
   SidebarContentHeader,
 } from "@/components/sidebar/content";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { ToastContainer } from "react-toastify";
-import "./globals.css";
 import { UserProvider } from "@/hooks/userContext";
+import { cn } from "@/lib/utils";
 
 export default function RootLayout({
   children,

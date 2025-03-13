@@ -14,7 +14,7 @@ const socket = io("http://localhost:3000", {
 export const ChatSection = () => {
   const [isOpenInfo, setIsOpenInfo] = useState(false);
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<string[]>(["hello", "How are you?"]);
 
   useEffect(() => {
     socket.connect();
@@ -35,7 +35,7 @@ export const ChatSection = () => {
   const sendMessage = () => {
     if (message.trim()) {
       socket.emit("sendMessage", message);
-      setMessage(""); // Очищаємо інпут після відправки
+      setMessage("");
     }
   };
 

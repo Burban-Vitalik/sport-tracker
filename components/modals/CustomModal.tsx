@@ -1,6 +1,6 @@
 "use client";
 
-import { UserPen, X } from "lucide-react";
+import { X } from "lucide-react";
 import React from "react";
 
 import { CustomIconButton } from "../form-elements/buttons/CustomIconButton";
@@ -33,23 +33,17 @@ export function CustomModal({
       <div
         className={cn(
           // "bg-white rounded-lg w-full sm:w-[600px] max-w-lg relative shadow-2xl transform animate-scaleIn transition-transform",
-          "bg-white rounded-lg w-full relative shadow-2xl transform animate-scaleIn transition-transform",
+          "bg-white rounded-lg w-1/3 relative shadow-2xl transform animate-scaleIn transition-transform",
           className
         )}
       >
-        <div className="flex justify-between items-center border-b border-gray-100 p-2">
+        <div className="flex px-6 justify-between items-center p-2">
           {title && (
-            <h2
-              id="modal-title"
-              className="text-xl font-semibold text-gray-800 flex gap-2 items-center"
-            >
-              <UserPen />
-              {title}
-            </h2>
+            <h2 className="text-lg font-semibold text-gray-600">{title}</h2>
           )}
           <CustomIconButton
             onClick={onClose}
-            className="text-white bg-cyan-700 hover:text-gray-800 transition-colors border-none"
+            className="bg-white border border-gray-100 hover:text-gray-800 transition-colors"
             aria-label="Close"
           >
             <X size={24} />

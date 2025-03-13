@@ -2,12 +2,12 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { CustomContainer } from "@/components/common/CustomContainer";
-import { Exercise, Favorite } from "@prisma/client";
+import { useUser } from "@/hooks/userContext";
+import { fetchExercises } from "@/lib/api/fetchExercises";
+import { Exercise } from "@prisma/client";
 
 import { ExercisesList } from "./components/ExercisesList";
-import { fetchExercises } from "@/lib/api/fetchExercises";
 import { ExercisesListSkeleton } from "./components/ExercisesListSkeleton";
-import { useUser } from "@/hooks/userContext";
 
 type DataType = {
   exercises: Exercise[];

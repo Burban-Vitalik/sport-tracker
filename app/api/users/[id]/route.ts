@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     const user = await prisma.user.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: params.id },
       include: {
         favorites: true,
         bodyInfo: { include: { drinkRecords: true } },
@@ -42,7 +42,7 @@ export async function PUT(req: Request) {
   try {
     const response = await prisma.user.update({
       where: {
-        id: parseInt(id.toString()),
+        id: id.toString(),
       },
       data: {
         ...body,
@@ -70,7 +70,7 @@ export async function DELETE(req: Request) {
       });
     }
 
-    await prisma.user.delete({ where: { id: parseInt(id) } });
+    await prisma.user.delete({ where: { id: id } });
 
     return new NextResponse(
       JSON.stringify({ message: "User deleted successfully" }),

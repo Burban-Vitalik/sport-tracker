@@ -1,14 +1,15 @@
 import { Search } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "../ui/input";
+import { cn } from "@/lib/utils";
 
 type Props = {
   className?: string;
 } & React.ComponentProps<"form">;
 
-export function CustomSearchInput({}: Props) {
+export function CustomSearchInput({ className }: Props) {
   return (
-    <div className="relative w-full">
+    <div className={cn("relative w-full", className)}>
       <Label htmlFor="search" className="sr-only">
         Search
       </Label>
