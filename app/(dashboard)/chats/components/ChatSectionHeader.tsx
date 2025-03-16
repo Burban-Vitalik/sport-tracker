@@ -6,14 +6,14 @@ import { FC } from "react";
 import { AvatarCover } from "@/components/cards/Avatar";
 
 type Props = {
-  toggleInfo: VoidFunction;
+  toggleModal: VoidFunction;
   userName?: string;
   status?: string;
   imageSrc?: string;
 };
 
 export const ChatSectionHeader: FC<Props> = ({
-  toggleInfo,
+  toggleModal,
   userName = "Vitalik Burban",
   status = "Online",
   imageSrc = "/img/userLogo2.png",
@@ -48,7 +48,7 @@ export const ChatSectionHeader: FC<Props> = ({
         <Info
           color="gray"
           className="cursor-pointer hover:text-black transition-colors"
-          onClick={toggleInfo}
+          onClick={toggleModal}
           aria-label="Open user info"
         />
       </div>

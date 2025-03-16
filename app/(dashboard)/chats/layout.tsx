@@ -1,13 +1,20 @@
+"use client";
+import { useFetchChats } from "@/hooks/useFetchChats";
+
 import { ChatsSidebar } from "./components/ChatsSidebar";
 
-export default function ChatsLayout({
-  children,
-}: {
+type Props = {
   children: React.ReactNode;
-}) {
+};
+
+export default function ChatsLayout({ children }: Props) {
+  const { chats } = useFetchChats({
+    userId: "cm87nf0eg0000uwekoud293e9",
+  });
+
   return (
     <section className="flex gap-6 h-[80vh]">
-      <ChatsSidebar />
+      <ChatsSidebar chats={chats} />
       {children}
     </section>
   );

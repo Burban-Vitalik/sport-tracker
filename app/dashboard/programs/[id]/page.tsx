@@ -1,14 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { WorkoutProgram } from "@prisma/client";
-import { Goal } from "./components/Goals";
-import { TrainingSession } from "./components/TrainingSession";
-import { StyledTabs } from "./components/StyledTabs";
-import programBG from "../../../../public/img/program.webp";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/hooks/userContext";
+import { WorkoutProgram } from "@prisma/client";
+
+import programBG from "../../../../public/img/program.webp";
+import { Goal } from "./components/Goals";
+import { StyledTabs } from "./components/StyledTabs";
+import { TrainingSession } from "./components/TrainingSession";
 
 export default function ProgramPage() {
   const { id: programId } = useParams<{ id: string }>();
@@ -40,7 +42,7 @@ export default function ProgramPage() {
   if (!user) return <p>Loading...</p>;
 
   const addToFavorites = async () => {
-    const res = await fetch("/api/favorites", {
+    await fetch("/api/favorites", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +53,6 @@ export default function ProgramPage() {
         type: "WORKOUT_PROGRAM",
       }),
     });
-    debugger;
   };
 
   if (loading) return <p>Loading...</p>;

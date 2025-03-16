@@ -1,9 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useCallback, useMemo } from "react";
 
-import { chatsList } from "@/app/mockData/chats";
+import { useRouter } from "next/navigation";
+import { FC, useCallback, useMemo } from "react";
+
 import { useChatParams } from "@/hooks/useChatParams";
+import { ChatWithMessages } from "@/types/chat";
 
 import FaceImg from "../../../../public/img/userLogo.png";
 import { ChatsList } from "./ChatsList";
@@ -11,7 +12,11 @@ import { ChatSidebarActions } from "./ChatsSidebarActions";
 import { MembersList } from "./MembersList";
 import { NewChat } from "./NewChat";
 
-export const ChatsSidebar = () => {
+type PropsType = {
+  chats: ChatWithMessages[];
+};
+
+export const ChatsSidebar: FC<PropsType> = ({ chats }) => {
   const router = useRouter();
   const { chatId, type, params } = useChatParams();
 
@@ -26,10 +31,8 @@ export const ChatsSidebar = () => {
   );
 
   const filteredChats = useMemo(() => {
-    return type === "all"
-      ? chatsList
-      : chatsList.filter((chat) => chat.type === type);
-  }, [type]);
+    return type === "all" ? chats : chats.filter((chat) => chat.type === type);
+  }, [type, chats]);
 
   return (
     <div className="w-full max-w-xs bg-white rounded-2xl shadow-lg flex flex-col overflow-hidden">
@@ -39,7 +42,7 @@ export const ChatsSidebar = () => {
 
       <ChatSidebarActions chatsType={type} toggleChatsType={toggleChatsType} />
       <NewChat chatsLength={filteredChats.length} />
-      <ChatsList chats={filteredChats} />
+      <ChatsList chats={chats} />
     </div>
   );
 };

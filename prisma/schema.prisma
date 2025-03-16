@@ -123,7 +123,6 @@ model Message {
   createdAt DateTime @default(now())
   chat Chat @relation(fields: [chatId], references: [id])
   sender    User     @relation(fields: [senderId], references: [id])
-
 }
 
 model Chat {
@@ -131,6 +130,7 @@ model Chat {
   isPrivate Boolean @default(true)
   participants  ChatParticipant[]
   messages Message[]
+  type ChatType
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -152,6 +152,12 @@ model ChatParticipant  {
 
 
 // -- Enums
+enum ChatType {
+  GROUP
+  CHANNEL
+  CHAT
+}
+
 enum FavoriteType {
   EXERCISE
   WORKOUT_PROGRAM

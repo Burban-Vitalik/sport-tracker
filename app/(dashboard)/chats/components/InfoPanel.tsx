@@ -1,13 +1,14 @@
-import { useLayoutEffect, useRef } from "react";
+import { FC, useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ChatInfo } from "./ChatInfo";
+import { UseModal } from "@/types/modal";
 
-interface InfoPanelProps {
-  isOpen: boolean;
-  toggleInfo: () => void;
-}
+type Props = {
+  isOpen: UseModal["isOpen"];
+  toggleModal: UseModal["toggleModal"];
+};
 
-export const InfoPanel = ({ isOpen, toggleInfo }: InfoPanelProps) => {
+export const InfoPanel: FC<Props> = ({ isOpen, toggleModal }) => {
   const infoRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
@@ -37,7 +38,7 @@ export const InfoPanel = ({ isOpen, toggleInfo }: InfoPanelProps) => {
         isOpen ? "opacity-100 visible" : "opacity-0 invisible w-0"
       }`}
     >
-      <ChatInfo toggleInfo={toggleInfo} />
+      <ChatInfo toggleModal={toggleModal} />
     </div>
   );
 };

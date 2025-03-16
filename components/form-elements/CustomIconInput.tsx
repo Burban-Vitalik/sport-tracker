@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
+
 import { Input } from "../ui/input";
-import { Text } from "lucide-react";
 
 type PropsType = {
   children?: React.ReactNode;
@@ -17,7 +17,6 @@ export function CustomIconInput({ children, ...rest }: PropsType) {
         style={{ paddingLeft: "35px" }}
       />
       <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/80 peer-disabled:opacity-50">
-        <Text color="gray" />
         {children}
       </div>
     </div>

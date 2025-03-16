@@ -3,16 +3,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { FC, useCallback } from "react";
 
 import { ChatItemCard } from "./ChatItemCard";
-
-type Chat = {
-  id: string;
-  type: string;
-  name: string;
-  members: number;
-};
+import { ChatWithMessages } from "@/types/chat";
 
 type Props = {
-  chats: Array<Chat>;
+  chats: ChatWithMessages[];
 };
 
 export const ChatsList: FC<Props> = ({ chats }) => {
@@ -34,7 +28,9 @@ export const ChatsList: FC<Props> = ({ chats }) => {
     <div className="overflow-y-auto">
       {chats.map((chat) => (
         <ChatItemCard
-          message={chat.name}
+          count={chat.messages.length}
+          senderName="John Doe"
+          message={chat.messages[0]?.text}
           key={chat.id}
           onClick={chatClick.bind(null, chat.id)}
         />

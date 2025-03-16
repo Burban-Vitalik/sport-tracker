@@ -1,35 +1,46 @@
-import { FC } from "react";
-import { CircleX, MessageCircle, Video } from "lucide-react";
-
+import { ChevronLeft, MessageCircle, Settings, Video } from "lucide-react";
 import Image from "next/image";
+import { FC } from "react";
+
 import FaceImg from "../../../../public/img/userLogo.png";
+import { UseModal } from "@/types/modal";
 
 type Props = {
   user?: string;
-  toggleInfo: () => void;
+  toggleModal: UseModal["toggleModal"];
 };
 
-export const ChatInfo: FC<Props> = ({ toggleInfo }) => {
+export const ChatInfo: FC<Props> = ({ toggleModal }) => {
   return (
     <div className="relative h-full rounded-r-2xl p-6 flex flex-col items-center space-y-6 shadow-lg">
-      <div className="absolute top-4 right-4">
-        <CircleX
-          color="white"
-          className="cursor-pointer hover:scale-110 transition-all"
-          onClick={toggleInfo}
-        />
+      <div className="flex w-full justify-between">
+        <span className="flex gap-2">
+          <ChevronLeft
+            className="cursor-pointer hover:scale-110 transition-all"
+            onClick={toggleModal}
+            color="gray"
+            size={24}
+          />
+          <p className="font-semibold">Chanel Information</p>
+        </span>
+        <button>
+          <Settings color="gray" size={24} />
+        </button>
       </div>
-      <div className="relative w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-lg">
-        <Image
-          src={FaceImg}
-          layout="fill"
-          objectFit="cover"
-          alt="User Avatar"
-        />
-      </div>
-      <div className="text-center">
-        <p className="font-semibold text-lg text-gray-900">Vitalik Burban</p>
-        <p className="text-sm text-gray-600">Fitness Coach</p>
+
+      <div className="hidden">
+        <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg flex-shrink-0">
+          <Image
+            src={FaceImg}
+            layout="fill"
+            objectFit="cover"
+            alt="User Avatar"
+          />
+        </div>
+        <div className="text-center">
+          <p className="font-semibold text-lg text-gray-900">Vitalik Burban</p>
+          <p className="text-sm text-gray-600">Fitness Coach</p>
+        </div>
       </div>
 
       {/* Actions */}
