@@ -1,6 +1,6 @@
 import { FC, useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ChatInfo } from "./ChatInfo";
+import { ChatInfo } from "./ChatInfo/ChatInfo";
 import { UseModal } from "@/types/modal";
 
 type Props = {
@@ -34,7 +34,7 @@ export const InfoPanel: FC<Props> = ({ isOpen, toggleModal }) => {
   return (
     <div
       ref={infoRef}
-      className={`transition-all duration-500 ${
+      className={`transition-all duration-500 border ${
         isOpen ? "opacity-100 visible" : "opacity-0 invisible w-0"
       }`}
     >

@@ -1,5 +1,5 @@
 "use client";
-import { CircleX, Info } from "lucide-react";
+import { EllipsisVertical } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
 
@@ -38,14 +38,7 @@ export const ChatSectionHeader: FC<Props> = ({
         </p>
       </div>
       <div className="flex gap-2">
-        <div className="flex items-center">
-          <CircleX
-            color="gray"
-            onClick={() => router.push("/chats")}
-            className="cursor-pointer"
-          />
-        </div>
-        <Info
+        <EllipsisVertical
           color="gray"
           className="cursor-pointer hover:text-black transition-colors"
           onClick={toggleModal}

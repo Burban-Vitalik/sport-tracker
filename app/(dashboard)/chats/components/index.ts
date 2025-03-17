@@ -1,4 +1,4 @@
-export * from "./ChatInfo";
+export * from "./ChatInfo/ChatInfo";
 export * from "./NewChat";
 export * from "./ChatsList";
 export * from "./InfoPanel";
