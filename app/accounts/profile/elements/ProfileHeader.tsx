@@ -13,6 +13,7 @@ import { uploadFileToStarage } from "@/lib/supabase/storage/uploadFile";
 import { getFullUserName, showToast } from "@/app/helpers";
 import { formFullUrl } from "@/lib/supabase/helperes/makeFullUrl";
 import { useRouter } from "next/navigation";
+import { useUpdateUser } from "@/hooks/put/useUpdateUser";
 
 type PropsType = {
   user: User;
@@ -33,6 +34,7 @@ export const ProfileHeader = ({ user }: PropsType) => {
     setIsModalOpen(false);
     setModalContent(null);
   };
+  const { updateUser } = useUpdateUser();
 
   const handleUploadImage = async (file: File) => {
     if (!file) return;
@@ -51,21 +53,7 @@ export const ProfileHeader = ({ user }: PropsType) => {
         filePath: response.path || "",
       });
 
-      const res = await fetch(`/api/users/${user.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: user.id,
-          profileImage: fullUrl,
-        }),
-      });
-
-      if (res.ok) {
-        showToast({ message: "Profile updated successfully", type: "success" });
-        router.refresh();
-      } else {
-        showToast({ message: "Profile update failed", type: "error" });
-      }
+      updateUser({ userId: user.id, data: { profileImage: fullUrl } });
     } catch (error) {
       console.error("Error uploading image:", error);
       showToast({ message: "An error occurred during upload", type: "error" });

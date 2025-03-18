@@ -1,11 +1,13 @@
 "use client";
 
-import { showToast } from "@/app/helpers";
-import { CustomIconInput } from "@/components/form-elements";
-import { Label } from "@/components/ui/label";
-import { useUser } from "@/hooks/userContext";
 import { Formik } from "formik";
 import { Cake, UserIcon } from "lucide-react";
+
+import { CustomIconInput } from "@/components/form-elements";
+import { Label } from "@/components/ui/label";
+import { useUpdateUser } from "@/hooks/put/useUpdateUser";
+import { useUser } from "@/hooks/userContext";
+import { User } from "@prisma/client";
 
 const formFields = [
   {
@@ -29,34 +31,10 @@ const formFields = [
   { name: "age", label: "Age", icon: <Cake size={18} />, type: "number" },
 ];
 
-const updateProfile = async (
-  userId: number,
-  values: Record<string, unknown>
-) => {
-  try {
-    const response = await fetch(`/api/users/${userId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: userId, ...values }),
-    });
-
-    const message =
-      response.status === 200
-        ? "Profile updated successfully"
-        : "Profile update failed";
-
-    showToast({
-      message,
-      type: response.status === 200 ? "success" : "error",
-    });
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
-    showToast({ message: "An unexpected error occurred", type: "error" });
-  }
-};
-
 export default function EditProfilePage() {
   const { user } = useUser();
+
+  const { updateUser } = useUpdateUser();
 
   if (!user) return <p>Loading...</p>;
 
@@ -71,7 +49,9 @@ export default function EditProfilePage() {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values) => updateProfile(user.id, values)}
+      onSubmit={(values) =>
+        updateUser({ userId: user.id, data: values as Partial<User> })
+      }
     >
       {({ handleSubmit, values, handleChange }) => (
         <form onSubmit={handleSubmit}>

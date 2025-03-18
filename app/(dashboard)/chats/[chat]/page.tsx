@@ -1,45 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ChatSection } from "../components/ChatSection";
-import { Message } from "@prisma/client";
 import { usePathname } from "next/navigation";
 
-type DataType = {
-  messages: Message[] | [];
-  loading: boolean;
-};
+import { ChatSection } from "../components/ChatSection";
+import { useFetchMessages } from "@/hooks/fetch/useFetchMessages";
 
 const ChatPage = () => {
-  const [data, setData] = useState<DataType>({
-    messages: [],
-    loading: false,
-  });
-
   const pathname = usePathname();
   const chatId = pathname.split("/").pop();
 
-  useEffect(() => {
-    if (!chatId) return;
+  const { messages, loading } = useFetchMessages(chatId as string);
 
-    async function getMessages() {
-      try {
-        setData((prev) => ({ ...prev, loading: true }));
-        const response = await fetch(`/api/messages?chatId=${chatId}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setData({ messages: data, loading: false });
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-        setData((prev) => ({ ...prev, loading: false }));
-      }
-    }
-    getMessages();
-  }, [chatId]);
+  if (loading) return <div>Loading</div>;
 
-  return <ChatSection messages={data.messages} />;
+  return <ChatSection messages={messages} />;
 };
 
 export default ChatPage;

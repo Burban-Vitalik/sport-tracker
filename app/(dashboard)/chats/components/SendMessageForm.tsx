@@ -2,19 +2,17 @@ import { Form, Formik } from "formik";
 import { Send, Text } from "lucide-react";
 
 import { CustomIconButton, CustomIconInput } from "@/components/form-elements";
-import { SendMessage } from "@/types/chat";
-
-type Props = {
-  sendMessage: SendMessage;
-};
+import { useCreateMessage } from "@/hooks/post/useCreateMessage";
 
 const initialValues = {
   message: "",
 };
 
-export const SendMessageForm = ({ sendMessage }: Props) => {
+export const SendMessageForm = () => {
+  const { createMessage } = useCreateMessage();
+
   const handleSend = (values: typeof initialValues) =>
-    sendMessage({
+    createMessage({
       text: values.message,
       chatId: "cm87nc7gl0000uwagdjemid0b",
       senderId: "cm87nf0eg0000uwekoud293e9",

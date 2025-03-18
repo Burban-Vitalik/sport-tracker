@@ -1,5 +1,5 @@
 "use client";
-import { useFetchChats } from "@/hooks/useFetchChats";
+import { useFetchChats } from "@/hooks/fetch/useFetchChats";
 
 import { ChatsSidebar } from "./components/ChatsSidebar";
 

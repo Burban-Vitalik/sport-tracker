@@ -1,19 +1,22 @@
 "use client";
+import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import Image from "next/image";
-import GifImage from "../../../../public/img/gif/dumbbell-one-arm-chest-press.gif";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 import { DifficultyItem } from "@/components/common/DifficultyItem";
+import { FavoriteTypeEnum } from "@/lib/api/favorites";
 import { cn } from "@/lib/utils";
 import { Exercise } from "@prisma/client";
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+
+import GifImage from "../../../../public/img/gif/dumbbell-one-arm-chest-press.gif";
 
 type PropsType = {
   className?: string;
   exercise: Exercise;
-  addFavorite: (exercise: Exercise) => Promise<null | undefined>;
-  deleteFromFavorites: (itemId: string) => Promise<null | undefined>;
+  addFavorite: (entityId: string, type: FavoriteTypeEnum.EXERCISE) => void;
+  deleteFromFavorites: (itemId: string) => void;
   isFavoriteItem?: boolean;
 };
 
@@ -33,7 +36,7 @@ export function ExerciseCard({
       deleteFromFavorites(exercise.id);
     } else {
       setIsFavorite(!isFavorite);
-      addFavorite(exercise);
+      addFavorite(exercise.id, FavoriteTypeEnum.EXERCISE);
     }
   };
 

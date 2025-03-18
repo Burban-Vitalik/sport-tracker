@@ -2,7 +2,6 @@
 import { FC } from "react";
 
 import { useModal } from "@/hooks/useModal";
-import { sendMessage } from "@/lib/sendMessage";
 import { Message } from "@prisma/client";
 
 import {
@@ -24,7 +23,7 @@ export const ChatSection: FC<PropsType> = ({ messages }) => {
       <div className="bg-white rounded-l-2xl shadow-inner transition-all duration-500 flex flex-col w-full">
         <ChatSectionHeader toggleModal={toggleModal} />
         <MessageList messages={messages} />
-        <SendMessageForm sendMessage={sendMessage} />
+        <SendMessageForm />
       </div>
       <InfoPanel isOpen={isOpen} toggleModal={toggleModal} />
     </div>

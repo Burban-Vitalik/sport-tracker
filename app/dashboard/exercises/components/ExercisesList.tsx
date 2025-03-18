@@ -3,14 +3,12 @@
 import gsap from "gsap";
 import { FC, useEffect, useRef } from "react";
 
-import {
-  addToFavorites,
-  FavoriteTypeEnum,
-  removeFromFavorites,
-} from "@/lib/api/favorites";
 import { Exercise, Favorite } from "@prisma/client";
 
 import { ExerciseCard } from "./ExerciseCard";
+import { useUser } from "@/hooks/userContext";
+import { useAddToFavorites } from "@/hooks/post/useAddToFavorites";
+import { useRemoveFromFavorites } from "@/hooks/remove/useRemoveFromFavorites";
 
 type PropsType = {
   exercises: Exercise[];
@@ -18,24 +16,11 @@ type PropsType = {
 };
 
 export const ExercisesList: FC<PropsType> = ({ exercises, favorites }) => {
+  const { user } = useUser();
   const listRef = useRef<HTMLDivElement>(null);
 
-  const addFavorite = (exercise: Exercise) =>
-    addToFavorites({
-      type: FavoriteTypeEnum.EXERCISE,
-      userId: 1,
-      entityId: exercise.id,
-    });
-
-  const deleteFromFavorites = async (
-    itemId: string
-  ): Promise<null | undefined> => {
-    const foundElement = favorites.find((fav) => fav.entityId === itemId);
-    if (foundElement) {
-      await removeFromFavorites({ favoriteItemId: foundElement?.id });
-    }
-    return null;
-  };
+  const { addToFavorites } = useAddToFavorites(user?.id as string);
+  const { removeFromFavorites } = useRemoveFromFavorites();
 
   useEffect(() => {
     if (listRef.current) {
@@ -83,7 +68,6 @@ export const ExercisesList: FC<PropsType> = ({ exercises, favorites }) => {
       });
     }
   }, []);
-
   return (
     <div
       ref={listRef}
@@ -94,8 +78,8 @@ export const ExercisesList: FC<PropsType> = ({ exercises, favorites }) => {
           key={index}
           exercise={exercise}
           className="flex-1"
-          addFavorite={addFavorite}
-          deleteFromFavorites={deleteFromFavorites}
+          addFavorite={addToFavorites}
+          deleteFromFavorites={removeFromFavorites}
           isFavoriteItem={favorites.some(
             (fav: Favorite) => fav.entityId === exercise.id
           )}

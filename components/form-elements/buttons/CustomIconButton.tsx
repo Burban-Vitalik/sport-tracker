@@ -1,8 +1,8 @@
+import React, { forwardRef } from "react";
 import { Button } from "@/components/ui/button";
 
 type PropsType = {
   children: React.ReactNode;
-  ref?: React.Ref<HTMLButtonElement>;
   variant?:
     | "default"
     | "destructive"
@@ -14,14 +14,16 @@ type PropsType = {
     | undefined;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const CustomIconButton = ({
-  variant = "outline",
-  children,
-  ...rest
-}: PropsType) => {
-  return (
-    <Button {...rest} variant={variant}>
-      {children}
-    </Button>
-  );
-};
+const CustomIconButton = forwardRef<HTMLButtonElement, PropsType>(
+  ({ variant = "outline", children, ...rest }, ref) => {
+    return (
+      <Button ref={ref} {...rest} variant={variant}>
+        {children}
+      </Button>
+    );
+  }
+);
+
+CustomIconButton.displayName = "CustomIconButton";
+
+export { CustomIconButton };

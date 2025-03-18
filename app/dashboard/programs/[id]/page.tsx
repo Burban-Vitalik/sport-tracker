@@ -1,11 +1,10 @@
 "use client";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { useFetchProgram } from "@/hooks/fetch/useFetchProgram";
 import { useUser } from "@/hooks/userContext";
-import { WorkoutProgram } from "@prisma/client";
 
 import programBG from "../../../../public/img/program.webp";
 import { Goal } from "./components/Goals";
@@ -14,30 +13,9 @@ import { TrainingSession } from "./components/TrainingSession";
 
 export default function ProgramPage() {
   const { id: programId } = useParams<{ id: string }>();
-  const [program, setProgram] = useState<WorkoutProgram | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const { user } = useUser();
 
-  useEffect(() => {
-    if (!programId) return;
-
-    const fetchProgram = async () => {
-      try {
-        const response = await fetch(`/api/workouts/programs/${programId}`);
-        if (!response.ok) throw new Error("Failed to fetch program data");
-
-        const data = await response.json();
-        setProgram(data);
-      } catch {
-        setError("Error loading program data");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProgram();
-  }, [programId]);
+  const { program, loading } = useFetchProgram(programId);
 
   if (!user) return <p>Loading...</p>;
 
@@ -56,7 +34,6 @@ export default function ProgramPage() {
   };
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
   if (!program) return <p>No program found</p>;
 
   return (

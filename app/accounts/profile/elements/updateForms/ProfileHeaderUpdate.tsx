@@ -9,7 +9,7 @@ type PropsType = {
   lastName: string | null;
   email: string;
   age: number;
-  userId: number;
+  userId: string;
   closeModal: () => void;
 };
 
