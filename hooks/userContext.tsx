@@ -17,6 +17,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     async function fetchUser() {
+      const cachedUser = localStorage.getItem("user");
+      if (cachedUser) {
+        setUser(JSON.parse(cachedUser));
+        return;
+      }
+
       const token = document.cookie
         .split("; ")
         .find((row) => row.startsWith("token="))
@@ -28,17 +34,17 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       try {
-        // Розшифровуємо токен, щоб отримати ID користувача
         const decodedToken: { userId: string; [key: string]: unknown } =
-          jwtDecode(token); // Декодуємо токен
-        const userId = decodedToken.userId; // Витягуємо userId з токену
-        // Робимо запит на сервер для отримання даних користувача
+          jwtDecode(token);
+        const userId = decodedToken.userId;
+
         setIsLoading(true);
         const response = await fetch(`/api/users/${userId}`);
 
         if (response.ok) {
           const userData = await response.json();
           setUser(userData);
+          localStorage.setItem("user", JSON.stringify(userData));
         } else {
           console.error("Failed to fetch user data");
         }

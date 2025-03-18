@@ -1,6 +1,12 @@
 "use client";
 
 import { ChevronUp, User2 } from "lucide-react";
+import Link from "next/link";
+
+import { getFullUserName } from "@/app/helpers";
+import LogoutButton from "@/components/auth/LogoutButton";
+import { useUser } from "@/hooks/userContext";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,17 +19,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../../ui/sidebar";
-import Link from "next/link";
-import LogoutButton from "@/components/auth/LogoutButton";
-import { useUser } from "@/hooks/userContext";
-import { getFullUserName } from "@/app/helpers";
 
 export function SidebarFooterComponent() {
-  const { user, isLoading } = useUser();
-
-  if (isLoading) {
-    return <p>Loading</p>;
-  }
+  const { user } = useUser();
 
   return (
     <SidebarFooter className="absolute bottom-0 right-0 w-full">

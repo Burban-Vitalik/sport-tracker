@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { Check, ChevronsUpDown, DumbbellIcon } from "lucide-react";
+import * as React from "react";
 
 import {
   DropdownMenu,

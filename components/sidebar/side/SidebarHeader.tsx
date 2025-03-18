@@ -1,5 +1,5 @@
-import { SearchForm } from "./search-form";
-import { VersionSwitcher } from "./version-switcher";
+import { SearchForm } from "./Search";
+import { VersionSwitcher } from "./VersionSwitcher";
 import { SidebarHeader } from "@/components/ui/sidebar";
 import { UserRole } from "@prisma/client";
 
