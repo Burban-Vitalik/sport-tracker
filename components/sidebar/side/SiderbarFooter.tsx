@@ -3,9 +3,7 @@
 import { ChevronUp, User2 } from "lucide-react";
 import Link from "next/link";
 
-import { getFullUserName } from "@/app/helpers";
-import LogoutButton from "@/components/auth/LogoutButton";
-import { useUser } from "@/hooks/userContext";
+import { useUser } from "@/context/userContext";
 
 import {
   DropdownMenu,
@@ -19,6 +17,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../../ui/sidebar";
+import LogoutButton from "@/components/sections/auth/LogoutButton";
 
 export function SidebarFooterComponent() {
   const { user } = useUser();
@@ -31,10 +30,7 @@ export function SidebarFooterComponent() {
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton>
                 <User2 />
-                {getFullUserName({
-                  firstName: user?.firstName as string,
-                  lastName: user?.lastName as string,
-                })}
+                {user?.email}
                 <ChevronUp className="ml-auto" />
               </SidebarMenuButton>
             </DropdownMenuTrigger>

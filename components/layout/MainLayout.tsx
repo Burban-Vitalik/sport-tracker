@@ -6,7 +6,7 @@ import {
   SidebarContentHeader,
 } from "@/components/sidebar/content";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { UserProvider } from "@/hooks/userContext";
+import { UserProvider } from "@/context/userContext";
 
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (

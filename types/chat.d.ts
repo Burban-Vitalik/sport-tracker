@@ -9,3 +9,12 @@ export type SendMessage = ({
   chatId: string,
   senderId: string,
 }) => Promise<void>;
+
+export type ChatContextType = {
+  chat: Chat | null;
+  loading: boolean;
+};
+
+export type ChatProviderProps = {
+  children: React.ReactNode;
+} & ChatContextType;

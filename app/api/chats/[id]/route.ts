@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const chatId = searchParams.get("chatId");
+  const pathSegments = req.nextUrl.pathname.split("/");
+  const chatId = pathSegments[pathSegments.length - 1]; // Остання частина шляху
 
   if (!chatId) {
     return NextResponse.json({ error: "Invalid chat ID" }, { status: 400 });

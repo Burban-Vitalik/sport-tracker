@@ -1,10 +1,10 @@
 import * as React from "react";
 
 import { Sidebar } from "@/components/ui/sidebar";
-import { useUser } from "@/hooks/userContext";
+import { useUser } from "@/context/userContext";
 import { UserRole } from "@prisma/client";
 
-import { SidebarSkeleton } from "../skeletons/SidebarSkeleton";
+import { SidebarSkeleton } from "../common/SidebarSkeleton";
 import { data } from "./data";
 import {
   SidebarFooterComponent,
