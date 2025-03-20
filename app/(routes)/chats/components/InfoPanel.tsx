@@ -3,11 +3,9 @@ import { FC, useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ChatInfo } from "./ChatInfo/ChatInfo";
 import { UseModal } from "@/types/modal";
+import { EModal } from "@/app/enums/modal.enum";
 
-type Props = {
-  isOpen: UseModal["isOpen"];
-  toggleModal: UseModal["toggleModal"];
-};
+type Props = {} & Pick<UseModal, EModal.isOpen | EModal.toggleModal>;
 
 export const InfoPanel: FC<Props> = ({ isOpen, toggleModal }) => {
   const infoRef = useRef<HTMLDivElement | null>(null);

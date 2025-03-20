@@ -1,8 +1,9 @@
 import { Formik } from "formik";
 import { Cake, Pen, Trash2, User } from "lucide-react";
-import { showToast } from "@/app/helpers/showToast";
 import { CustomIconButton, CustomIconInput } from "@/components/form-elements";
 import { cn } from "@/lib/utils";
+import { useUpdateProfile } from "@/hooks/put/useUpdateProfile";
+import { showToast } from "@/app/helpers";
 
 type PropsType = {
   firstName: string | null;
@@ -72,36 +73,20 @@ export const ProfileHeaderUpdateForm = ({
     age: age || 0,
   };
 
-  const handleUpdate = async (
-    value: Omit<PropsType, "userId" | "closeModal" | "profileImage">
-  ) => {
+  const { updateProfile } = useUpdateProfile(userId);
+
+  const handleFunction = async (value: typeof initialValues) => {
     try {
-      const res = await fetch(`/api/users/${userId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: userId, ...value }),
-      });
-
-      const message =
-        res.status === 200
-          ? "Profile updated successfully"
-          : "Profile update failed";
-
-      showToast({
-        message,
-        type: res.status === 200 ? "success" : "error",
-      });
+      await updateProfile(value);
+      showToast({ message: "Profile updated successfully", type: "success" });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      showToast({ message: "An unexpected error occurred", type: "error" });
-    } finally {
-      closeModal();
-      // window.location.reload(); // тимчасово
+      showToast({ message: "Error updating profile", type: "error" });
     }
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleUpdate}>
+    <Formik initialValues={initialValues} onSubmit={handleFunction}>
       {({ values, handleChange, handleSubmit }) => (
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 gap-4">

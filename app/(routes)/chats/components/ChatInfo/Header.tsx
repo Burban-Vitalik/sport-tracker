@@ -1,8 +1,9 @@
+import { EModal } from "@/app/enums/modal.enum";
 import { ChevronLeft, Settings } from "lucide-react";
 import { FC } from "react";
 
 type HeaderProps = {
-  toggleModal: VoidFunction;
+  toggleModal: EModal.toggleModal;
 };
 
 export const Header: FC<HeaderProps> = ({ toggleModal }) => {

@@ -2,15 +2,13 @@
 
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { Formik } from "formik";
+import { ErrorMessage, Formik } from "formik";
 import { User } from "@prisma/client";
 import Link from "next/link";
 import { LockKeyhole, LogIn, Mail } from "lucide-react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { CustomIconButton } from "../form-elements/buttons/CustomIconButton";
-import { ErrorMessage } from "../form-elements/messages/ErrorMessage";
-import { CustomIconInput } from "../form-elements";
+import { CustomIconInput, CustomIconButton } from "@/components/form-elements";
 
 type InitialLoginValues = Pick<User, "email" | "password">;
 

@@ -4,7 +4,6 @@ import { ConfirmModal } from "@/components/modals/ModalConfirm";
 
 const Page2 = () => {
   const handleDeleteUser = () => {
-    // Додайте свою логіку видалення
     alert("User deleted successfully!");
   };
 

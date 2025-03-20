@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 
 import { ChatWithMessages } from "@/types/chat";
+import { apiFetcher } from "@/lib/fetcher";
 
 type Props = {
   userId: string;
@@ -22,11 +23,8 @@ export const useFetchChats = ({ userId }: Props): DataType => {
     const fetchChats = async () => {
       setData((prev) => ({ ...prev, loading: true }));
       try {
-        const response = await fetch(`/api/chats?userId=${userId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch chats");
-        }
-        const chatsData = await response.json();
+        const chatsData = await apiFetcher(`/api/chats?userId=${userId}`);
+
         setData({ chats: chatsData, loading: false });
       } catch (error) {
         console.error("Error fetching chats:", error);

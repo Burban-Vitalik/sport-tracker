@@ -10,7 +10,7 @@ import { FavoriteTypeEnum } from "@/lib/api/favorites";
 import { cn } from "@/lib/utils";
 import { Exercise } from "@prisma/client";
 
-import GifImage from "../../../../public/img/gif/dumbbell-one-arm-chest-press.gif";
+import GiftImage from "@/public/img/gif/dumbbell-one-arm-chest-press.gif";
 
 type PropsType = {
   className?: string;
@@ -50,7 +50,7 @@ export function ExerciseCard({
     >
       <div className="w-20 h-20 rounded-lg overflow-hidden">
         <Image
-          src={GifImage}
+          src={GiftImage}
           alt="GifImage"
           className="w-full h-full object-cover"
         />

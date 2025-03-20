@@ -1,6 +1,6 @@
-import { AvatarCover } from "../cards/Avatar";
-import UserLogo from "../../public/img/userLogo.png";
-import { CustomIconButton } from "../form-elements";
+import { AvatarCover } from "@/components/common/Avatar";
+import UserLogo from "@/public/img/userLogo.png";
+import { CustomIconButton } from "@/components/form-elements";
 
 export const ChatMember = () => {
   return (

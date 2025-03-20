@@ -1,9 +1,9 @@
 "use client";
 import { FC, useState } from "react";
 
-import { CreateChat } from "@/components/chat/CreateChat";
 import { CustomModal } from "@/components/modals/CustomModal";
 import { useSearchParams } from "next/navigation";
+import { CreateChat } from "@/components/sections/chat/CreateChat";
 
 type Props = {
   chatsLength: number;

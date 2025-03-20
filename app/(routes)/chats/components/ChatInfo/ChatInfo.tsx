@@ -2,7 +2,6 @@
 import { FC } from "react";
 
 import { CollapsibleWrapper } from "@/components/common/CollapsibleWrapper";
-import { UseModal } from "@/types/modal";
 
 import {
   Actions,
@@ -14,10 +13,11 @@ import {
 } from "./index";
 import { Members } from "./Members";
 import { useChatContext } from "@/hooks/context/useChatContext";
+import { EModal } from "@/app/enums/modal.enum";
 
 type Props = {
   user?: string;
-  toggleModal: UseModal["toggleModal"];
+  toggleModal: EModal.toggleModal;
 };
 
 const Details = () => {

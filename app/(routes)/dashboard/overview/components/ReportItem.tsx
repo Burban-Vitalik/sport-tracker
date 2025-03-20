@@ -3,7 +3,7 @@ type PropsType = {
   report: string;
 };
 
-import SleepImg from "../../../../public/img/2829069.png";
+import SleepImg from "@/public/img/2829069.png";
 import Image from "next/image";
 
 export function ReportItem({ title, report }: PropsType) {

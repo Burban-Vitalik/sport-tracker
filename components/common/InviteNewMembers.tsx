@@ -1,5 +1,5 @@
-import { MembersList } from "../chat/MembersList";
 import { CustomIconButton } from "../form-elements";
+import { MembersList } from "../sections/chat/MembersList";
 
 export const InviteNewMembers = () => {
   return (

@@ -1,39 +1,30 @@
 "use client";
 
-import Image from "next/image";
-import UserLogo from "../../../../public/img/userLogo.png";
-import { CustomIconButton } from "@/components/form-elements/buttons/CustomIconButton";
 import { Pencil, Trash2 } from "lucide-react";
-import { User } from "@prisma/client";
-import { useState } from "react";
-import { ProfileHeaderUpdateForm } from "./updateForms/ProfileHeaderUpdate";
-import { CustomModal } from "@/components/modals/CustomModal";
-import { UploadFile } from "@/components/common/UploadFile";
-import { uploadFileToStarage } from "@/lib/supabase/storage/uploadFile";
-import { getFullUserName, showToast } from "@/app/helpers";
-import { formFullUrl } from "@/lib/supabase/helperes/makeFullUrl";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+
+import { getFullUserName, showToast } from "@/app/helpers";
+import { UploadFile } from "@/components/common/UploadFile";
+import { CustomIconButton } from "@/components/form-elements/buttons/CustomIconButton";
+import { CustomModal } from "@/components/modals/CustomModal";
 import { useUpdateUser } from "@/hooks/put/useUpdateUser";
+import { useModal } from "@/hooks/useModal";
+import { formFullUrl } from "@/lib/supabase/helperes/makeFullUrl";
+import { uploadFileToStarage } from "@/lib/supabase/storage/uploadFile";
+import UserLogo from "@/public/img/userLogo.png";
+import { User } from "@prisma/client";
+
+import { ProfileHeaderUpdateForm } from "./updateForms/ProfileHeaderUpdate";
 
 type PropsType = {
   user: User;
 };
 
 export const ProfileHeader = ({ user }: PropsType) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState<React.ReactNode>(null);
-
   const router = useRouter();
 
-  const openModal = (content: React.ReactNode) => {
-    setModalContent(content);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setModalContent(null);
-  };
+  const { isOpen: isModalOpen, openModal, closeModal } = useModal();
   const { updateUser } = useUpdateUser();
 
   const handleUploadImage = async (file: File) => {
@@ -93,18 +84,7 @@ export const ProfileHeader = ({ user }: PropsType) => {
           <CustomIconButton
             variant="destructive"
             className="flex items-center gap-2 text-gray-500 hover:text-gray-700 transition-colors text-sm py-2 px-3 bg-white border hover:bg-gray-100"
-            onClick={() =>
-              openModal(
-                <ProfileHeaderUpdateForm
-                  firstName={user.firstName}
-                  lastName={user.lastName}
-                  email={user.email}
-                  age={user.age as number}
-                  userId={user.id}
-                  closeModal={closeModal}
-                />
-              )
-            }
+            onClick={openModal}
           >
             <Pencil size={14} />
           </CustomIconButton>
@@ -123,7 +103,14 @@ export const ProfileHeader = ({ user }: PropsType) => {
         onClose={closeModal}
         title="Edit Profile"
       >
-        {modalContent}
+        <ProfileHeaderUpdateForm
+          firstName={user.firstName}
+          lastName={user.lastName}
+          email={user.email}
+          age={user.age as number}
+          userId={user.id}
+          closeModal={closeModal}
+        />
       </CustomModal>
     </>
   );

@@ -2,17 +2,17 @@
 import { Plus, Scale } from "lucide-react";
 
 import { CustomContainer } from "@/components/common/CustomContainer";
+import { CustomModal } from "@/components/modals/CustomModal";
+import { useModal } from "@/hooks/useModal";
 
 import CoffeeCup from "../../../public/img/coffeeIcon.png";
 import TeaBalance from "../../../public/img/teaIcon.png";
 import WaterBalance from "../../../public/img/waterBottle.png";
-import { BalanceList } from "./components/BalanceList";
-import { CustomModal } from "@/components/modals/CustomModal";
-import { useState } from "react";
 import { AddDrinkForm } from "./components/AddDrinkForm";
+import { BalanceList } from "./components/BalanceList";
 
 export default function BalancePage() {
-  const [open, setOpen] = useState(false);
+  const { isOpen, openModal, closeModal } = useModal();
 
   const balanceList = [
     {
@@ -67,7 +67,7 @@ export default function BalancePage() {
 
           <div className="w-[200px] h-[400px] bg-gray-200 rounded-xl p-4 flex justify-center items-center text-gray-500 font-semibold text-lg flex-col cursor-pointer hover:bg-gray-300 transition-all duration-300 shadow-md">
             <Plus size={32} />
-            <span className="mt-2" onClick={() => setOpen(true)}>
+            <span className="mt-2" onClick={openModal}>
               Add Balance
             </span>
           </div>
@@ -75,8 +75,8 @@ export default function BalancePage() {
       </div>
 
       <CustomModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
+        isOpen={isOpen}
+        onClose={closeModal}
         title="Add Balance"
         className="w-full sm:w-[600px] max-w-lg mx-6"
       >

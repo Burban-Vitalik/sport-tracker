@@ -1,29 +1,30 @@
 "use client";
 
-import { fetchExercises } from "@/lib/api/fetchExercises";
-import { Exercise } from "@prisma/client";
+import { showToast } from "@/app/helpers";
+import { useFetchExercise } from "@/hooks/fetch/useFetchExercise";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function ExercisePage() {
-  const [exercise, setExercise] = useState<Exercise | null>(null);
-  const params = useParams();
-  const id = params.id as string;
+  const { id } = useParams<{ id: string }>();
+
+  const { exercise, loading, error } = useFetchExercise(id);
 
   useEffect(() => {
-    if (!id) return;
+    if (error) {
+      showToast({
+        message: error,
+        type: "error",
+      });
+    }
+  }, [error]);
 
-    (async () => {
-      const res = await fetchExercises(id);
-      setExercise(res);
-    })();
-  }, [id]);
-
-  if (!exercise) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
+  if (!exercise) return <div>Empty...</div>;
 
   return (
     <div>
-      <div>Exercise Page</div>
+      <div>Exercise Page {id}</div>
       <div>{id}</div>
       <div>{exercise.name}</div>
       <div>{exercise.muscleGroup}</div>

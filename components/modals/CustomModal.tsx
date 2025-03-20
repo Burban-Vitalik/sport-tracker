@@ -5,10 +5,12 @@ import React from "react";
 
 import { CustomIconButton } from "../form-elements/buttons/CustomIconButton";
 import { cn } from "@/lib/utils";
+import { EModal } from "@/app/enums/modal.enum";
+import { UseModal } from "@/types/modal";
 
 type ModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen: UseModal[EModal.isOpen];
+  onClose: UseModal[EModal.closeModal];
   children: React.ReactNode;
   title?: string;
   className?: string;
@@ -32,7 +34,6 @@ export function CustomModal({
     >
       <div
         className={cn(
-          // "bg-white rounded-lg w-full sm:w-[600px] max-w-lg relative shadow-2xl transform animate-scaleIn transition-transform",
           "bg-white rounded-lg w-1/3 relative shadow-2xl transform animate-scaleIn transition-transform",
           className
         )}
