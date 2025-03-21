@@ -23,24 +23,9 @@ export type NavSection = {
 
 const currentPrograms = [
   {
-    icon: Notebook,
-    title: "Program 1",
-    url: "/dashboard/programs/41",
-  },
-  {
     icon: ScrollText,
     title: "Exercises",
-    url: "/dashboard/exercises",
-  },
-  {
-    icon: Notebook,
-    title: "Program 2",
-    url: "/dashboard/programs/41",
-  },
-  {
-    icon: Notebook,
-    title: "Program 3",
-    url: "/dashboard/programs/41",
+    url: "/exercises",
   },
   {
     icon: Notebook,
@@ -85,8 +70,8 @@ export const data = {
       items: [
         {
           icon: Notebook,
-          title: "All Programs",
-          url: "/dashboard/programs",
+          title: "Programs",
+          url: "/programs",
         },
         ...currentPrograms.map((program) => ({
           title: program.title,

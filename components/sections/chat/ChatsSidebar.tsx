@@ -6,7 +6,7 @@ import { FC, useCallback, useMemo } from "react";
 import { useChatParams } from "@/hooks/useChatParams";
 import { ChatWithMessages } from "@/types/chat";
 
-import FaceImg from "../../../../public/img/userLogo.png";
+import FaceImg from "@/public/img/userLogo.png";
 import { ChatsList } from "./ChatsList";
 import { ChatSidebarActions } from "./ChatsSidebarActions";
 import { MembersList } from "./MembersList";

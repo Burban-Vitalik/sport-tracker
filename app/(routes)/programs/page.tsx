@@ -5,9 +5,8 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 import { CustomIconButton } from "@/components/form-elements";
+import { WorkoutProgramsList } from "@/components/sections/program";
 import { useFetchPrograms } from "@/hooks/fetch/useFetchPrograms";
-
-import { WorkoutProgramsList } from "./WorkoutProgramsList";
 
 export default function WorkoutPrograms() {
   const router = useRouter();
@@ -17,11 +16,11 @@ export default function WorkoutPrograms() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="h-[80vh]">
       <div className="flex justify-end">
         <CustomIconButton
           className=" bg-emerald-800 text-white hover:bg-emerald-900 hover:text-white"
-          onClick={() => router.push("/dashboard/programs/createProgram")}
+          onClick={() => router.push("/programs/createProgram")}
         >
           <Plus />
           Create Program

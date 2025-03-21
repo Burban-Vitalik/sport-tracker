@@ -1,4 +1,5 @@
 "use client";
+import { apiFetcher } from "@/lib/fetcher";
 import { WorkoutProgram } from "@prisma/client";
 import { useState, useEffect } from "react";
 
@@ -18,14 +19,12 @@ export const useFetchPrograms = (): DataType => {
       try {
         setData((prev) => ({ ...prev, loading: true }));
 
-        const response = await fetch("/api/workouts/programs");
+        const response = await apiFetcher<WorkoutProgram[]>({
+          url: "/api/workouts/programs",
+          method: "GET",
+        });
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch workout programs");
-        }
-
-        const data = await response.json();
-        setData({ programs: data, loading: false });
+        setData({ programs: response, loading: false });
       } catch (error) {
         console.error("Error fetching programs:", error);
       } finally {

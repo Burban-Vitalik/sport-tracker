@@ -3,7 +3,7 @@ import { FC } from "react";
 
 import { ComponentCover } from "@/components/common/ComponentCover";
 
-import FaceImg from "../../../../public/img/userLogo.png";
+import FaceImg from "@/public/img/userLogo.png";
 
 type Props = {
   senderName?: string;

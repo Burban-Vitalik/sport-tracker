@@ -19,6 +19,7 @@ export const useFetchChat = (chatId: string) => {
       try {
         setData((prev) => ({ ...prev, loading: true }));
         const response = await fetch(`/api/chats/${chatId}`);
+
         if (!response.ok) {
           throw new Error("Failed to fetch chat");
         }

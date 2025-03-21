@@ -3,14 +3,14 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { CalendarCheck, CalendarDays } from "lucide-react";
 import { User } from "@prisma/client";
-import {
-  capitalizeName,
-  formatDate,
-  formatEmail,
-  getFullUserName,
-} from "../helpers";
 import { UserAvatar } from "@/components/common/UserAvatar";
 import { Button } from "@/components/ui/button";
+import {
+  getFullUserName,
+  capitalizeName,
+  formatEmail,
+  formatDate,
+} from "@/app/helpers";
 
 type UserKeys = keyof User;
 
@@ -24,6 +24,8 @@ const userKeys: Record<UserKeys, UserKeys> = {
   createdAt: "createdAt",
   updatedAt: "updatedAt",
   profileImage: "profileImage",
+  role: "id",
+  sex: "id",
 };
 
 export const columns: ColumnDef<User>[] = [

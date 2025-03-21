@@ -18,7 +18,10 @@ export const useFetchExercises = () => {
     (async function () {
       try {
         setData((prev) => ({ ...prev, loading: true }));
-        const response = await apiFetcher("/api/exercises");
+        const response = await apiFetcher<Exercise[]>({
+          url: "/api/exercises",
+          method: "GET",
+        });
         setData({ exercises: response, loading: false });
       } catch (error) {
         console.error("Error fetching exercises:", error);

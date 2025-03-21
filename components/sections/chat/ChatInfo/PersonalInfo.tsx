@@ -1,6 +1,7 @@
 import { FC } from "react";
+
 import { AvatarCover } from "@/components/common/Avatar";
-import FaceImg from "../../../../../public/img/userLogo2.png";
+import FaceImg from "@/public/img/userLogo.png";
 
 export const PersonalInfo: FC = () => {
   return (

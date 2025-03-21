@@ -3,8 +3,8 @@
 import { usePathname } from "next/navigation";
 
 import { useFetchChat } from "@/hooks/fetch/useFetchChat";
-import { ChatSection } from "../components";
-import { ChatProvider } from "@/hooks/context/useChatContext";
+import { ChatProvider } from "@/components/providers/ChatProvider";
+import { ChatSection } from "@/components/sections/chat";
 
 const ChatPage = () => {
   const pathname = usePathname();

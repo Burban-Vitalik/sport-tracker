@@ -156,7 +156,9 @@ const LoginForm = () => {
           {(errors.email || errors.password) && (
             <div ref={errorRef}>
               <ErrorMessage
-                message={errors.email || (errors.password as string)}
+                message={
+                  (errors.email as string) || (errors.password as string)
+                }
               />
             </div>
           )}

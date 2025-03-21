@@ -5,7 +5,7 @@ import { User } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 async function getData(): Promise<User[]> {
-  return await prisma.user.findMany();
+  return await prisma.user.findMany({});
 }
 
 export default async function UsersPage() {

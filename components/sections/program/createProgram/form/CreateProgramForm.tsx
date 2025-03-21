@@ -1,12 +1,13 @@
 "use client";
 import { Form, Formik } from "formik";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 import { showToast } from "@/app/helpers";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useUser } from "@/context/userContext";
-import { Gender, User, WorkoutProgram } from "@prisma/client";
+import { Gender, User, WorkoutGoal, WorkoutProgram } from "@prisma/client";
 
 import {
   SelectAge,
@@ -18,13 +19,12 @@ import {
   Summarize,
 } from "../formSteps";
 import { FormHeader } from "./FormHeader";
-import { useRouter } from "next/navigation";
 
 export const initialValues: Omit<WorkoutProgram, "id" | "userId"> = {
   title: "Some title",
   currentAge: 22,
   gender: Gender.Male,
-  workoutGoal: "strength_development",
+  workoutGoal: WorkoutGoal.FAT_LOSS,
   currentWeight: 82,
   currentHeight: 182,
   fatPercentage: 20,

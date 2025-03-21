@@ -5,7 +5,7 @@ import { Input } from "../ui/input";
 import { X } from "lucide-react";
 import { Table as ReactTable } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import { useDebounce } from "@/app/hooks";
+import { useDebounce } from "@/hooks/useDebounce";
 
 type PropsType<TData> = {
   dataTable: ReactTable<TData>;

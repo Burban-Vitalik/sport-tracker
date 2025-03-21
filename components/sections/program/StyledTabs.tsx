@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Settings } from "./tabs/Settings";
+import { Settings } from "./Settings";
 
 const tabsData = [
   {

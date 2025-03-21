@@ -23,7 +23,12 @@ export const useFetchChats = ({ userId }: Props): DataType => {
     const fetchChats = async () => {
       setData((prev) => ({ ...prev, loading: true }));
       try {
-        const chatsData = await apiFetcher(`/api/chats?userId=${userId}`);
+        if (!userId) return;
+
+        const chatsData = await apiFetcher<ChatWithMessages[]>({
+          url: `/api/chats?userId=${userId}`,
+          method: "GET",
+        });
 
         setData({ chats: chatsData, loading: false });
       } catch (error) {

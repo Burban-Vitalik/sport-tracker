@@ -39,6 +39,7 @@ const components: { title: string; component: FC; open?: boolean }[] = [
 export const ChatInfo: FC<Props> = ({ toggleModal }) => {
   const { chat } = useChatContext();
   if (!chat) return null;
+
   const { participants } = chat;
 
   return (

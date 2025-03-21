@@ -1,7 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import TimerImg from "../../../../../public/img/timer.png";
+
+import { Button } from "@/components/ui/button";
+
+import TimerImg from "@/public/img/timer.png";
 
 export const TrainingSession = () => {
   return (

@@ -4,8 +4,8 @@ import { FC, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
-import { WorkoutGoal as WorkoutGoalEnum } from "../../../../enums/workoutGoal";
 import { initialValues } from "../form/CreateProgramForm";
+import { WorkoutGoal } from "@/app/enums/workoutGoal";
 
 type PropsType = {
   values: typeof initialValues;
@@ -48,7 +48,7 @@ export const SelectWeekSecessions: FC<PropsType> = ({
   const [showMessage, setShowMessage] = useState(true);
 
   const workoutGoalName = useMemo(
-    () => WorkoutGoalEnum[values.workoutGoal as keyof typeof WorkoutGoalEnum],
+    () => WorkoutGoal[values.workoutGoal as keyof typeof WorkoutGoal],
     [values.workoutGoal]
   );
   const sessionColor = useMemo(
