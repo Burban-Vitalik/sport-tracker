@@ -5,9 +5,9 @@ import { CustomContainer } from "@/components/common/CustomContainer";
 import { CustomModal } from "@/components/modals/CustomModal";
 import { useModal } from "@/hooks/useModal";
 
-import CoffeeCup from "../../../public/img/coffeeIcon.png";
-import TeaBalance from "../../../public/img/teaIcon.png";
-import WaterBalance from "../../../public/img/waterBottle.png";
+import CoffeeCup from "@/public/img/coffeeIcon.png";
+import TeaBalance from "@/public/img/teaIcon.png";
+import WaterBalance from "@/public/img/waterBottle.png";
 import { AddDrinkForm } from "./components/AddDrinkForm";
 import { BalanceList } from "./components/BalanceList";
 

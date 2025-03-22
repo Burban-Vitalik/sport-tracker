@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 import { useFetchProgram } from "@/hooks/fetch/useFetchProgram";
 import { useUser } from "@/context/userContext";
 
-import programBG from "../../../../public/img/program.webp";
-import { Goal } from "../../../../components/sections/program/Goals";
-import { StyledTabs } from "../../../../components/sections/program/StyledTabs";
-import { TrainingSession } from "../../../../components/sections/program/TrainingSession";
+import programBG from "@/public/img/program.webp";
+import { Goal } from "@/components/sections/program/Goals";
+import { StyledTabs } from "@/components/sections/program/StyledTabs";
+import { TrainingSession } from "@/components/sections/program/TrainingSession";
 
 export default function ProgramPage() {
   const { id: programId } = useParams<{ id: string }>();

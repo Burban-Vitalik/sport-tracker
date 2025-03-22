@@ -1,8 +1,8 @@
 import { DrinkType } from "@prisma/client";
 import { Form, Formik } from "formik";
-import CoffeeCup from "../../../../public/img/coffeeIcon.png";
-import TeaBalance from "../../../../public/img/teaIcon.png";
-import WaterBalance from "../../../../public/img/waterBottle.png";
+import CoffeeCup from "@/public/img/coffeeIcon.png";
+import TeaBalance from "@/public/img/teaIcon.png";
+import WaterBalance from "@/public/img/waterBottle.png";
 import { DrinkTypeIcon } from "@/components/common/DrinkTypeIcon";
 import { StaticImageData } from "next/image";
 import { CustomIconButton } from "@/components/form-elements";

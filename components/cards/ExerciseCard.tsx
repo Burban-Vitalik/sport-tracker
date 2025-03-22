@@ -11,7 +11,7 @@ import { useRemoveFromFavorites } from "@/hooks/remove/useRemoveFromFavorites";
 import { FavoriteTypeEnum } from "@/lib/api/favorites";
 import { Exercise, Favorite } from "@prisma/client";
 
-import Shoulders from "../../public/img/People.webp";
+import Shoulders from "@/public/img/People.webp";
 import { Button } from "../ui/button";
 
 type PropsType = {

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import EmptyChatImg from "../../public/img/emptyChat.png";
+import EmptyChatImg from "@/public/img/emptyChat.png";
 
 export const EmptyChat = () => {
   return (

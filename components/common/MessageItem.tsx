@@ -1,5 +1,5 @@
 import Image from "next/image";
-import FaceImg from "../../public/img/userLogo.png";
+import FaceImg from "@/public/img/userLogo.png";
 import { Check } from "lucide-react";
 import { FC } from "react";
 
