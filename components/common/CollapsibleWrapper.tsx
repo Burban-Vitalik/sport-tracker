@@ -21,7 +21,7 @@ export const CollapsibleWrapper: FC<Props> = ({
         className="w-full flex justify-between items-center py-2  transition"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="font-medium">{!isOpen ? title : ""}</span>
+        <span className="font-medium">{title}</span>
         <span
           className={`transition-transform ${
             isOpen ? "rotate-180" : "rotate-0"

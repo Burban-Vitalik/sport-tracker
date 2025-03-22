@@ -1,8 +1,7 @@
 "use client";
-import { useFetchChats } from "@/hooks/fetch/useFetchChats";
-
-import { useUser } from "@/context/userContext";
 import { ChatsSidebar } from "@/components/sections/chat";
+import { useUser } from "@/context/userContext";
+import { useFetchChats } from "@/hooks/fetch/useFetchChats";
 
 type Props = {
   children: React.ReactNode;

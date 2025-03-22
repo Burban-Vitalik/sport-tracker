@@ -1,17 +1,17 @@
 "use client";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 import { CustomModal } from "@/components/modals/CustomModal";
 import { useSearchParams } from "next/navigation";
-import { CreateChat } from "@/components/sections/chat/CreateChat";
+import { useModal } from "@/hooks/useModal";
+import CreateChat from "./CreateChat";
 
 type Props = {
   chatsLength: number;
 };
 
 export const NewChat: FC<Props> = ({ chatsLength = 6 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleModal = () => setIsOpen(!isOpen);
+  const { isOpen, toggleModal } = useModal();
 
   const params = useSearchParams();
   const chatsType = params.get("type") || "chat";

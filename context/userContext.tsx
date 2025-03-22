@@ -1,10 +1,11 @@
 "use client";
+import { UserWithRelations } from "@/types/user";
 import { User } from "@prisma/client";
 import { jwtDecode } from "jwt-decode";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type UserContextType = {
-  user: User | null;
+  user: UserWithRelations | null;
   setUser: (user: User) => void;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;

@@ -52,13 +52,17 @@ export const ChatInfo: FC<Props> = ({ toggleModal }) => {
           </CollapsibleWrapper>
         ))}
         <CollapsibleWrapper title="Members">
-          <Members participants={participants} />
+          <Members participants={participants} chatType={chat.type} />
         </CollapsibleWrapper>
       </div>
 
       <button className="bg-red-500 w-full p-2 rounded-lg text-white">
         Leave Chat
       </button>
+
+      <p className="text-xs text-gray-600">
+        Chat is created on {new Date().toDateString()}
+      </p>
     </section>
   );
 };

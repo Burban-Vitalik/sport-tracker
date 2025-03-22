@@ -1,16 +1,14 @@
-"use client";
-
-import { ChatWithCredentials } from "@/types/chat";
+import { User } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 type DataType = {
-  chat: ChatWithCredentials | null;
+  users: User[];
   loading: boolean;
 };
 
-export const useFetchChat = (chatId: string) => {
+export const useFetchUsers = () => {
   const [data, setData] = useState<DataType>({
-    chat: null,
+    users: [],
     loading: false,
   });
 
@@ -18,20 +16,17 @@ export const useFetchChat = (chatId: string) => {
     (async function () {
       try {
         setData((prev) => ({ ...prev, loading: true }));
-        const response = await fetch(`/api/chats/${chatId}`);
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch chat");
-        }
+        const response = await fetch("/api/users");
+        if (!response.ok) throw new Error("Failed to fetch users");
         const data = await response.json();
-        setData({ chat: data, loading: false });
+        setData({ users: data, loading: false });
       } catch (error) {
-        console.error("Error fetching chat:", error);
+        console.error("Error fetching users:", error);
       } finally {
         setData((prev) => ({ ...prev, loading: false }));
       }
     })();
-  }, [chatId]);
+  }, []);
 
   return data;
 };

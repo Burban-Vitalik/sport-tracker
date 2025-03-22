@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import { FC } from "react";
 
 import { isItemFavorite } from "@/app/helpers/isItemFavorite";
+import { useUser } from "@/context/userContext";
 import { useAddToFavorites } from "@/hooks/post/useAddToFavorites";
 import { useRemoveFromFavorites } from "@/hooks/remove/useRemoveFromFavorites";
-import { useUser } from "@/context/userContext";
 import { FavoriteTypeEnum } from "@/lib/api/favorites";
 import { Exercise, Favorite } from "@prisma/client";
 
@@ -50,7 +50,6 @@ export const ExerciseCard: FC<PropsType> = ({ exercise }) => {
         </span>
       </div>
 
-      {/* Button */}
       <Button
         className="px-5 py-2 text-sm font-medium bg-cyan-600 text-white rounded-lg transition-all hover:bg-cyan-700"
         onClick={() => router.push("/dashboard/exercises/" + exercise.id)}

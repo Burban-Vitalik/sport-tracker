@@ -1,4 +1,4 @@
-import { Chat, Message } from "@prisma/client";
+import { Chat, ChatParticipant, Message } from "@prisma/client";
 
 export type ChatWithMessages = Chat & {
   messages: Message[];
@@ -11,10 +11,14 @@ export type SendMessage = ({
 }) => Promise<void>;
 
 export type ChatContextType = {
-  chat: Chat | null;
+  chat: ChatWithCredentials | null;
   loading: boolean;
 };
 
 export type ChatProviderProps = {
   children: React.ReactNode;
 } & ChatContextType;
+
+export type ChatWithCredentials = Chat & {
+  participants: ChatParticipant[];
+};
