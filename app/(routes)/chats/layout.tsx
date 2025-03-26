@@ -1,25 +1,15 @@
 "use client";
-import { ChatsSidebar } from "@/components/sections/chat";
-import { useUser } from "@/context/userContext";
-import { useFetchChats } from "@/hooks/fetch/useFetchChats";
 
 type Props = {
-  children: React.ReactNode;
+  chatsSection: React.ReactNode;
+  chatSection: React.ReactNode;
 };
 
-export default function ChatsLayout({ children }: Props) {
-  const { user, isLoading } = useUser();
-
-  const { chats } = useFetchChats({
-    userId: user?.id as string,
-  });
-
-  if (!user || isLoading) return <p>Loading...</p>;
-
+export default function ChatsLayout({ chatsSection, chatSection }: Props) {
   return (
-    <section className="flex gap-6 h-[80vh]">
-      <ChatsSidebar chats={chats} />
-      {children}
+    <section className="border h-[calc(100vh-64px)] flex gap-4 p-4">
+      <aside className="bg-white shadow-xl rounded-xl">{chatsSection}</aside>
+      <main className="shadow-xl rounded-xl w-full h-full">{chatSection}</main>
     </section>
   );
 }

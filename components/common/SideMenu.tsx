@@ -26,7 +26,7 @@ interface MenuItem {
   subItems?: MenuItem[];
 }
 
-export const SideMenu = ({ userId }: { userId: number }) => {
+export const SideMenu = ({ userId }: { userId: string }) => {
   const pathname = usePathname();
 
   const menuItems: MenuItem[] = [

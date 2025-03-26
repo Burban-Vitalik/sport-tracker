@@ -13,7 +13,7 @@ export default function AccountsLayout({
 
   return (
     <div className="flex flex-col gap-4 md:flex-row">
-      <SideMenu userId={user?.id as number} />
+      <SideMenu userId={user?.id} />
       <div className="flex flex-col gap-4 w-full">{children}</div>
     </div>
   );

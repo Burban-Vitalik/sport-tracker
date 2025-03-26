@@ -1,5 +1,5 @@
 import { EmptyChat } from "@/components/common/EmptyChat";
 
-export default function ChatsPage() {
+export default function ChatPage() {
   return <EmptyChat />;
 }

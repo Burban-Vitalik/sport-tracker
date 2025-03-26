@@ -3,7 +3,7 @@ import EmptyChatImg from "@/public/img/emptyChat.png";
 
 export const EmptyChat = () => {
   return (
-    <div className="w-full bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center space-y-4">
+    <div className="w-full h-full bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center space-y-4">
       <Image
         src={EmptyChatImg}
         alt="Empty Chat"

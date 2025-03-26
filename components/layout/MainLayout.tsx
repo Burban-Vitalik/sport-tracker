@@ -18,9 +18,9 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
             <SidebarInset>
               <SidebarContentHeader />
               <SidebarContent>
-                <div className="flex flex-1 flex-col gap-4 p-4 bg-gray-50">
+                <div className="flex flex-1 flex-col gap-4 bg-gray-50 h-[calc(100vh-64px)]">
                   <div className="grid w-full">{children}</div>
-                  <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+                  {/* <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" /> */}
                 </div>
               </SidebarContent>
             </SidebarInset>

@@ -1,22 +1,24 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { FC, useCallback, useMemo } from "react";
-
+import {
+  ChatSidebarActions,
+  MembersList,
+  NewChat,
+} from "@/components/sections/chat";
+import { useUser } from "@/context/userContext";
+import { useFetchChats } from "@/hooks/fetch";
 import { useChatParams } from "@/hooks/useChatParams";
-import { ChatWithMessages } from "@/types/chat";
-
 import FaceImg from "@/public/img/userLogo.png";
-import { ChatsList } from "./ChatsList";
-import { ChatSidebarActions } from "./ChatsSidebarActions";
-import { MembersList } from "./MembersList";
-import { NewChat } from "./NewChat";
+import { useRouter } from "next/navigation";
+import { useCallback, useMemo } from "react";
 
-type PropsType = {
-  chats: ChatWithMessages[];
-};
+export default function ChatPage() {
+  const { user, isLoading } = useUser();
 
-export const ChatsSidebar: FC<PropsType> = ({ chats }) => {
+  const { chats } = useFetchChats({
+    userId: user?.id as string,
+  });
+
   const router = useRouter();
   const { chatId, type, params } = useChatParams();
 
@@ -34,15 +36,15 @@ export const ChatsSidebar: FC<PropsType> = ({ chats }) => {
     return type === "all" ? chats : chats.filter((chat) => chat.type === type);
   }, [type, chats]);
 
+  if (isLoading && !user) return <p>Loading...</p>;
+
   return (
-    <div className="w-full max-w-xs bg-white rounded-2xl shadow-lg flex flex-col overflow-hidden">
-      <div className="flex justify-around border-b p-4">
+    <div className="">
+      <div className="flex gap-2 justify-around border-b p-4">
         <MembersList userImg={FaceImg} />
       </div>
-
       <ChatSidebarActions chatsType={type} toggleChatsType={toggleChatsType} />
       <NewChat chatsLength={filteredChats.length} />
-      <ChatsList chats={chats} />
     </div>
   );
-};
+}

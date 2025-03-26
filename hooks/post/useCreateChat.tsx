@@ -7,10 +7,7 @@ export const useCreateChat = () => {
         isPrivate: true,
         type: "CHAT",
         creatorId: userId,
-        participants: [
-          "cm8ervqk00007uw98hpkruen7",
-          "cm8ervi8s0005uw98g0h41wfa",
-        ],
+        participants: [userId, "cm8ervi8s0005uw98g0h41wfa"],
       }),
     });
     const data = await response.json();
