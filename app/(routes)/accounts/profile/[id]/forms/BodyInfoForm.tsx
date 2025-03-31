@@ -1,11 +1,12 @@
 import { CustomIconButton, CustomIconInput } from "@/components/form-elements";
 import { Label } from "@/components/ui/label";
+import { MyPick } from "@/types/custom-types";
 import { BodyInfo } from "@prisma/client";
 import { Formik } from "formik";
 import { Cake, Pen, X } from "lucide-react";
 import { FC } from "react";
 
-type InitialValuesType = Pick<BodyInfo, "height" | "weight">;
+type InitialValuesType = MyPick<BodyInfo, "height" | "weight">;
 
 const formElements = [
   {

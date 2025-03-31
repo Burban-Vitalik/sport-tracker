@@ -11,10 +11,11 @@ import {
   formatEmail,
   formatDate,
 } from "@/app/helpers";
+import { MyRecord } from "@/types/custom-types";
 
 type UserKeys = keyof User;
 
-const userKeys: Record<UserKeys, UserKeys> = {
+const userKeys: MyRecord<UserKeys, UserKeys> = {
   firstName: "firstName",
   lastName: "lastName",
   email: "email",

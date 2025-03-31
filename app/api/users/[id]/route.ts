@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { MyPartial } from "@/types/custom-types";
 import { User } from "@prisma/client";
 import { NextResponse } from "next/server";
 
@@ -30,7 +31,7 @@ export async function GET(
 }
 
 export async function PUT(req: Request) {
-  const body: Partial<User> = await req.json();
+  const body: MyPartial<User> = await req.json();
   const { id } = body;
 
   if (!id) {

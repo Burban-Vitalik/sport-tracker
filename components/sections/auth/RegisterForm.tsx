@@ -1,20 +1,22 @@
 "use client";
 
-import { User } from "@prisma/client";
 import { Formik } from "formik";
-import { useRouter } from "next/navigation";
 import { LockKeyhole, Mail } from "lucide-react";
-import { ErrorMessage } from "../form-elements/messages/ErrorMessage";
 import Link from "next/link";
-import { CustomIconButton, CustomIconInput } from "../form-elements";
+import { useRouter } from "next/navigation";
 
-type InitialRegisterValues = Pick<User, "email" | "password">;
+import { CustomIconButton, CustomIconInput } from "@/components/form-elements";
+import { ErrorMessage } from "@/components/form-elements/messages/ErrorMessage";
+import { MyPartial, MyPick, MyRecord } from "@/types/custom-types";
+import { User } from "@prisma/client";
+
+type InitialRegisterValues = MyPick<User, "email" | "password">;
 
 const handleApiErrors = (
   status: number,
-  setErrors: (errors: Partial<InitialRegisterValues>) => void
+  setErrors: (errors: MyPartial<InitialRegisterValues>) => void
 ) => {
-  const errorMessages: Record<number, Partial<InitialRegisterValues>> = {
+  const errorMessages: MyRecord<number, MyPartial<InitialRegisterValues>> = {
     400: {
       email: "Email and password are required.",
       password: "Email and password are required.",
@@ -50,7 +52,7 @@ const RegisterForm = () => {
     values: InitialRegisterValues,
     {
       setErrors,
-    }: { setErrors: (errors: Partial<InitialRegisterValues>) => void }
+    }: { setErrors: (errors: MyPartial<InitialRegisterValues>) => void }
   ) => {
     try {
       const { res, data } = await registerUser(values);

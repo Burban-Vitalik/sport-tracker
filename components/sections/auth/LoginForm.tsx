@@ -2,15 +2,17 @@
 
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { ErrorMessage, Formik } from "formik";
+import { Formik } from "formik";
 import { User } from "@prisma/client";
 import Link from "next/link";
 import { LockKeyhole, LogIn, Mail } from "lucide-react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { CustomIconInput, CustomIconButton } from "@/components/form-elements";
+import { MyPartial, MyPick } from "@/types/custom-types";
+import { ErrorMessage } from "@/components/form-elements/messages/ErrorMessage";
 
-type InitialLoginValues = Pick<User, "email" | "password">;
+type InitialLoginValues = MyPick<User, "email" | "password">;
 
 const LoginForm = () => {
   const router = useRouter();
@@ -32,7 +34,9 @@ const LoginForm = () => {
 
   const handleLogin = async (
     values: InitialLoginValues,
-    { setErrors }: { setErrors: (errors: Partial<InitialLoginValues>) => void }
+    {
+      setErrors,
+    }: { setErrors: (errors: MyPartial<InitialLoginValues>) => void }
   ) => {
     try {
       const res = await fetch("/api/auth/login", {

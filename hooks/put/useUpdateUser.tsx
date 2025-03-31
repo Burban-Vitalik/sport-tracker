@@ -1,9 +1,10 @@
 import { showToast } from "@/app/helpers";
+import { MyPartial } from "@/types/custom-types";
 import { User } from "@prisma/client";
 
 type Props = {
   userId: string;
-  data: Partial<User>;
+  data: MyPartial<User>;
 };
 
 export const useUpdateUser = () => {

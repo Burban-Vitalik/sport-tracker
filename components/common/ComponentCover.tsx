@@ -1,8 +1,9 @@
+import { MyRecord } from "@/types/custom-types";
 import Head from "next/head";
 import { FC, ReactNode } from "react";
 
 type ComponentCoverProps = {
-  jsonLd: Record<string, unknown>;
+  jsonLd: MyRecord<string, unknown>;
   children: ReactNode;
 };
 

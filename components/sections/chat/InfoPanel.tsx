@@ -1,11 +1,14 @@
 "use client";
-import { FC, useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ChatInfo } from "./ChatInfo/ChatInfo";
-import { UseModal } from "@/types/modal";
-import { EModal } from "@/app/enums/modal.enum";
+import { FC, useLayoutEffect, useRef } from "react";
 
-type Props = {} & Pick<UseModal, EModal.isOpen | EModal.toggleModal>;
+import { EModal } from "@/app/enums/modal.enum";
+import { MyPick } from "@/types/custom-types";
+import { UseModal } from "@/types/modal";
+
+import { ChatInfo } from "./ChatInfo/ChatInfo";
+
+type Props = {} & MyPick<UseModal, EModal.isOpen | EModal.toggleModal>;
 
 export const InfoPanel: FC<Props> = ({ isOpen, toggleModal }) => {
   const infoRef = useRef<HTMLDivElement | null>(null);

@@ -19,8 +19,9 @@ import {
   Summarize,
 } from "../formSteps";
 import { FormHeader } from "./FormHeader";
+import { MyOmit } from "@/types/custom-types";
 
-export const initialValues: Omit<WorkoutProgram, "id" | "userId"> = {
+export const initialValues: MyOmit<WorkoutProgram, "id" | "userId"> = {
   title: "Some title",
   currentAge: 22,
   gender: Gender.Male,

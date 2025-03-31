@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { MyPartial } from "@/types/custom-types";
 import { WorkoutProgram } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -56,7 +57,7 @@ export async function PATCH(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const id = pathname.split("/").pop();
 
-  const body: Partial<WorkoutProgram> = await req.json();
+  const body: MyPartial<WorkoutProgram> = await req.json();
 
   if (!id) {
     return NextResponse.json({ error: "ID is required" }, { status: 400 });

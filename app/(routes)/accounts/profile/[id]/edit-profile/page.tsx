@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useUpdateUser } from "@/hooks/put/useUpdateUser";
 import { useUser } from "@/context/userContext";
 import { User } from "@prisma/client";
+import { MyPartial } from "@/types/custom-types";
 
 const formFields = [
   {
@@ -50,7 +51,7 @@ export default function EditProfilePage() {
     <Formik
       initialValues={initialValues}
       onSubmit={(values) =>
-        updateUser({ userId: user.id, data: values as Partial<User> })
+        updateUser({ userId: user.id, data: values as MyPartial<User> })
       }
     >
       {({ handleSubmit, values, handleChange }) => (
