@@ -1,16 +1,17 @@
 "use client";
 
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
 import { Formik } from "formik";
-import { User } from "@prisma/client";
-import Link from "next/link";
-import { LockKeyhole, LogIn, Mail } from "lucide-react";
-import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { CustomIconInput, CustomIconButton } from "@/components/form-elements";
-import { MyPartial, MyPick } from "@/types/custom-types";
+import Cookies from "js-cookie";
+import { LockKeyhole, LogIn, Mail } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
+
+import { CustomIconButton, CustomIconInput } from "@/components/form-elements";
 import { ErrorMessage } from "@/components/form-elements/messages/ErrorMessage";
+import { MyPartial, MyPick } from "@/types/custom-types";
+import { User } from "@prisma/client";
 
 type InitialLoginValues = MyPick<User, "email" | "password">;
 

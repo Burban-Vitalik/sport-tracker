@@ -1,56 +1,59 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
 
-interface DecodedToken {
-  userId: string;
-  email: string;
-  exp: number;
-}
+import { checkTokenExpiration } from "@/app/helpers/checkTokenExpiration";
+import { TOKEN_KEY } from "@/consts";
+import { DecodedToken } from "@/types/token";
+
+type DataType = {
+  isAuthenticated: boolean;
+  user: DecodedToken | null;
+  loading: boolean;
+};
 
 const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<DecodedToken | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<DataType>({
+    isAuthenticated: false,
+    user: null,
+    loading: true,
+  });
+
+  function updateAuthState(isAuth: boolean, userData: DecodedToken | null) {
+    setData((prev) => ({
+      ...prev,
+      isAuthenticated: isAuth,
+      user: userData,
+    }));
+  }
 
   useEffect(() => {
     const checkAuth = () => {
-      const token = Cookies.get("token");
+      const token = Cookies.get(TOKEN_KEY);
 
-      if (!token) {
-        setIsAuthenticated(false);
-        setUser(null);
-        setLoading(false);
+      if (!token || !checkTokenExpiration(token)) {
+        Cookies.remove(TOKEN_KEY); // Remove expired token
+        updateAuthState(false, null);
         return;
       }
 
       try {
         const decoded: DecodedToken = jwtDecode(token);
-
-        // Перевіряємо, чи токен не протермінований
-        if (decoded.exp * 1000 < Date.now()) {
-          Cookies.remove("token"); // Видаляємо прострочений токен
-          setIsAuthenticated(false);
-          setUser(null);
-        } else {
-          setIsAuthenticated(true);
-          setUser(decoded);
-        }
+        updateAuthState(true, decoded);
       } catch (error) {
-        console.error("Помилка під час розшифровки токена:", error);
-        setIsAuthenticated(false);
-        setUser(null);
+        console.error("Error decoding token", error);
+        updateAuthState(false, null);
       } finally {
-        setLoading(false);
+        setData((prev) => ({ ...prev, loading: false }));
       }
     };
 
     checkAuth();
   }, []);
 
-  return { isAuthenticated, user, loading };
+  return data;
 };
 
 export default useAuth;

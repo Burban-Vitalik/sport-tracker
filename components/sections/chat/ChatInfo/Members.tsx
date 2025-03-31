@@ -10,8 +10,6 @@ type Props = {
 };
 
 export const Members: FC<Props> = ({ participants, chatType }) => {
-  console.log("vovo", chatType);
-
   return (
     <div>
       <div className="flex flex-col gap-2">
