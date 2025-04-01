@@ -17,8 +17,8 @@ export const ChatMember = ({ name = "User Name", email }: Props) => {
           <p className="text-gray-600 text-sm">{email}</p>
         </span>
       </div>
-      <CustomIconButton className="px-3 py-1 text-sm text-red-400 border border-red-400 rounded-lg hover:bg-red-400 hover:text-white transition">
-        Remove
+      <CustomIconButton className="px-3 py-1 text-sm text-blue-400 border border-blue-400 rounded-lg hover:bg-blue-400 hover:text-white transition">
+        Admin
       </CustomIconButton>
     </div>
   );

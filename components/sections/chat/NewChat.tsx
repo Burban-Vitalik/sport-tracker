@@ -4,7 +4,7 @@ import { FC } from "react";
 import { CustomModal } from "@/components/modals/CustomModal";
 import { useSearchParams } from "next/navigation";
 import { useModal } from "@/hooks/useModal";
-import CreateChat from "./CreateChat";
+import { Stepper } from "@/components/Stepper";
 
 type Props = {
   chatsLength: number;
@@ -30,7 +30,7 @@ export const NewChat: FC<Props> = ({ chatsLength = 6 }) => {
       </button>
 
       <CustomModal isOpen={isOpen} onClose={toggleModal} title="New Chat">
-        <CreateChat />
+        <Stepper />
       </CustomModal>
     </section>
   );
