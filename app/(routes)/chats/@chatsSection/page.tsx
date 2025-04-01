@@ -36,7 +36,7 @@ export default function ChatPage() {
     return type === "all" ? chats : chats.filter((chat) => chat.type === type);
   }, [type, chats]);
 
-  if (isLoading && !user) return <p>Loading...</p>;
+  if (isLoading && !user) return <p>1234...</p>;
 
   return (
     <div className="">

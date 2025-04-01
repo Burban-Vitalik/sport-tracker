@@ -1,29 +1,30 @@
+"use client";
 import React from "react";
 
 import { EmptyMessageWithSmile } from "@/components/common";
 import { Container } from "@/components/common/Container";
 import { PageTitle } from "@/components/common/PageTitle";
 import { CustomSearchInput } from "@/components/form-elements/CustomSearchInput";
-import { prisma } from "@/lib/prisma";
-import { User } from "@prisma/client";
 
 import { UsersList } from "./UsersList";
+import { useFetchUsers } from "@/hooks/fetch/useFetchUsers";
 
-async function getData(): Promise<User[]> {
-  return await prisma.user.findMany({});
-}
+export default function UsersPage() {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { users, loading: usersLoading } = useFetchUsers();
 
-export default async function UsersPage() {
-  const data: User[] = await getData();
+  if (usersLoading) {
+    return <p>Loading users...</p>;
+  }
 
   return (
     <Container className="mt-10 mx-auto">
       <PageTitle title="Users Page" />
-      {data ? (
+      {users && users.length > 0 ? (
         <div className="flex gap-4 flex-col">
           <CustomSearchInput />
           <div className="flex flex-row flex-wrap gap-4">
-            <UsersList users={data} />
+            <UsersList users={users} />
           </div>
         </div>
       ) : (

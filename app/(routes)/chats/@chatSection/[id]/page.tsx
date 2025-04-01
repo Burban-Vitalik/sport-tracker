@@ -9,8 +9,6 @@ export default function ChatSectionPage() {
   const { id } = params;
   const { chat, loading } = useFetchChat(id as string);
 
-  if (loading || !chat) return <div>Loading</div>;
-
   return (
     <ChatProvider chat={chat} loading={loading}>
       <ChatSection />

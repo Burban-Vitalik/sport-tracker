@@ -21,4 +21,5 @@ export type ChatProviderProps = {
 
 export type ChatWithCredentials = Chat & {
   participants: ChatParticipant[];
+  messages: Message[];
 };
