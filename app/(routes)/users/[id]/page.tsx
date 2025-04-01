@@ -1,31 +1,52 @@
 "use client";
+import { useFetchUser } from "@/hooks/fetch/useFetchUser";
 import { useCreateChat } from "@/hooks/post/useCreateChat";
-import { prisma } from "@/lib/prisma";
-import { useParams } from "next/navigation";
-
-async function getUser(id: string) {
-  const response = await prisma.user.findUnique({ where: { id: id } });
-  return response;
-}
+import { useParams, useRouter } from "next/navigation";
 
 export default function UserPage() {
+  const { createChat } = useCreateChat();
   const params = useParams();
   const { id } = params;
-  const user = getUser(id as string);
 
-  const { createChat } = useCreateChat();
+  const router = useRouter();
 
-  if (!user) {
+  const { user, loading } = useFetchUser(id as string);
+
+  const me = JSON.parse(localStorage.getItem("user") as string);
+
+  if (!user || loading) {
     return <div>user not found</div>;
   }
+  const commonChat = me?.ChatParticipant.find((myChat) =>
+    user?.ChatParticipant.some((userChat) => myChat.chatId === userChat.chatId)
+  );
+
+  const hasCommonChat = Boolean(commonChat);
+  const commonChatId = commonChat?.chatId || null;
 
   return (
     <div>
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded-md"
-        onClick={() => createChat(id as string)}
-      >
-        Start Chat
+      {!hasCommonChat ? (
+        <div>
+          <p>Common chat: {commonChatId}</p>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            onClick={() => createChat(commonChatId as string)}
+          >
+            {"Create chat"}
+          </button>
+        </div>
+      ) : (
+        <button
+          className="bg-red-500 text-white px-4 py-2 rounded-md"
+          onClick={() => router.push(`/chats/${id}`)}
+        >
+          Open Chat
+        </button>
+      )}
+
+      <button className="bg-blue-500 text-white px-4 py-2 rounded-md m-5">
+        Add to friends
       </button>
     </div>
   );
