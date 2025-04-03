@@ -13,7 +13,7 @@ export async function GET(
       include: {
         favorites: true,
         bodyInfo: { include: { drinkRecords: true } },
-        ChatParticipant: true,
+        chatParticipant: true,
       },
     });
 

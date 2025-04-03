@@ -23,7 +23,7 @@ model User {
   bodyInfo    BodyInfo? 
   workoutProgram WorkoutProgram[] @relation()
   favorites Favorite[]
-  ChatParticipant ChatParticipant[]
+  chatParticipant ChatParticipant[]
   
   @@index([email])
 }
@@ -117,22 +117,21 @@ model DrinkRecord {
 }
 model Message {
   id        String      @id @default(cuid())
-  text      String
-  senderId  String
-  chatId String
-  createdAt DateTime @default(now())
   chat Chat @relation(fields: [chatId], references: [id])
+  chatId String
   sender    User     @relation(fields: [senderId], references: [id])
+  senderId  String
+  messageText String
+  sentAt        DateTime  @default(now()) 
+  readStatus    ReadStatus  @default(UNREAD) 
 }
 
 model Chat {
   id String @id @default(cuid())
-  isPrivate Boolean @default(true)
   participants  ChatParticipant[]
+  isPrivate Boolean @default(false)
   messages Message[]
-  type ChatType
   creatorId String
-
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
@@ -153,10 +152,9 @@ model ChatParticipant  {
 
 
 // -- Enums
-enum ChatType {
-  GROUP
-  CHANNEL
-  CHAT
+enum ReadStatus {
+  READ
+  UNREAD
 }
 
 enum FavoriteType {

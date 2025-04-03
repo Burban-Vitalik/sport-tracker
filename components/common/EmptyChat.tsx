@@ -11,10 +11,10 @@ export const EmptyChat = () => {
         height={220}
         className="mx-auto opacity-80"
       />
-      <h2 className="text-xl font-semibold text-gray-800">
+      <h2 className="text-2xl font-semibold text-gray-800">
         It&apos;s nice to chat with someone
       </h2>
-      <p className="text-gray-600">
+      <p className="text-xl text-gray-600">
         Pick a person from the left menu and start your conversation
       </p>
     </div>

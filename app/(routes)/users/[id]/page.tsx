@@ -17,8 +17,8 @@ export default function UserPage() {
   if (!user || loading) {
     return <div>user not found</div>;
   }
-  const commonChat = me?.ChatParticipant.find((myChat) =>
-    user?.ChatParticipant.some((userChat) => myChat.chatId === userChat.chatId)
+  const commonChat = me?.chatParticipant.find((myChat) =>
+    user?.chatParticipant.some((userChat) => myChat.chatId === userChat.chatId)
   );
 
   const hasCommonChat = Boolean(commonChat);

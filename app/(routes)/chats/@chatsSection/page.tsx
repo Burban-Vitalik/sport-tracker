@@ -10,7 +10,7 @@ import { useFetchChats } from "@/hooks/fetch";
 import { useChatParams } from "@/hooks/useChatParams";
 import FaceImg from "@/public/img/userLogo.png";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 
 export default function ChatPage() {
   const { user, isLoading } = useUser();
@@ -32,10 +32,6 @@ export default function ChatPage() {
     [chatId, params, router]
   );
 
-  const filteredChats = useMemo(() => {
-    return type === "all" ? chats : chats.filter((chat) => chat.type === type);
-  }, [type, chats]);
-
   if (isLoading && !user) return <p>1234...</p>;
 
   return (
@@ -44,7 +40,7 @@ export default function ChatPage() {
         <MembersList userImg={FaceImg} />
       </div>
       <ChatSidebarActions chatsType={type} toggleChatsType={toggleChatsType} />
-      <NewChat chatsLength={filteredChats.length} />
+      <NewChat chatsLength={chats.length} />
     </div>
   );
 }
