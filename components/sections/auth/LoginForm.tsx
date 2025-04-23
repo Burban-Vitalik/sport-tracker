@@ -12,6 +12,8 @@ import { CustomIconButton, CustomIconInput } from "@/components/form-elements";
 import { ErrorMessage } from "@/components/form-elements/messages/ErrorMessage";
 import { MyPartial, MyPick } from "@/types/custom-types";
 import { User } from "@prisma/client";
+import { loginUser } from "@/lib/auth/login";
+import { shakeAnimation } from "@/animation/shakeAnimation";
 
 type InitialLoginValues = MyPick<User, "email" | "password">;
 
@@ -24,7 +26,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (formRef.current) {
       gsap.from(formRef.current, {
-        opacity: 100,
+        opacity: 0,
         y: 50,
         scale: 0.9,
         duration: 0.8,
@@ -39,57 +41,26 @@ const LoginForm = () => {
       setErrors,
     }: { setErrors: (errors: MyPartial<InitialLoginValues>) => void }
   ) => {
-    try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+    const handleError = (message: string) => {
+      setErrors({
+        email: message,
+        password: message,
       });
+      shakeAnimation(errorRef.current);
+    };
 
-      const data = await res.json();
+    try {
+      const res = await loginUser(values);
 
-      if (res.ok) {
-        Cookies.set("token", data.token, { expires: 1 });
+      if (res.statusCode === 200) {
+        Cookies.set("token", res.data.access_token, { expires: 1 });
         router.push("/dashboard");
       } else {
-        setErrors({
-          email: "Invalid credentials. Please try again.",
-          password: "Invalid credentials. Please try again.",
-        });
-
-        if (errorRef.current) {
-          gsap.fromTo(
-            errorRef.current,
-            { x: -10 },
-            {
-              x: 10,
-              duration: 0.1,
-              repeat: 3,
-              yoyo: true,
-              ease: "power2.inOut",
-            }
-          );
-        }
+        handleError("Invalid credentials. Please try again.");
       }
-    } catch {
-      setErrors({
-        email: "An unexpected error occurred. Please try again later.",
-        password: "An unexpected error occurred. Please try again later.",
-      });
-
-      if (errorRef.current) {
-        gsap.fromTo(
-          errorRef.current,
-          { x: -10 },
-          {
-            x: 10,
-            duration: 0.1,
-            repeat: 3,
-            yoyo: true,
-            ease: "power2.inOut",
-          }
-        );
-      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      handleError("An unexpected error occurred. Please try again later.");
     }
   };
 

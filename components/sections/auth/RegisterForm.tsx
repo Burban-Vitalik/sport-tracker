@@ -9,6 +9,7 @@ import { CustomIconButton, CustomIconInput } from "@/components/form-elements";
 import { ErrorMessage } from "@/components/form-elements/messages/ErrorMessage";
 import { MyPartial, MyPick, MyRecord } from "@/types/custom-types";
 import { User } from "@prisma/client";
+import { createUser } from "@/lib/api/createUser";
 
 type InitialRegisterValues = MyPick<User, "email" | "password">;
 
@@ -34,17 +35,6 @@ const handleApiErrors = (
   setErrors(errorMessages[status] || defaultError);
 };
 
-const registerUser = async (values: InitialRegisterValues) => {
-  const res = await fetch("/api/auth/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(values),
-  });
-
-  const data = await res.json();
-  return { res, data };
-};
-
 const RegisterForm = () => {
   const router = useRouter();
 
@@ -55,7 +45,10 @@ const RegisterForm = () => {
     }: { setErrors: (errors: MyPartial<InitialRegisterValues>) => void }
   ) => {
     try {
-      const { res, data } = await registerUser(values);
+      const { res, data } = await createUser({
+        email: values.email,
+        password: values.password,
+      });
 
       if (res.status === 201) {
         alert(data.message);

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronUp, User2 } from "lucide-react";
+import { ChevronUp, LogOutIcon, User2 } from "lucide-react";
 import Link from "next/link";
 
 import { useUser } from "@/context/userContext";
@@ -17,7 +17,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../../ui/sidebar";
-import LogoutButton from "@/components/sections/auth/LogoutButton";
+import { CustomIconButton } from "@/components/form-elements";
+import { logout } from "@/lib/auth/logout";
 
 export function SidebarFooterComponent() {
   const { user } = useUser();
@@ -45,7 +46,13 @@ export function SidebarFooterComponent() {
                 <span>Billing</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <LogoutButton />
+                <CustomIconButton
+                  variant="destructive"
+                  onClick={logout}
+                  style={{ width: "100%" }}
+                >
+                  Log out <LogOutIcon />
+                </CustomIconButton>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -38,10 +38,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         const decodedToken: { userId: string; [key: string]: unknown } =
           jwtDecode(token);
-        const userId = decodedToken.userId;
+        const userId = decodedToken.id;
 
         setIsLoading(true);
-        const response = await fetch(`/api/users/${userId}`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/users/${userId}`
+        );
+
+        debugger;
 
         if (response.ok) {
           const userData = await response.json();

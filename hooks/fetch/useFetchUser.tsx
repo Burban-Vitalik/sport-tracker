@@ -13,11 +13,17 @@ export const useFetchUser = (userId: string) => {
   });
 
   useEffect(() => {
+    if (!userId) return;
+
     (async function () {
       try {
         setData((prev) => ({ ...prev, loading: true }));
-        const response = await fetch(`/api/users/${userId}`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/users/${userId}`
+        );
+
         if (!response.ok) throw new Error("Failed to fetch user");
+
         const data = await response.json();
         setData({ user: data, loading: false });
       } catch (error) {
@@ -26,7 +32,7 @@ export const useFetchUser = (userId: string) => {
         setData((prev) => ({ ...prev, loading: false }));
       }
     })();
-  }, []);
+  }, [userId]);
 
   return data;
 };

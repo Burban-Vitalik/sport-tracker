@@ -1,17 +1,23 @@
-"use client";
+"use client"; // важливо для використання onClick у Next.js App Router
 
-import { CustomIconButton } from "@/components/form-elements/buttons/CustomIconButton";
+import { removeUser } from "@/lib/api/removeUser";
 import { DeleteIcon } from "lucide-react";
 
 export default function SettingsPage() {
-  const deleteUser = () => alert("Deleted");
+  const handleDelete = async () => {
+    try {
+      await removeUser("cm94i13990000uw98gssxvfvt");
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+      alert("Failed to delete user");
+    }
+  };
 
   return (
     <div>
-      <CustomIconButton variant="destructive" onClick={deleteUser}>
-        Delete User
-        <DeleteIcon />
-      </CustomIconButton>
+      <button onClick={handleDelete}>
+        <DeleteIcon /> Delete
+      </button>
     </div>
   );
 }

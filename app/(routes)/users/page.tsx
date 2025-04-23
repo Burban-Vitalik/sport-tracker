@@ -10,7 +10,6 @@ import { UsersList } from "./UsersList";
 import { useFetchUsers } from "@/hooks/fetch/useFetchUsers";
 
 export default function UsersPage() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { users, loading: usersLoading } = useFetchUsers();
 
   if (usersLoading) {
